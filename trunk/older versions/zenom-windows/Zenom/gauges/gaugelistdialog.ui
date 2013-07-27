@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GaugeListDialog</class>
+ <widget class="QDialog" name="GaugeListDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>421</width>
+    <height>481</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Gauge List</string>
+  </property>
+  <widget class="QListWidget" name="gaugeList">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>161</width>
+     <height>201</height>
+    </rect>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>50</width>
+     <height>50</height>
+    </size>
+   </property>
+   <property name="spacing">
+    <number>5</number>
+   </property>
+   <property name="modelColumn">
+    <number>0</number>
+   </property>
+   <item>
+    <property name="text">
+     <string>Radial</string>
+    </property>
+    <property name="icon">
+     <iconset resource="../zenom.qrc">
+      <normaloff>:/Zenom/Resources/radialgauge.png</normaloff>:/Zenom/Resources/radialgauge.png</iconset>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Linear</string>
+    </property>
+    <property name="icon">
+     <iconset resource="../zenom.qrc">
+      <normaloff>:/Zenom/Resources/lineargauge.png</normaloff>:/Zenom/Resources/lineargauge.png</iconset>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Numeric</string>
+    </property>
+    <property name="icon">
+     <iconset resource="../zenom.qrc">
+      <normaloff>:/Zenom/Resources/numericgauge.png</normaloff>:/Zenom/Resources/numericgauge.png</iconset>
+    </property>
+   </item>
+  </widget>
+  <widget class="QStackedWidget" name="stackedWidget">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>10</y>
+     <width>231</width>
+     <height>431</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ok">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>450</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>OK</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="cancel">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>450</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cancel</string>
+   </property>
+  </widget>
+  <widget class="LogVariableTreeWidget" name="logVariableList">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>230</y>
+     <width>161</width>
+     <height>211</height>
+    </rect>
+   </property>
+   <column>
+    <property name="text">
+     <string>Log Variables</string>
+    </property>
+   </column>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>LogVariableTreeWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>logvariabletreewidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../zenom.qrc"/>
+ </resources>
+ <connections/>
+</ui>

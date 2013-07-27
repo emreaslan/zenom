@@ -1,0 +1,30 @@
+#VRML V2.0 utf8
+DEF T Transform { children [
+  Shape {
+    geometry DEF C PointSet {
+      coord Coordinate {
+        point [ 0 -1 2, 1 0 0, -2 3 -1, -4 0 0,
+
+                -2 2 -1, 5 -2 1, 3 -6 3  ]
+      }
+      color Color {
+        color [ 1 0 0, 0 1 0, 1 1 0, 0 1 1,
+
+                1 1 1, 1 0 0, 1 0 0 ]
+      }
+    }
+  }
+  Transform {
+    translation 0 0 -1
+    children Shape {
+      geometry USE C
+      appearance Appearance {
+        material Material {
+          emissiveColor 0 1 0
+          diffuseColor 1 0 0   
+        }
+      }
+    }
+  }
+]}
+

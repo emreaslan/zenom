@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/Zenom">
+        <file>Resources/new.png</file>
+        <file>Resources/open.png</file>
+        <file>Resources/save.png</file>
+        <file>Resources/build.png</file>
+        <file>Resources/pause.png</file>
+        <file>Resources/start.png</file>
+        <file>Resources/stop.png</file>
+        <file>Resources/makefile.template</file>
+        <file>Resources/source.template</file>
+        <file>Resources/radialgauge.png</file>
+        <file>Resources/lineargauge.png</file>
+        <file>Resources/numericgauge.png</file>
+    </qresource>
+</RCC>

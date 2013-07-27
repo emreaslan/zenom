@@ -1,0 +1,76 @@
+#VRML V2.0 utf8
+Group { children [
+  Transform {            # Base of snowman
+    translation 0 1 0
+    children Shape {
+      geometry Sphere { radius 1 }
+      appearance DEF A1 Appearance {
+        material Material {
+          diffuseColor 1 1 1
+          emissiveColor .3 .3 .3
+        }
+      }
+    }
+  }
+  DEF L2 Transform {            # Middle of snowman
+    translation 0 2.333 0
+    children Shape {
+      geometry Sphere { radius 0.66 }
+      appearance USE A1
+    }
+  }
+  DEF L2 Transform {            # Head of snowman
+    translation 0 3.2 0
+    children Shape {
+      geometry DEF L2 Sphere { radius 0.4 }
+      appearance USE A1
+    }
+  }
+  Transform {            # Left eye stone
+    translation .16 3.4 .3
+    children Shape {
+      geometry DEF S1 Sphere { radius 0.05 }
+      appearance DEF A2 Appearance {
+        material Material { diffuseColor 0 0 0 }
+      }
+    }
+  }
+  Transform {            # Right eye stone
+    translation -.17 3.43 .3
+    children Shape {
+      geometry USE S1
+      appearance Appearance {
+        material Material { diffuseColor 0.2 0.2 0.2 }
+      }
+     }
+  }
+  Transform {            # Carrot nose
+    translation 0 3.3 .5
+    scale 0.5 0.5 2
+    children Shape {
+      geometry Sphere { radius 0.1 }
+      appearance Appearance {
+        material Material { diffuseColor 1.0 0.3 0.1 }
+      }
+    }
+  }
+  Transform {            # Hat cap
+    translation 0 3.5 0
+    children Shape {
+      geometry Sphere { radius .2 }
+      appearance Appearance {
+        material Material { diffuseColor 1.0 0.0 0.0 }
+      }
+    }
+  }
+  Transform {            # Hat rim
+    translation 0 3.55 0
+    scale 2 .01 2
+    children Shape {
+      geometry Sphere { radius .4 }
+      appearance Appearance {
+        material Material { diffuseColor 1.0 0.0 0.0 }
+      }
+    }
+  }
+] }

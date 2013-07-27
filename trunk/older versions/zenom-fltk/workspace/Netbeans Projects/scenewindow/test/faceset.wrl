@@ -1,0 +1,39 @@
+Shape {
+  appearance Appearance {
+    material Material {
+      diffuseColor 1 0 1
+    } # end material
+  } # end appearance
+
+  geometry IndexedFaceSet {
+
+    solid TRUE
+    coord Coordinate {
+      point [
+        # the pointset hasn't changed
+        #base of pyramid
+        -2 0  2,     # point 0, left and close
+        -2 0 -2,     # point 1, left and back
+         2 0 -2,     # point 2, right and back
+         2 0  2,     # point 3, right and close
+        #top of pyramid
+         0 2  0,     #point 4, top of pyramid
+        ]  # end point
+    } # end coord
+    coordIndex [
+      #base
+      #note that now it is CRUCIAL that I go counter-clockwise
+      #from the OUTSIDE.
+
+      0, 1, 2, 3, 0, -1,
+      #vertical faces
+      #now rather than defining the edges, I am describing the faces
+      0, 4, 1, -1,   # left side
+      1, 4, 2, -1,   # back side
+      2, 4, 3, -1,   # right side
+      3, 4, 0, -1,   # front side
+    ] # end coordIndex
+
+  } # end geometry
+} # end shape
+

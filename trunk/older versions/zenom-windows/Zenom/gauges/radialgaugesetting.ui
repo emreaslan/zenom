@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RadialGaugeSetting</class>
+ <widget class="AbstractGaugeSetting" name="RadialGaugeSetting">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>231</width>
+    <height>431</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>RadialGaugeSetting</string>
+  </property>
+  <widget class="QGroupBox" name="previewGroupBox">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>210</y>
+     <width>221</width>
+     <height>221</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Preview</string>
+   </property>
+  </widget>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>221</width>
+     <height>201</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="scaleTab">
+    <attribute name="title">
+     <string>Scale</string>
+    </attribute>
+    <widget class="QGroupBox" name="rangeGroupBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>196</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Range</string>
+     </property>
+     <widget class="QLabel" name="endRangeLabel">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>45</y>
+        <width>31</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>End:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="startRangeLabel">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>31</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Start:</string>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="startRange">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>20</y>
+        <width>91</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="decimals">
+       <number>0</number>
+      </property>
+      <property name="minimum">
+       <double>-999999999.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>999999999.000000000000000</double>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="endRange">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>45</y>
+        <width>91</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="decimals">
+       <number>0</number>
+      </property>
+      <property name="minimum">
+       <double>-999999999.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>999999999.000000000000000</double>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="tickCountGroupBox">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>90</y>
+       <width>96</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Tick Count</string>
+     </property>
+     <widget class="QLabel" name="majorLabel">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>45</y>
+        <width>31</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Major:</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="minorTick">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>20</y>
+        <width>41</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>1</number>
+      </property>
+     </widget>
+     <widget class="QLabel" name="minorLabel">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>31</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Minor:</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="majorTick">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>45</y>
+        <width>41</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>2</number>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="spanAngleGroupBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>96</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Span Angle</string>
+     </property>
+     <widget class="QLabel" name="endLabel">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>45</y>
+        <width>31</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>End:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="startLabel">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>31</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Start:</string>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="startAngle">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>20</y>
+        <width>41</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="accelerated">
+       <bool>true</bool>
+      </property>
+      <property name="decimals">
+       <number>0</number>
+      </property>
+      <property name="minimum">
+       <double>-359.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>359.000000000000000</double>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="endAngle">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>45</y>
+        <width>41</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="accelerated">
+       <bool>true</bool>
+      </property>
+      <property name="decimals">
+       <number>0</number>
+      </property>
+      <property name="minimum">
+       <double>-359.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>359.000000000000000</double>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="captionTab">
+    <attribute name="title">
+     <string>Caption</string>
+    </attribute>
+    <widget class="QLabel" name="captionLabel">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>46</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Caption:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="caption">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>10</y>
+       <width>111</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="maxLength">
+      <number>15</number>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="positionGroupBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>196</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Position</string>
+     </property>
+     <widget class="QLabel" name="captionXLabel">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>16</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>X:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="captionYLabel">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>16</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Y:</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="captionYPos">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>121</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>-100</number>
+      </property>
+      <property name="maximum">
+       <number>100</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QSlider" name="captionXPos">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>20</y>
+        <width>121</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>-100</number>
+      </property>
+      <property name="maximum">
+       <number>100</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="colorScale">
+    <attribute name="title">
+     <string>Color Scale</string>
+    </attribute>
+    <widget class="QLabel" name="endLabel_2">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>10</y>
+       <width>31</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>End</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="startLabel_2">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>10</y>
+       <width>31</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Start</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="greenLabel">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>30</y>
+       <width>41</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Green:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="redLabel">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>90</y>
+       <width>41</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Red:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="yellowLabel">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>60</y>
+       <width>41</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Yellow:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="redEnd">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>90</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="yellowEnd">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>60</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="greenEnd">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>30</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="greenStart">
+     <property name="geometry">
+      <rect>
+       <x>45</x>
+       <y>30</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="yellowStart">
+     <property name="geometry">
+      <rect>
+       <x>45</x>
+       <y>60</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="redStart">
+     <property name="geometry">
+      <rect>
+       <x>45</x>
+       <y>90</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>AbstractGaugeSetting</class>
+   <extends>QWidget</extends>
+   <header>abstractgaugesetting.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>minorTick</tabstop>
+  <tabstop>majorTick</tabstop>
+  <tabstop>startAngle</tabstop>
+  <tabstop>endAngle</tabstop>
+  <tabstop>caption</tabstop>
+  <tabstop>captionXPos</tabstop>
+  <tabstop>captionYPos</tabstop>
+  <tabstop>greenStart</tabstop>
+  <tabstop>greenEnd</tabstop>
+  <tabstop>yellowStart</tabstop>
+  <tabstop>yellowEnd</tabstop>
+  <tabstop>redStart</tabstop>
+  <tabstop>redEnd</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

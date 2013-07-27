@@ -1,0 +1,97 @@
+<html><!-- InstanceBegin template="/Templates/bitirmeHtml.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<title>Zenom</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1254">
+<script src="listmenu.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="listmenu.css" />
+</head>
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table id="Table_01" width="1024" height="768" border="0" cellpadding="0" cellspacing="0" align="center">
+	<tr>
+		<td colspan="2">
+			<img src="images/bitirmeHtml_01.gif" width="1024" height="142" alt=""></td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<img src="images/bitirmeHtml_02.gif" width="1024" height="12" alt=""></td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<img src="images/bitirmeHtml_03.gif" width="1024" height="20" alt=""></td>
+	</tr>
+	<tr>
+    <td valign="top" width="280">
+        
+<ul class="treemenu"> 
+            <li> 
+				<a href="introduction.html">Giriş</a>			</li> 
+			<li class="treenodeopen"> 
+				<a href="#">Zenom Benzetim</a> 
+				<ul> 
+                    <li><a href="installation.html">Kurulum</a></li>
+                    <li><a href="makeproject.html">Proje Oluşturma</a></li>
+					<li class="treenodeopen"> 
+					<a href="functions.html">Fonksiyonlar</a> 
+					<ul> 
+						<li><a href="functions.html#initFunc">initialize</a> </li> 
+						<li><a href="functions.html#startFunc">start</a> </li> 
+                        <li><a href="functions.html#doloopFunc">doloop</a> </li> 
+                        <li><a href="functions.html#stopFunc">stop</a> </li> 
+                        <li><a href="functions.html#terminateFunc">terminate</a> </li> 
+					</ul>					
+					</li>  
+				</ul> 
+			</li> 
+			<li class="treenodeopen"> 
+				<a href="#">Zenom Kullanıcı Arayüzü</a> 
+				<ul> 
+                    <li><a href="mainwindow.html">Ana Pencere</a></li> 
+                    <li><a href="logwindow.html">Kayıt Parametre Penceresi</a></li> 
+                    <li><a href="controlwindow.html">Kontrol Parametre Penceresi</a></li> 
+					<li><a href="watchwindow.html">Anlık Gözetim Penceresi</a></li> 
+					<li><a href="plotwindow.html">2B Grafik Penceresi</a></li> 
+					<li><a href="scenewindow.html">3B Sahne Penceresi</a></li> 
+				</ul> 
+			</li> 
+            <li><a href="rtnet.html">RTNET Kullanımı</a></li> 
+  			<li><a href="examples.html">Örnekler</a></li> 
+			<li><a href="#">İletişim</a></li>             
+		</ul>      </td>
+	  <td width="751" height="560" valign="top">
+        <!-- InstanceBeginEditable name="EditRegion1" -->
+        <div class="text"> 
+        <div class="header">Zenom Proje Oluşturma</div>
+        <div class="body">
+          <p>Zenom &uuml;zerine benzetim hazırlamak i&ccedil;in zenomProject yardımcı programı kullanılır. Bu yardımcı program sayesinde derlemeye hazır benzetim dosyası oluşturabilirsiniz.</p>
+          <div class="header1">&Ouml;rnek Proje Oluşturma</div>
+          <ol>
+            <li>Konsol ekranı a&ccedil;ılır.<span style="font-weight: bold">cd usr/local/Zenom/bin/</span>  komutu yazılır.</li>
+            <li><span style="font-weight: bold">./zenomProject <em>&quot;proje ismi&quot;</em> <em>&quot;hedef klas&ouml;r&quot;</em></span> komutu &ccedil;alıştırılır.</li>
+          </ol>
+          <p>Parametre olarak alınan hedef klas&ouml;rde parametre olarak alınan proje isminde bir klas&ouml;r oluşur. Bu klas&ouml;r,</p>
+          <ul>
+            <li><strong>projeIsmi.cpp -</strong> Benzetim &ccedil;alışması i&ccedil;in kodlanması gereken 5 temel fonksiyonu i&ccedil;eren dosyadan,</li>
+            <li><strong>projeIsmi.cfg -</strong> Benzetim bilgilerinin kayıt edildiği konfig&uuml;rasyon dosyasından,</li>
+            <li><strong>projeIsmi.znm -</strong> &Ccedil;alıştırılabilir dosyadan,</li>
+            <li><strong>Makefile -</strong> derleme dosyasından,</li>
+            <li><strong>vrmlFiles/ -</strong> vrml dosyalarının konulacağı klas&ouml;rden</li>
+          </ul>
+          <p> oluşur.</p>
+          <p>Proje oluşturduktan sonra <strong>projeIsmi.cpp</strong> dosyası a&ccedil;ılır ve 5 temel fonksiyon kodlanır. Ardından proje <strong>make</strong> komutu ile derlenir. <strong>projeIsmi.cfg</strong> konfig&uuml;rasyon dosyasına kayıt ve kontrol değişkenleri bilgileri yazılır. </p>
+          <p>Konfig&uuml;rasyon dosyasını g&uuml;ncelleyerek kontrol değişkenlerine  ilk değer atamalarını yapabilirsiniz.</p>
+          <div class="warning"><strong>projeIsmi.cfg</strong> dosyasında yapılan bilin&ccedil;siz değişiklikler, programın d&uuml;zg&uuml;n &ccedil;alışmamasına veya sonlanmasına yol a&ccedil;abilir.</div>
+        </div>
+        </div>	
+		<!-- InstanceEndEditable -->	  </td>
+  </tr>
+	<tr>
+		<td colspan="2">
+			<img src="images/bitirmeHtml_06.gif" width="1024" height="16" alt=""></td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<img src="images/bitirmeHtml_09.png" width="1024" height="16" alt=""></td>
+	</tr>
+</table>
+</body>
+<!-- InstanceEnd --></html>
