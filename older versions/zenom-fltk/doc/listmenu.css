@@ -1,0 +1,115 @@
+.treemenu {
+	margin : 20px 0px;
+	padding : 10px 10px 10px 10px;
+	list-style-type : none;	
+	background-color : #EEEEEE;
+	border : 1px solid #5F7383;
+	width : 260px;
+}
+
+.treemenu UL {
+	list-style-type : none;
+	margin : 0px 10px;
+	padding : 0px 10px;
+}
+
+.treemenu LI {
+	display : inline;
+}
+
+.treemenu A {
+	display : block;
+	padding-left : 15px;
+	text-decoration : none;
+	outline: none;
+	color: #5F7383;
+	font-family: verdana, sans-serif;
+    font-size: 12px;
+}
+
+.treemenu a:hover {
+	color: #8DA3B1;
+}
+
+
+.treemenu .treeopen {
+	background-image : url('images/minus.png');
+	background-repeat : no-repeat;
+	background-position : left;
+	color: #be5028;
+}		
+
+.treemenu .treeclosed {
+	background-image : url('images/plus.png');
+	background-repeat : no-repeat;
+	background-position : left;
+
+}
+
+div.text
+{
+	border: #EEEEEE 1px solid;
+	font-family: verdana, sans-serif;
+    text-align: left;
+	padding:5px;
+	margin: 20px 0px 10px 20px;
+    text-decoration: none;
+}
+
+div.header
+{
+	border-bottom: #5F7383 1px solid;
+	font-weight: bolder;
+	margin : 20px 10px;
+	text-transform: none;
+	color: #be5028;
+    font-size: 18px;
+}
+
+div.header1
+{
+	border-bottom: #5F7383 1px dotted;
+	font-weight: bolder;
+	margin : 15px 0px;
+	text-transform: none;
+	color: #be5028;
+    font-size: 15px;
+}
+
+div.header2
+{
+	border-bottom: #5F7383 1px dotted;
+	margin : 15px 0px;
+	text-transform: none;
+	color: #be5028;
+    font-size: 14px;
+}
+
+div.body
+{ 
+    margin: 16px 2%;
+    font-size: 14px;
+}
+
+div.warning
+{
+	padding: 12px 5px 10px 50px;
+	margin: 10px;
+	background-color: #FFC84A;
+	border: #FF972D 2px dotted;
+	font-style: italic;
+	font-family: verdana, sans-serif;
+	font-size: 14px;
+	background-image : url(images/warning.png);
+	background-repeat : no-repeat;
+	background-position : 3px 3px;
+}
+
+div.code {
+	font-family: Courier New,Courier,monotype;
+	font-weight: bold;
+	font-size: 12px;
+	padding: 10px 10px 10px 10px;
+	background-color: #E8F2FB;
+	border: solid 1px #CADFEF; 
+}

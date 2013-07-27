@@ -1,0 +1,236 @@
+<html><!-- InstanceBegin template="/Templates/bitirmeHtml.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<title>Zenom</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1254">
+<script src="listmenu.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="listmenu.css" />
+</head>
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table id="Table_01" width="1024" height="768" border="0" cellpadding="0" cellspacing="0" align="center">
+	<tr>
+		<td colspan="2">
+			<img src="images/bitirmeHtml_01.gif" width="1024" height="142" alt=""></td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<img src="images/bitirmeHtml_02.gif" width="1024" height="12" alt=""></td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<img src="images/bitirmeHtml_03.gif" width="1024" height="20" alt=""></td>
+	</tr>
+	<tr>
+    <td valign="top" width="273">
+        
+<ul class="treemenu"> 
+            <li> 
+				<a href="">Giriş</a>			</li> 
+			<li class="treenodeopen"> 
+				<a href="">Zenom Benzetim</a> 
+				<ul> 
+                    <li><a href="">Başlarken</a></li>
+                    <li><a href="makeproject.html">Proje Oluşturma</a></li>
+					<li class="treenodeopen"> 
+					<a href="functions.html">Fonksiyonlar</a> 
+					<ul> 
+						<li><a href="functions.html#initFunc">initialize</a> </li> 
+						<li><a href="functions.html#startFunc">start</a> </li> 
+                        <li><a href="functions.html#doloopFunc">doloop</a> </li> 
+                        <li><a href="functions.html#stopFunc">stop</a> </li> 
+                        <li><a href="functions.html#terminateFunc">terminate</a> </li> 
+					</ul>					
+					</li>  
+				</ul> 
+			</li> 
+			<li class="treenodeopen"> 
+				<a href="">Zenom Kullanıcı Arayüzü</a> 
+				<ul> 
+                    <li><a href="mainwindow.html">Ana Pencere</a></li> 
+                    <li><a href="logwindow.html">Kayıt Parametre Penceresi</a></li> 
+                    <li><a href="controlwindow.html">Kontrol Parametre Penceresi</a></li> 
+					<li><a href="watchwindow.html">Anlık Gözetim Penceresi</a></li> 
+					<li><a href="plotwindow.html">2B Grafik Penceresi</a></li> 
+					<li><a href="">3B Sahne Penceresi</a></li> 
+				</ul> 
+			</li> 
+            <li> 
+				<a href="">RTNET Kullanımı</a>			</li> 
+            <li> 
+				<a href="">Örnekler</a>	    </li> 
+			<li> 
+				<a href="">İletişim</a>			</li>             
+		</ul>      </td>
+	  <td width="751" height="560" valign="top">
+        <!-- InstanceBeginEditable name="EditRegion1" -->
+        <div class="text"> 
+        <div class="header"><strong>BounceBall &Ouml;rneği</strong></div>
+        <div class="body"> Zenom kullanımını g&ouml;stermek i&ccedil;in BounceBall &ouml;rneği kullanılacaktır. Bu &ouml;rnek ile Zenom&rsquo;da değişken tanımları, fonksiyon kullanımları ve konfigurasyon dosyası oluşturulması anlatılacaktır.
+<div class="header1"><strong>Control ve Log Değişkenlerini Tanımlama</strong></div>
+          <p>Zenom uygulamalarında kullanılacak control ve log değişkenleri, benzetime kaydedilmelidir. Kayıt işlemi yapan fonksiyonlar double, int, double[] ve array&lt;double&gt; tipinde değişkenleri kaydetmektedir. Control ve Log değişkenleri bu tiplerde olmak zorundadır.</p>
+          <p>Control ve Log değişkenlerinın objenin &uuml;yesi olarak tanımlanmalı, constructor yada initialize fonksiyonunda benzetime kayıt edilmelidir.</p>
+          <p>Control değişkenleri kaydetmek i&ccedil;in registerControlVariable(), Log değişkenlerini kaydetmek i&ccedil;in registerLogVariable() fonksiyonları kullanılır. Bu fonksiyonların farklı veritipleri i&ccedil;in overload fonksiyonları bulunmaktadır.</p>
+          <p>BounceBall &Ouml;rneğindeki değişken tanımlamları</p>
+          <div class="code">
+            <p>private:<br>
+              // Benzetim icinde kullanilacak degiskenler<br>
+              Integrator&lt;double&gt; integratorAcc; //Ivme integrali alacak QMath Objesi<br>
+              Integrator&lt;double&gt; integratorVelocity; //Hiz integrali alacak QMath Objesi<br>
+  <br>
+              // ----- Log Variables -----<br>
+              int totalBounceCount; //Benzetim boyunca topun toplam sekme sayisi<br>
+              int currentBounceCount; //Her start/stop arasindaki topun sekme sayisi<br>
+              double ballPos[3]; //Topun pozisyon bilgisi<br>
+              double ballScale[3]; //Topun boyut bilgisi<br>
+              double velocity; //Hiz degeri<br>
+              double acc; //Ivme degeri<br>
+              double xyTest[2]; //Hiza gore pozisyon degeri</p>
+            <p> // ----- Control Variables -----<br>
+              double ballRadius; //Topun yaricapi<br>
+              double hitAcc; //Carpma anindaki ivme degeri<br>
+              double gravity; //Yercekimi degeri</p>
+          </div>
+          <p>Log ve Control değişkenlerinin initialize() fonksiyonunda benzetime kayıt edilmesi</p>
+          <div class="code">
+            <p>int BounceBall::initialize()<br>
+              {<br>
+// Log ve Control degiskenleri benzetime kaydedilir<br>
+// Kaydedilecek degisken double, int, double[] tipinde olmadilir<br>
+registerLogVariable(ballPos , &quot;ballPos&quot;, &quot;Topun Konumu&quot;,1,3); // double[3] tipi icin kayit fonksiyonu<br>
+registerLogVariable(ballScale , &quot;ballScale&quot;, &quot;Topun Boyutu&quot;,1,3);<br>
+registerLogVariable(xyTest , &quot;xyTest&quot;, &quot;xyTest Degiskeni&quot;,1,2); // double[2] tipi icin kayit fonksiyonu</p>
+            <p> registerLogVariable(totalBounceCount , &quot;totalBounceCount&quot;, &quot;Topun benzetim boyunca toplam  sekme sayisi&quot;); // int tipi icin kayit fonksiyonu<br>
+              registerLogVariable(currentBounceCount , &quot;currentBounceCount&quot;, &quot;Topun bir kosum boyunca sekme sayisi&quot;);<br>
+  <br>
+              registerLogVariable(velocity , &quot;velocity&quot;, &quot;Hiz&quot;);<br>
+              registerLogVariable(acc , &quot;acc&quot;, &quot;Ivme&quot;); // double tipi icin kayit fonksiyonu<br>
+  <br>
+              registerControlVariable(hitAcc, &quot;hitAcc&quot; ,&quot;carpma etkisi&quot;);<br>
+              registerControlVariable(gravity, &quot;gravity&quot; ,&quot;Yercekimi&quot;);<br>
+              registerControlVariable(ballRadius, &quot;ballRadius&quot; ,&quot;Top Yaricapi&quot;);</p>
+            <p>... // Benzetim algoritmasi icin olan kodlar<br>
+            }</p>
+</div>
+          <p>&nbsp;</p>
+          <div class="header1"><strong>Benzetim Fonksiyonlarının Kodlanması</strong></div>
+<p><span class="header1"><strong></strong>Değişkenler tanımlandıktan ve benzetime kaydedildikten sonra, initialize(), start(), doloop(), stop() ve terminate() fonksiyonları, topun hareketini ger&ccedil;ekleyecek algoritmaya g&ouml;re kodlanır.</span></p>
+<p>initialize() Fonksiyonu          </p>
+          <div class="code">
+            <p>int BounceBall::initialize()<br>
+              {<br>
+            ... // Degisken kaydetme kodlari</p>
+            <p> totalBounceCount = 0; // Topun toplam sekme sayisi sifirlanir<br>
+              return 0;<br>
+            }</p>
+          </div>
+<p>&nbsp;</p>
+          <p>start() Fonksiyonu </p>
+          <div class="code">
+            <p>int BounceBall::start()<br>
+              {<br>
+currentBounceCount = 0;<br>
+//Integral objeleri sifirlanir<br>
+integratorAcc = Integrator&lt;double&gt;(1/frequency, 0);<br>
+integratorVelocity = Integrator&lt;double&gt;(1/frequency, 20.0);<br>
+<br>
+// Topun boyut ve konum bilgileri sifirlanir<br>
+ballPos[0] = 0; ballPos[1] = 20; ballPos[2] = 0;<br>
+ballScale[0] = 1; ballScale[1] = 1; ballScale[2] = 1;<br>
+<br>
+return 0;<br>
+}</p>
+          </div>
+          <p>&nbsp;</p>
+          <p>doloop() Fonksiyonu </p>
+          <div class="code">
+            <p>int BounceBall::doloop()<br>
+              {<br>
+// Benzetim frekansinda topun hareketini hesaplayan islemler<br>
+if( ( ballPos[1] &gt;= 0 &amp;&amp; ballPos[1] &lt;= ballRadius*2))<br>
+{<br>
+ballScale[1] = fabs(ballRadius / ballPos[1]);<br>
+acc = hitAcc - gravity;<br>
+}<br>
+else<br>
+{<br>
+ballScale[1] = 1;<br>
+hitAcc = gravity;<br>
+}<br>
+<br>
+double oldVelocity = velocity;<br>
+velocity = integratorAcc.integrate(acc);<br>
+ballPos[1] = integratorVelocity.integrate(velocity);<br>
+xyTest[0] =  ballPos[1];<br>
+xyTest[1] = velocity;</p>
+            <p> // Topun sekmesini sayilir<br>
+              if ( oldVelocity &lt; 0 &amp;&amp; velocity &gt; 0 )<br>
+              {<br>
+              ++totalBounceCount;<br>
+              ++currentBounceCount;<br>
+              }</p>
+            <p> return 0;<br>
+              }</p>
+          </div>
+          <p>&nbsp;</p>
+          <p>stop() Fonksiyonu </p>
+          <div class="code">
+            <p>int BounceBall::stop()<br>
+              {<br>
+            // Donanim ve dinamik hafiza kullanimi olmadigi icin bu fonksiyonda islem yapilmasina gerek yoktur.</p>
+            <p>return 0;<br>
+              }</p>
+          </div>
+<p>&nbsp;</p>
+<p>terminate() Fonksiyonu </p>
+<div class="code">
+  <p>int BounceBall::terminate()<br>
+    {<br>
+    // Donanim ve dinamik hafiza kullanimi olmadigi icin bu fonksiyonda islem yapilmasina gerek yoktur.</p>
+  <p>return 0;<br>
+    } </p>
+</div>
+<p>&nbsp;</p>
+<div class="header1">
+  <p><strong>Konfigurasyon Dosyasının Oluşturulması</strong></p></div>
+<p>Zenom ile proje oluşturulduğunda, proje klas&ouml;r&uuml;nde &lt;ProjeAdı&gt;.cfg dosyası oluşur. Bu dosya benzetimin ve grafik aray&uuml;z&uuml;n&uuml;n değiştirilebilir parametrelerini tutmaktadır. Benzetimi aray&uuml;z olmadan &ccedil;alıştırmak i&ccedil;in, bu dosyanın kullanıcı tarafından d&uuml;zenlenmesi gerekmektedir. Aray&uuml;z ile kullanımda, dosyadaki bilgiler men&uuml;ler yardımıyla değiştirilebileceği i&ccedil;in bu dosyayı d&uuml;zenlemeye gerek yoktur.</p>
+<p>&nbsp;</p>
+<p>BounceBall &Ouml;rneği i&ccedil;in oluşan konfigurasyon dosyası</p>
+<div class="code">
+  <p>&lt;XENOM_FILE&gt;</p>
+  <p>&lt;GENERAL&gt;<br>
+    Frequency 1000 // Benzetimin calisma frekansi<br>
+    Duration 200 // Benzetimin calisma suresi</p>
+  <p>&lt;LOG_VARIABLES&gt;<br>
+    ballPos 0 1000 0 100 1 3 //Log degiskenlerinin kayıt baslangıc, bitis, frekans, boyut bilgileri<br>
+    ballScale 0 1000 0 100 1 3<br>
+    xyTest 0 1000 0 100 1 2<br>
+    totalBounceCount 0 1000 0 100 1 1<br>
+    currentBounceCount 0 1000 0 100 1 1<br>
+    velocity 0 1000 0 100 1 1<br>
+    acc 0 1000 0 100 1 1</p>
+  <p>&lt;CONTROL_VARIABLES&gt;<br>
+    hitAcc 1 1 100.00<br>
+    gravity 1 1 9.81<br>
+    ballRadius 1 1 1.50<br>
+  </p>
+  <p>&lt;GUI&gt;</p>
+  <p>... // Arayuz bilgileri<br>
+  </p>
+</div>
+<p></p>
+<div class="warning">Kullanıcı konfigurasyon dosyasında sadece frekans değerleri ve Control değişkenlerinin değerlerini değiştirebilir. Diğer bilgileri değiştirmesi ya da dosyanın formatını bozması Zenom'un hata vermesine neden olur.</div>
+<p>&nbsp;</p>
+</div>
+        </div>	
+		<!-- InstanceEndEditable -->	  </td>
+  </tr>
+	<tr>
+		<td colspan="2">
+			<img src="images/bitirmeHtml_06.gif" width="1024" height="16" alt=""></td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<img src="images/bitirmeHtml_09.png" width="1024" height="16" alt=""></td>
+	</tr>
+</table>
+</body>
+<!-- InstanceEnd --></html>

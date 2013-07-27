@@ -1,0 +1,155 @@
+<html><!-- InstanceBegin template="/Templates/bitirmeHtml.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<title>Zenom</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1254">
+<script src="listmenu.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="listmenu.css" />
+</head>
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table id="Table_01" width="1024" height="768" border="0" cellpadding="0" cellspacing="0" align="center">
+	<tr>
+		<td colspan="2">
+			<img src="images/bitirmeHtml_01.gif" width="1024" height="142" alt=""></td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<img src="images/bitirmeHtml_02.gif" width="1024" height="12" alt=""></td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<img src="images/bitirmeHtml_03.gif" width="1024" height="20" alt=""></td>
+	</tr>
+	<tr>
+    <td valign="top" width="280">
+        
+<ul class="treemenu"> 
+            <li> 
+				<a href="introduction.html">Giriş</a>			</li> 
+			<li class="treenodeopen"> 
+				<a href="#">Zenom Benzetim</a> 
+				<ul> 
+                    <li><a href="installation.html">Kurulum</a></li>
+                    <li><a href="makeproject.html">Proje Oluşturma</a></li>
+					<li class="treenodeopen"> 
+					<a href="functions.html">Fonksiyonlar</a> 
+					<ul> 
+						<li><a href="functions.html#initFunc">initialize</a> </li> 
+						<li><a href="functions.html#startFunc">start</a> </li> 
+                        <li><a href="functions.html#doloopFunc">doloop</a> </li> 
+                        <li><a href="functions.html#stopFunc">stop</a> </li> 
+                        <li><a href="functions.html#terminateFunc">terminate</a> </li> 
+					</ul>					
+					</li>  
+				</ul> 
+			</li> 
+			<li class="treenodeopen"> 
+				<a href="#">Zenom Kullanıcı Arayüzü</a> 
+				<ul> 
+                    <li><a href="mainwindow.html">Ana Pencere</a></li> 
+                    <li><a href="logwindow.html">Kayıt Parametre Penceresi</a></li> 
+                    <li><a href="controlwindow.html">Kontrol Parametre Penceresi</a></li> 
+					<li><a href="watchwindow.html">Anlık Gözetim Penceresi</a></li> 
+					<li><a href="plotwindow.html">2B Grafik Penceresi</a></li> 
+					<li><a href="scenewindow.html">3B Sahne Penceresi</a></li> 
+				</ul> 
+			</li> 
+            <li><a href="rtnet.html">RTNET Kullanımı</a></li> 
+  			<li><a href="examples.html">Örnekler</a></li> 
+			<li><a href="#">İletişim</a></li>             
+		</ul>      </td>
+	  <td width="751" height="560" valign="top">
+        <!-- InstanceBeginEditable name="EditRegion1" -->
+        <div class="text">
+          <div class="header">Zenom Kurulumu</div>
+          <div class="body">Zenom benzetim ortamının çalışabilmesi için aşağıdaki paketlerin sistemde kurulu olması gerekmektedir.
+            Zenom kurulumu için <a href="#zenom"><span style="font-weight: bold">tıklayınız</span></a>.
+            <ol>
+              <li><a href="#xenomai"><span style="font-weight: bold">Xenomai</span></a> - Linux kerneli gerçek zamanlı sistem yaması</li>
+              <li><a href="#rtnet"><span style="font-weight: bold">RTNET</span></a> - Gerçek zamanlı ağ haberleşme paketi</li>
+              <li><a href="#fltkopenvrml"><span style="font-weight: bold">FLTK2</span></a> - Arayüz tasarım kütüphanesi</li>
+              <li><a href="#fltkopenvrml"><span style="font-weight: bold">OpenVRML</span></a> - Vrml ayrıştırma kütüphanesi</li>
+            </ol>
+            <p>&nbsp;</p>
+            <div class="header1"><a name="xenomai">Xenomai Kurulumu</a></div>
+            <p>Xenomai kurulumu için Linux Kernel, adeos ve Xenomai yamalarına ihtiyaç vardır. Xenomai yaması kernel kaynak dosyaları ile birleştirilip kernel yeniden derlenmelidir.</p>
+            <p>Linux Kernel <a href="www.kernel.org">www.kernel.org</a>, Xenomai <a href="www.xenomai.org">www.xenomai.org</a>, adeos <a href="home.gna.org/adeos">home.gna.org/adeos</a> sitelerinden indirilebilir. Bu anlatım da 2.6.29.5  kernel ve bu kernele uyumlu adeos yaması, 2.4.8  stable Xenomai yaması kullanıldı.</p>
+            <p>İndirilen sıkıştırılmış haldeki Linux  Kernel ve Xenomai dosyaları /usr/src klasörü içine çıkartılır. Bu işlemler için  gerekli komutlar aşağıdaki gibidir.</p>
+            <div class="code"> $ cd /usr/src<br>
+              $ sudo tar –xf &lt;Xenomai File Path&gt;<br>
+              $ sudo tar –xf &lt;Linux Kernel File Path&gt; </div>
+            <p>Dosyalar çıkartıldıktan sonra hem kurulum  hemde versiyon  geçişlerinin kolaylığı  için kaynak dosyalarının olduğu klasorlere  kısayollar tanımlanır.</p>
+            <div class="code"> $ sudo ln -s &lt;Linux Kernel Folder&gt; linux<br>
+              $ sudo ln -s &lt;Xenomai Folder&gt; xenomai </div>
+            <p>Xenomai paketi Linux Kernel'e yama yapılır.</p>
+            <div class="code"> $ cd /usr/src/xenomai/scripts/<br>
+              $ sudo ./prepare-kernel.sh<br>
+              Linux tree: /usr/src/linux<br>
+              Target architecture : x86_64<br>
+Adeos patch: &lt;Adeos File Path&gt;<br>
+            </div>
+            <p>Yama işlemi yapıldıktan sonra kernel ayarları yapılıp dermeleme işlemine başlanır. Kernel ayarlarını yapmak için göresel arayüzü olan QtConfig kullanılır. Bilgisayarınızda Qt yok ise hata meydana gelir, Add/Remove Software Development files for the Qt 3 GUI toolkit paketini yükleyiniz.</p>
+            <div class="code"> $ cd /usr/src/linux<br>
+              $ sudo make xconfig </div>
+            <p>Açılan linux kernel konfigürasyon penceresinde <span style="font-weight: bold">General Setup</span> -&gt; <span style="font-weight: bold">Local version - append to kernel release</span> kısmına çift tıklanır ve altta açılan kısma <span style="font-weight: bold">_xeno</span> yazılır, enter tuşuna basılır. Bu sayede yeni kurulan linux kernelinin uzantısının son eki _xeno olacaktır.</p>
+            <p align="center"><img src="images/installappendxeno.png" width="500" height="132"></p>
+            <p>Linux kernel konfigürasyon penceresinde <span style="font-weight: bold">Real-time sub-system</span> -&gt; <span style="font-weight: bold">Timing</span> başlığı altındaki <span style="font-weight: bold">Enable periodic timing</span> seçeneği işaretlenir. Daha sonra <span style="font-weight: bold">Real-time sub-system</span> -&gt; <span style="font-weight: bold">Interfaces</span> başlığı altındaki <span style="font-weight: bold">Native API</span> ve <span style="font-weight: bold">POSIX API</span> altındaki seçeneklerin hepsini işaretlenir.</p>
+            <div class="warning">Eğer <span style="font-weight: bold">Real-time sub-system</span> sekmesinde <span style="font-weight: bold">&quot;WARNING! You enabled APM, CPU Frequency scaling or ACPI 'processor' option. These options are known to cause troubles with Xenomai.&quot;</span> uyarısı alınırsa <span style="font-weight: bold">Power Management and ACPI options</span> seçeneğindeki ve alt sekmelerindeki <span style="font-weight: bold">CPU Frequency scaling</span> ve <span style="font-weight: bold">Memory power saving</span> sekmelerindeki bütün işaretleri kaldırın.</div>
+            <p>Konfigürasyon dosyası ayarlandıktan sonra sırası ile aşağıdaki komutlar yazılarak kernel derlenir ve sisteme yeni kernel kurulur.            </p>
+            <div class="code"> $ sudo make<br>
+              $ sudo make modules_install<br>
+              $ sudo make install </div>
+            <p>Kernel kurulumu bittikten sonra Xenomai sisteme kurulur.</p>
+            <div class="code"> $ cd /usr/src/xenomai<br>
+              $ sudo ./configure<br>
+              $ sudo make<br>
+              $ sudo make install </div>
+            <p>Bilgisayar yeniden başlatıldığında gnub ekranında _xeno uzantısı olan  Linux Kernel'i seçilir. Xenomai yamasının doğruluğunu test etmek için latency örneğini çalıştırılır. </p>
+            <div class="code"> $ cd /usr/xenomai/bin<br>
+              $ sudo ./latency            </div>
+            <div class="header1"><a name="rtnet">RTNET Kurulumu</a></div>
+            <p>RTNET kurulumu i&ccedil;in, RTNET kaynak koduna ihtiya&ccedil;tır vardır. ( www.rtnet.org sitesinden indirilebilir) RTNET kurulumu, kurulumun parametrelerin se&ccedil;ilmesi, derleme ve dosyaların sisteme kopyalanmasından oluşur.</p>
+            <p>İlk işlem, RTNET kaynak dosyalarını derlemeye hazır hale getirmektir. Daha sonra make config işlemi ile kurulum parametreleri belirlencektir.</p>
+            <div class="warning">RTNET sadece belirli ethernet kartlarında desteklemektedir. www.rtnet.org adresinden desteklenen kart modellerini öğrenebilirsiniz.</div>
+            <p>RTNET sistemi inceler ve kendini yapılandırır. Aşağıdaki komutlardan sonra RTNET Konfigurasyon penceresi a&ccedil;ılır.</p>
+            <div class="code"> $ tar -xf &lt;RTNET File Path&gt;<br>
+              $ cd &lt;RTNET Folder&gt;<br>
+$  ./configure<br>
+            $ make xconfig</div>
+            <p><img src="images/rtnetConfig.png" width="708" height="457"></p>
+            <p>Açılan konfigürasyon penceresinde <span style="font-weight: bold">Variant</span> sekmesinde &quot;<span style="font-weight: bold">Xenomai 2.1 or better</span>&quot; işaretlenir, <span style="font-weight: bold">Real-Time Extended Linux Kernel</span> kısmına &quot;<span style="font-weight: bold">/usr/src/linux</span>&quot;,<span style="font-weight: bold"> Installation Path of RTnet</span>kısmına &quot;<span style="font-weight: bold">usr/local/rtnet</span>&quot; yazılır.</p>
+            <p>Bu değerler girildikten sonra, kullanılan ethernet kartına uygun s&uuml;r&uuml;c&uuml;lerin aktif olması i&ccedil;in <span style="font-weight: bold">Drivers</span> sekmesi altında gerekli s&uuml;r&uuml;c&uuml;ler se&ccedil;ilmedir. Se&ccedil;im yapıldıktan sonra konfigürasyon penceresi kayıt edilir ve kapatılır.</p>
+            <p>Konfigürasyon dosyası ayarlandıktan sonra aşağıdaki komutlar ile RTNET derlenir. Kurulum işlemine ek olarak bir header dosyası, RTNET kurulum klas&ouml;r&uuml;ne kopyalanmalıdır. Bu işlem aşağıda anlatılmıştır.</p>
+            <div class="code">$ cd &lt;RTNET Folder&gt;<br>
+$ make<br>
+$ sudo make install<br>
+$ sudo cp ./stack/include/rtnet_config.h /usr/local/rtnet/include</div>
+            <p>Bu işlemler tamamlandığında RTNET kurulumu tamamlanmış olur.</p>
+            <div class="header1"><a name="fltkopenvrml">FTLK2 ve OpenVRML Kurulumu</a></div>
+            <p>Bu iki paketin Zenom ile kullanılması i&ccedil;in kurulumunda herhangi bir &ouml;zelleştirme yapmak gerekmemektedir. Paketlerin kendi kurulum rutinleri ile kurulum yapabilirsiniz.</p>
+            <p>&nbsp;</p>
+            <div class="header1"><a name="zenom">Zenom Kurulumu</a></div>
+            <p>Gerekli paketler kurulduktan sonra Zenom kurulumu başlamaya hazırdır. Zenom kurulumu, sistemin incelenmesi, derleme ve dosyaların kopyalanmasından oluşur.</p>
+            <p>Zenom Kurulum Komutları </p>
+            <div class="code">
+              <p>$ cd &lt;Zenom File Path&gt;<br>
+                $  ./configure<br>
+                $  make<br>
+                $ sudo make install</p>
+            </div>
+            <p>Bu işlemler yapıldıktan sonra, Zenom &quot;usr/local/zenom&quot; klasorune kurulmuş ve kullanıma hazır hale gelmiştir.</p>
+            <div class="warning">Zenom sistemi incelerken, gerekli paketleri bulamadığında hata verecektir. &quot;./configure&quot; komutunda hata alırsanız, gerekli paketlerin doğru olarak kurulduğunu kontrol edin.</div>
+          </div>
+        </div>
+        <!-- InstanceEndEditable -->	  </td>
+  </tr>
+	<tr>
+		<td colspan="2">
+			<img src="images/bitirmeHtml_06.gif" width="1024" height="16" alt=""></td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<img src="images/bitirmeHtml_09.png" width="1024" height="16" alt=""></td>
+	</tr>
+</table>
+</body>
+<!-- InstanceEnd --></html>

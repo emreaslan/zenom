@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PlotWindow</class>
+ <widget class="QMainWindow" name="PlotWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Plot</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="Plot" name="plot"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>600</width>
+     <height>23</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionAutoscale"/>
+   <addaction name="separator"/>
+   <addaction name="actionSet_Time_Interval"/>
+   <addaction name="separator"/>
+   <addaction name="actionAttach_Log_Variable"/>
+  </widget>
+  <action name="actionAttach_Log_Variable">
+   <property name="icon">
+    <iconset resource="../zenom.qrc">
+     <normaloff>:/zenom/resources/link.png</normaloff>:/zenom/resources/link.png</iconset>
+   </property>
+   <property name="text">
+    <string>Attach Log Variable</string>
+   </property>
+   <property name="toolTip">
+    <string>Attach Log Variable to Plot</string>
+   </property>
+  </action>
+  <action name="actionSet_Time_Interval">
+   <property name="icon">
+    <iconset resource="../zenom.qrc">
+     <normaloff>:/plot/resources/timeinterval.png</normaloff>:/plot/resources/timeinterval.png</iconset>
+   </property>
+   <property name="text">
+    <string>Set Time Interval</string>
+   </property>
+   <property name="toolTip">
+    <string>Sets Plot Time Interval</string>
+   </property>
+  </action>
+  <action name="actionAutoscale">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../zenom.qrc">
+     <normaloff>:/plot/resources/autoscale.png</normaloff>:/plot/resources/autoscale.png</iconset>
+   </property>
+   <property name="text">
+    <string>Autoscale</string>
+   </property>
+   <property name="toolTip">
+    <string>Autoscale</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Plot</class>
+   <extends>QFrame</extends>
+   <header>plot/plot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../zenom.qrc"/>
+ </resources>
+ <connections/>
+</ui>
