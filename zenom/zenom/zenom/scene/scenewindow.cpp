@@ -81,9 +81,12 @@ void SceneWindow::closeEvent(QCloseEvent *pEvent)
 // File Menu
 void SceneWindow::on_actionOpen_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Load OSG File"),
-        "",
-        tr("OSG Files (*.*)"));
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Load OSG File"),
+                                                    "",
+                                                    tr("OSG Files (*.*)"),
+                                                    NULL,
+                                                    QFileDialog::DontUseNativeDialog);
 
     QDir dir;
     readNodeFile( dir.relativeFilePath( fileName ) );

@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Zenom</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="zenom.qrc">
+    <normaloff>:/zenom/resources/logo.png</normaloff>:/zenom/resources/logo.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_3">
     <item row="1" column="0" colspan="3">
@@ -145,8 +149,17 @@
     <addaction name="actionScene"/>
     <addaction name="separator"/>
    </widget>
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="action_Contents"/>
+    <addaction name="separator"/>
+    <addaction name="action_About_zenom"/>
+   </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_View"/>
+   <addaction name="menu_Help"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen_Project">
@@ -175,7 +188,7 @@
   </action>
   <action name="actionWatch">
    <property name="text">
-    <string>Watch...</string>
+    <string>&amp;Watch...</string>
    </property>
   </action>
   <action name="actionReload">
@@ -185,12 +198,25 @@
   </action>
   <action name="actionScene">
    <property name="text">
-    <string>Scene</string>
+    <string>&amp;Scene</string>
    </property>
   </action>
   <action name="actionPlot">
    <property name="text">
-    <string>Plot</string>
+    <string>&amp;Plot</string>
+   </property>
+  </action>
+  <action name="action_Contents">
+   <property name="text">
+    <string>&amp;Contents</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+  <action name="action_About_zenom">
+   <property name="text">
+    <string>&amp;About...</string>
    </property>
   </action>
  </widget>
@@ -202,6 +228,8 @@
    <header>widget/output.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="zenom.qrc"/>
+ </resources>
  <connections/>
 </ui>

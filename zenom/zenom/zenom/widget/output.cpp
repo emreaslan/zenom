@@ -23,6 +23,16 @@ void Output::appendErrorMessage(const QString &pText)
     appendHtml( QString("<font color=\"#b20808\">%1 %2</font>").arg( QTime::currentTime().toString("hh:mm:ss") ).arg(pText) );
 }
 
+void Output::appendUserMessage(const QString &pText)
+{
+    appendHtml( QString("<font color=\"#0000aa\">%1 %2</font>").arg( QTime::currentTime().toString("hh:mm:ss") ).arg(pText) );
+}
+
+void Output::appendUserErrorMessage(const QString &pText)
+{
+    appendHtml( QString("<font color=\"#b20808\">%1 %2</font>").arg( QTime::currentTime().toString("hh:mm:ss") ).arg(pText) );
+}
+
 void Output::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu *menu = new QMenu();

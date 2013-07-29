@@ -1,8 +1,12 @@
 #include "plot.h"
 
+#include <QFile>
+#include <QFileInfo>
+#include <QImageWriter>
 #include <qwt_legend.h>
 #include <qwt_plot_grid.h>
 #include <qwt_plot_marker.h>
+#include <qwt_plot_renderer.h>
 #include "plotmagnifier.h"
 
 
@@ -176,4 +180,57 @@ void Plot::setAutoscaleAndInterval( bool pOn, double pMin, double pMax )
         setAxisAutoScale( QwtPlot::yLeft );
         setAxisScale(QwtPlot::xBottom, d_interval.minValue(), d_interval.maxValue());
     }
+}
+
+void Plot::importCurvesFromText( const QString &pFileName )
+{
+    QFile file( pFileName );
+    if (!file.open(QIODevice::ReadOnly))
+        return;
+
+    QDataStream in(&file);
+    QString baseFileName = QFileInfo(pFileName).baseName();
+
+    QString name;
+    QVector<QPointF> data;
+    while ( !in.atEnd() )
+    {
+        in >> name >> data;
+
+        PlotCurve* newCurve = new PlotCurve( QString("%1_%2").arg(baseFileName).arg(name) );
+        newCurve->setPen( QPen( mColorGenerator.generateColor() ));
+        newCurve->setSamples( data );
+        newCurve->attach( this );
+    }
+}
+
+void Plot::exportCurvesAsText( const QString& pFileName )
+{
+    QFile file( pFileName );
+    if (!file.open(QIODevice::WriteOnly))
+        return;
+
+    QDataStream out(&file);
+
+    // Writes the points to stream out
+    for( int i = 0; i < mCurveVec.size(); ++i )
+    {
+        QVector<QPointF> data;
+        for(size_t j = 0; j < mCurveVec[i]->data()->size(); ++j)
+        {
+            data.push_back( mCurveVec[i]->data()->sample(j) );
+        }
+        out << mCurveVec[i]->title().text() << data;
+    }
+}
+
+void Plot::exportCurvesAsImage( const QString& pFileName )
+{
+    // Legend item'da yer alan X  butonu resime katılmaz.
+    QRect rectangle( 0, 0, size().width() - 20 , size().height() );
+
+    QPixmap pixmap(rectangle.size());
+    render(&pixmap, QPoint(), QRegion(rectangle));
+
+    pixmap.save( pFileName );
 }

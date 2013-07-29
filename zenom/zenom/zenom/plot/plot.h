@@ -35,6 +35,12 @@ public:
 
     void setAutoscale( bool pOn );
 
+    void importCurvesFromText( const QString& pFileName );
+
+    void exportCurvesAsText( const QString& pFileName );
+
+    void exportCurvesAsImage( const QString& pFileName );
+
 signals:
     void autoscaleOff();
 

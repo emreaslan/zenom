@@ -37,10 +37,14 @@ Zenom::Zenom(QWidget *parent) :
     mMessageListenerTask = new MessageListenerTask(this);
 
     connect( &mControlBaseProcess, SIGNAL( error(QProcess::ProcessError) ), SLOT( controlBaseProcessError(QProcess::ProcessError) ));
+    connect( &mControlBaseProcess, SIGNAL( readyReadStandardOutput() ), SLOT( controlBaseReadyReadStandardOutput() ));
+    connect( &mControlBaseProcess, SIGNAL( readyReadStandardError() ), SLOT( controlBaseReadyReadStandardError() ));
 
     setSimulationState( TERMINATED );
 
     connect(&mTimer, SIGNAL(timeout()), SLOT(doloop()));
+
+    mAboutDialog = new AboutDialog(this);
 }
 
 Zenom::~Zenom()
@@ -117,6 +121,16 @@ void Zenom::controlBaseProcessError( QProcess::ProcessError pError )
     }
 
     setSimulationState( CRASHED );
+}
+
+void Zenom::controlBaseReadyReadStandardOutput()
+{
+    ui->output->appendUserMessage( mControlBaseProcess.readAllStandardOutput() );
+}
+
+void Zenom::controlBaseReadyReadStandardError()
+{
+    ui->output->appendUserErrorMessage( mControlBaseProcess.readAllStandardError() );
 }
 
 void Zenom::doloop()
@@ -439,4 +453,9 @@ void Zenom::openRecentFile()
     QAction *action = qobject_cast<QAction *>(sender());
     if (action)
         openProject( action->data().toString() );
+}
+
+void Zenom::on_action_About_zenom_triggered()
+{
+    mAboutDialog->show();
 }

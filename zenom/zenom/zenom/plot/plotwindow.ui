@@ -20,19 +20,9 @@
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>600</width>
-     <height>23</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>Plot Tool Bar</string>
    </property>
    <property name="movable">
     <bool>false</bool>
@@ -49,13 +39,50 @@
    <addaction name="separator"/>
    <addaction name="actionAttach_Log_Variable"/>
   </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>600</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionI_mport"/>
+    <addaction name="action_Export"/>
+    <addaction name="separator"/>
+    <addaction name="action_Close"/>
+   </widget>
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="action_Contents"/>
+   </widget>
+   <widget class="QMenu" name="menu_Plot">
+    <property name="title">
+     <string>&amp;Plot</string>
+    </property>
+    <addaction name="actionAutoscale"/>
+    <addaction name="actionSet_Time_Interval"/>
+    <addaction name="separator"/>
+    <addaction name="actionAttach_Log_Variable"/>
+   </widget>
+   <addaction name="menu_File"/>
+   <addaction name="menu_Plot"/>
+   <addaction name="menu_Help"/>
+  </widget>
   <action name="actionAttach_Log_Variable">
    <property name="icon">
     <iconset resource="../zenom.qrc">
      <normaloff>:/zenom/resources/link.png</normaloff>:/zenom/resources/link.png</iconset>
    </property>
    <property name="text">
-    <string>Attach Log Variable</string>
+    <string>Attach &amp;Log Variable...</string>
    </property>
    <property name="toolTip">
     <string>Attach Log Variable to Plot</string>
@@ -67,7 +94,7 @@
      <normaloff>:/plot/resources/timeinterval.png</normaloff>:/plot/resources/timeinterval.png</iconset>
    </property>
    <property name="text">
-    <string>Set Time Interval</string>
+    <string>Set &amp;Time Interval...</string>
    </property>
    <property name="toolTip">
     <string>Sets Plot Time Interval</string>
@@ -85,10 +112,39 @@
      <normaloff>:/plot/resources/autoscale.png</normaloff>:/plot/resources/autoscale.png</iconset>
    </property>
    <property name="text">
-    <string>Autoscale</string>
+    <string>&amp;Autoscale</string>
    </property>
    <property name="toolTip">
     <string>Autoscale</string>
+   </property>
+  </action>
+  <action name="action_Contents">
+   <property name="text">
+    <string>&amp;Contents</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+  <action name="actionI_mport">
+   <property name="text">
+    <string>I&amp;mport...</string>
+   </property>
+   <property name="toolTip">
+    <string>Import</string>
+   </property>
+  </action>
+  <action name="action_Export">
+   <property name="text">
+    <string>&amp;Export...</string>
+   </property>
+   <property name="toolTip">
+    <string>Export</string>
+   </property>
+  </action>
+  <action name="action_Close">
+   <property name="text">
+    <string>&amp;Close</string>
    </property>
   </action>
  </widget>

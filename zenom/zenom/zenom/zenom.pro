@@ -59,7 +59,8 @@ SOURCES += main.cpp\
     plot/legenditem.cpp \
     plot/plot.cpp \
     plot/plotmagnifier.cpp \
-    widget/output.cpp
+    widget/output.cpp \
+    aboutdialog.cpp
 
 HEADERS  += zenom.h \
     messagelistenertask.h \
@@ -103,7 +104,8 @@ HEADERS  += zenom.h \
     plot/legenditem.h \
     plot/plot.h \
     plot/plotmagnifier.h \
-    widget/output.h
+    widget/output.h \
+    aboutdialog.h
 
 FORMS    += zenom.ui \
     controlvariableswidget.ui \
@@ -120,7 +122,8 @@ FORMS    += zenom.ui \
     scene/scenewindow.ui \
     plot/plotwindow.ui \
     plot/attachlogvariabledialog.ui \
-    plot/legenditem.ui
+    plot/legenditem.ui \
+    aboutdialog.ui
 
 RESOURCES += \
     zenom.qrc

@@ -41,20 +41,27 @@
     <addaction name="actionCreate_Viewpoint"/>
     <addaction name="actionRemove_Current_Viewpoint"/>
    </widget>
-   <widget class="QMenu" name="menu_Simulation">
+   <widget class="QMenu" name="menu_Help">
     <property name="title">
-     <string>&amp;Simulation</string>
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="action_Contents"/>
+   </widget>
+   <widget class="QMenu" name="menu_Scene">
+    <property name="title">
+     <string>&amp;Scene</string>
     </property>
     <addaction name="actionBind_Parameters"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Viewpoints"/>
-   <addaction name="menu_Simulation"/>
+   <addaction name="menu_Scene"/>
+   <addaction name="menu_Help"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>Scene Tool Bar</string>
    </property>
    <property name="movable">
     <bool>false</bool>
@@ -82,7 +89,7 @@
   </action>
   <action name="actionClose">
    <property name="text">
-    <string>Close</string>
+    <string>&amp;Close</string>
    </property>
   </action>
   <action name="actionPrevious_Viewpoint">
@@ -91,7 +98,7 @@
      <normaloff>:/zenom/resources/previous.png</normaloff>:/zenom/resources/previous.png</iconset>
    </property>
    <property name="text">
-    <string>Previous Viewpoint</string>
+    <string>&amp;Previous Viewpoint</string>
    </property>
   </action>
   <action name="actionNext_Viewpoint">
@@ -100,7 +107,7 @@
      <normaloff>:/zenom/resources/next.png</normaloff>:/zenom/resources/next.png</iconset>
    </property>
    <property name="text">
-    <string>Next Viewpoint</string>
+    <string>&amp;Next Viewpoint</string>
    </property>
   </action>
   <action name="actionCreate_Viewpoint">
@@ -109,12 +116,12 @@
      <normaloff>:/zenom/resources/viewpoint.png</normaloff>:/zenom/resources/viewpoint.png</iconset>
    </property>
    <property name="text">
-    <string>Create Viewpoint...</string>
+    <string>&amp;Create Viewpoint...</string>
    </property>
   </action>
   <action name="actionRemove_Current_Viewpoint">
    <property name="text">
-    <string>Remove Current Viewpoint</string>
+    <string>&amp;Remove Current Viewpoint</string>
    </property>
   </action>
   <action name="actionBind_Parameters">
@@ -123,7 +130,7 @@
      <normaloff>:/zenom/resources/link.png</normaloff>:/zenom/resources/link.png</iconset>
    </property>
    <property name="text">
-    <string>Bind Parameters...</string>
+    <string>&amp;Bind Parameters...</string>
    </property>
   </action>
   <action name="actionReturn_to_Viewpoint">
@@ -133,6 +140,14 @@
    </property>
    <property name="text">
     <string>Return to Viewpoint</string>
+   </property>
+  </action>
+  <action name="action_Contents">
+   <property name="text">
+    <string>&amp;Contents</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
    </property>
   </action>
  </widget>
