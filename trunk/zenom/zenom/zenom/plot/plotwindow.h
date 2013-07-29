@@ -31,6 +31,12 @@ protected:
 
 private slots:
 
+    void on_actionI_mport_triggered();
+
+    void on_action_Export_triggered();
+
+    void on_action_Close_triggered();
+
     void on_actionAttach_Log_Variable_triggered();
     
     void on_actionSet_Time_Interval_triggered();

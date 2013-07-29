@@ -17,6 +17,10 @@ public slots:
 
     void appendErrorMessage( const QString& pText );
 
+    void appendUserMessage( const QString& pText );
+
+    void appendUserErrorMessage( const QString& pText );
+
 protected:
     void contextMenuEvent(QContextMenuEvent *event);
 };

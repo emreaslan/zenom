@@ -19,6 +19,7 @@ class MessageListenerTask;
 #include "gauge/gaugemanager.h"
 #include "plot/plotmanager.h"
 #include "scene/scenemanager.h"
+#include "aboutdialog.h"
 
 
 namespace Ui {
@@ -55,9 +56,33 @@ private slots:
     void on_frequency_editingFinished();
     void on_duration_editingFinished();
 
+    /**
+     * Arayuzleri gunceller.
+     * Plot, scene ve gauge arayüzlerindeki log-variable gösterimleri
+     * bu fonksiyon cagrilarak guncellenir.
+     */
     void doloop();
 
+    /**
+     * Control-Base process'te bir hata olustugunda cagrilir.
+     */
     void controlBaseProcessError( QProcess::ProcessError pError );
+
+    /**
+     * Kullanici tarafindan girilen standart mesajlarini alir.
+     * Control-Base tarafindan cout kullanilarak
+     * yazilan mesajlar ele alinir.
+     */
+    void controlBaseReadyReadStandardOutput();
+
+    /**
+     * Kullanici tarafindan girilen hata mesajlarini alir.
+     * Control-Base tarafindan cerr kullanilarak
+     * yazilan mesajlar ele alinir.
+     */
+    void controlBaseReadyReadStandardError();
+
+    void on_action_About_zenom_triggered();
 
 private:
     Ui::Zenom *ui;
@@ -98,6 +123,9 @@ private:
     enum { MaxRecentFiles = 5 };
     QAction *recentFileActs[MaxRecentFiles];
     QAction *separatorAct;
+
+    // About Dialog
+    AboutDialog* mAboutDialog;
 };
 
 #endif // ZENOM_H
