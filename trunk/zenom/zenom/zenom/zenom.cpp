@@ -10,6 +10,8 @@
 #include <QFileInfo>
 #include <QTime>
 
+#include "utility/matlabstream.h"
+
 Zenom::Zenom(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Zenom)
@@ -154,6 +156,7 @@ void Zenom::setSimulationState(State pState)
     // File Menu
     ui->actionSave_Project->setEnabled( pState != TERMINATED );
     ui->actionReload->setEnabled( pState != TERMINATED );
+    ui->actionExport_as_Matlab->setEnabled( pState == STOPPED );
 
     // View Menu
     ui->actionWatch->setEnabled( pState != TERMINATED );
@@ -458,4 +461,31 @@ void Zenom::openRecentFile()
 void Zenom::on_action_About_zenom_triggered()
 {
     mAboutDialog->show();
+}
+
+void Zenom::on_actionExport_as_Matlab_triggered()
+{
+    QString fileName = QFileDialog::getSaveFileName( this,
+                                             tr("Export File Name"),
+                                             QString(),
+                                             "Matlab (*.m)",
+                                             NULL,
+                                             QFileDialog::DontUseNativeDialog);
+
+    if ( !fileName.isEmpty() )
+    {
+        if ( !fileName.endsWith(".m") )
+            fileName += ".m";
+
+        QFile file( fileName );
+        if (!file.open(QIODevice::WriteOnly))
+            return;
+
+        // Log variable listesi dosyaya yazilir.
+        MatlabStream out(&file);
+        for ( unsigned int i = 0; i < DataRepository::instance()->logVariables().size(); ++i )
+        {
+            out.writeLogVariable( DataRepository::instance()->logVariables().at(i) );
+        }
+    }
 }

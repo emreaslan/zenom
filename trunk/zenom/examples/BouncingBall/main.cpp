@@ -69,6 +69,9 @@ int BouncingBall::initialize()
     g = -9.81;   // m/s^2
     cor = -0.8;  // coefficient of restitution
 
+    position[0] = 0;
+    position[1] = 0;
+
     return 0;
 }
 
