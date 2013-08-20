@@ -62,6 +62,7 @@ void PlotWindow::on_action_Export_triggered()
 {
     QStringList filter;
     filter += "Zenom Plot Files (*.zplot)";
+    filter += "Matlab Files (*.m)";
 
     const QList<QByteArray> imageFormats =
         QImageWriter::supportedImageFormats();
@@ -86,13 +87,19 @@ void PlotWindow::on_action_Export_triggered()
 
     if ( !fileName.isEmpty() )
     {
-        // Binary File
-        if( selectedFilter == "Zenom Plot Files (*.zplot)" )
+        if( selectedFilter == "Zenom Plot Files (*.zplot)" )    // Binary File
         {
             if ( !fileName.endsWith(".zplot") )
                 fileName += ".zplot";
 
-            ui->plot->exportCurvesAsText( fileName );
+            ui->plot->exportCurvesAsBinary( fileName );
+        }
+        else if( selectedFilter == "Matlab Files (*.m)" )   // Matlab File
+        {
+            if ( !fileName.endsWith(".m") )
+                fileName += ".m";
+
+            ui->plot->exportCurvesAsMatlab( fileName );
         }
         else    // Image File
         {

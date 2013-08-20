@@ -60,7 +60,8 @@ SOURCES += main.cpp\
     plot/plot.cpp \
     plot/plotmagnifier.cpp \
     widget/output.cpp \
-    aboutdialog.cpp
+    aboutdialog.cpp \
+    utility/matlabstream.cpp
 
 HEADERS  += zenom.h \
     messagelistenertask.h \
@@ -105,7 +106,8 @@ HEADERS  += zenom.h \
     plot/plot.h \
     plot/plotmagnifier.h \
     widget/output.h \
-    aboutdialog.h
+    aboutdialog.h \
+    utility/matlabstream.h
 
 FORMS    += zenom.ui \
     controlvariableswidget.ui \
