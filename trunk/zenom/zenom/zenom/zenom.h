@@ -148,6 +148,8 @@ private slots:
      */
     void on_actionExport_as_Matlab_triggered();
 
+    void on_actionClear_Recent_Projects_Menu_triggered();
+
 private:
     Ui::Zenom *ui;
 
@@ -274,7 +276,6 @@ private:
     void insertRecentFileList( const QString& pProjectPath );
     enum { MaxRecentFiles = 5 };
     QAction *recentFileActs[MaxRecentFiles];
-    QAction *separatorAct;
 
     /**
      * About penceresidir.
