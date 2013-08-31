@@ -43,7 +43,8 @@ void PlotWindow::closeEvent(QCloseEvent *pEvent)
     QWidget::closeEvent( pEvent );
 }
 
-void PlotWindow::on_actionI_mport_triggered()
+
+void PlotWindow::on_action_Open_triggered()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Import File Name"),
@@ -58,10 +59,30 @@ void PlotWindow::on_actionI_mport_triggered()
     }
 }
 
-void PlotWindow::on_action_Export_triggered()
+void PlotWindow::on_action_Save_triggered()
 {
     QStringList filter;
     filter += "Zenom Plot Files (*.zplot)";
+
+    QString fileName = QFileDialog::getSaveFileName( this,
+                                             tr("Export File Name"),
+                                             QString(),
+                                             filter.join( ";;" ),
+                                             NULL,
+                                             QFileDialog::DontUseNativeDialog);
+
+    if ( !fileName.isEmpty() )
+    {
+        if ( !fileName.endsWith(".zplot") )
+            fileName += ".zplot";
+
+        ui->plot->exportCurvesAsBinary( fileName );
+    }
+}
+
+void PlotWindow::on_action_Export_triggered()
+{
+    QStringList filter;    
     filter += "Matlab Files (*.m)";
 
     const QList<QByteArray> imageFormats =
@@ -76,6 +97,8 @@ void PlotWindow::on_action_Export_triggered()
 
     if( imageFormats.contains("jpg") )
         filter += "JPG (*.jpg)";
+
+    filter += "Zenom Plot Files (*.zplot)";
 
     QString selectedFilter;
     QString fileName = QFileDialog::getSaveFileName( this,
@@ -158,4 +181,3 @@ void PlotWindow::autoscaleOffSlot()
 {
     ui->actionAutoscale->setChecked( false );
 }
-

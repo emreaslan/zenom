@@ -45,14 +45,16 @@
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>29</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="actionI_mport"/>
+    <addaction name="action_Open"/>
+    <addaction name="action_Save"/>
+    <addaction name="separator"/>
     <addaction name="action_Export"/>
     <addaction name="separator"/>
     <addaction name="action_Close"/>
@@ -145,6 +147,22 @@
   <action name="action_Close">
    <property name="text">
     <string>&amp;Close</string>
+   </property>
+  </action>
+  <action name="action_Open">
+   <property name="text">
+    <string>&amp;Open...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open Zenom Plot File</string>
+   </property>
+  </action>
+  <action name="action_Save">
+   <property name="text">
+    <string>&amp;Save...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save as Zenom Plot File</string>
    </property>
   </action>
  </widget>

@@ -406,47 +406,52 @@ void Zenom::createRecentFileActions()
     for (int i = 0; i < MaxRecentFiles; ++i)
     {
         recentFileActs[i] = new QAction( QString::number(i), this);
-        ui->menu_File->insertAction( ui->actionExit, recentFileActs[i] );
+        ui->menuRecent_P_rojects->insertAction( ui->actionClear_Recent_Projects_Menu, recentFileActs[i] );
         recentFileActs[i]->setVisible(false);
         connect(recentFileActs[i], SIGNAL(triggered()),
                 this, SLOT(openRecentFile()));
     }
 
-    separatorAct = ui->menu_File->insertSeparator( ui->actionExit );
+    ui->menuRecent_P_rojects->insertSeparator( ui->actionClear_Recent_Projects_Menu );
 }
 
 void Zenom::updateRecentFileActions()
 {
     QSettings settings;
-    QStringList files = settings.value("recentFileList").toStringList();
+    QStringList files = settings.value("recentProjectList").toStringList();
 
     int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
 
     for (int i = 0; i < numRecentFiles; ++i)
     {
-        QString filename = QFileInfo( files[i] ).fileName();
-        QString text = tr("&%1 %2").arg(i + 1).arg( filename );
-        recentFileActs[i]->setText(text);
-        recentFileActs[i]->setData(files[i]);
+        recentFileActs[i]->setText(files[i]);
         recentFileActs[i]->setVisible(true);
     }
 
     for (int j = numRecentFiles; j < MaxRecentFiles; ++j)
         recentFileActs[j]->setVisible(false);
 
-    separatorAct->setVisible(numRecentFiles > 0);
+    ui->menuRecent_P_rojects->setEnabled( numRecentFiles > 0 );
 }
 
 void Zenom::insertRecentFileList(const QString &pProjectPath)
 {
     QSettings settings;
-    QStringList files = settings.value("recentFileList").toStringList();
+    QStringList files = settings.value("recentProjectList").toStringList();
     files.removeAll( pProjectPath );
     files.prepend( pProjectPath );
     while (files.size() > MaxRecentFiles)
         files.removeLast();
 
-    settings.setValue("recentFileList", files);
+    settings.setValue("recentProjectList", files);
+
+    updateRecentFileActions();
+}
+
+void Zenom::on_actionClear_Recent_Projects_Menu_triggered()
+{
+    QSettings settings;
+    settings.setValue("recentProjectList", QStringList());
 
     updateRecentFileActions();
 }
@@ -455,7 +460,7 @@ void Zenom::openRecentFile()
 {
     QAction *action = qobject_cast<QAction *>(sender());
     if (action)
-        openProject( action->data().toString() );
+        openProject( action->text() );
 }
 
 void Zenom::on_action_About_zenom_triggered()

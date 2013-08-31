@@ -30,8 +30,9 @@ protected:
     virtual void closeEvent(QCloseEvent *pEvent);
 
 private slots:
+    void on_action_Open_triggered();
 
-    void on_actionI_mport_triggered();
+    void on_action_Save_triggered();
 
     void on_action_Export_triggered();
 
