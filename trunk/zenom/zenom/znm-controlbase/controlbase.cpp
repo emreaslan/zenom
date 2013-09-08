@@ -83,6 +83,14 @@ void ControlBase::initializeControlBase()
     mDataRepository->bindMessageQueues();
     mDataRepository->sendStateRequest( R_INIT ); // Send message to GUI to read variables
     mDataRepository->bindMainControlHeap();
+
+    // Control Variable degerleri heap'e kopyalanir.
+    for (size_t i = 0; i < mDataRepository->controlVariables().size(); ++i)
+    {
+        mDataRepository->controlVariables()[i]->copyToHeap();
+    }
+
+    mDataRepository->sendStateRequest( R_INIT ); // Send message to GUI to read values
     mState = STOPPED;
 }
 

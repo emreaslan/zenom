@@ -221,16 +221,12 @@ void Zenom::openProject(const QString& pProjectPath)
         mControlBaseProcess.start( controlBaseProgram, QStringList() << projectName );
         if ( mControlBaseProcess.waitForStarted() )
         {
-            // TODO wait condition icin timeout
-            // wait olmadan mesaj gelirse
-            mMutex.lock();
-            if ( !mWaitCondition.wait(&mMutex, 10000) )
+            // Controlbase'den mesaj gelene kadar beklenir.
+            if ( !mMessageListenerTask->waitForInitMessage() )
             {
                 ui->output->appendErrorMessage( QString("Error: Failed connecting program: The program does not implemented specified format.") );
-                mMutex.unlock();
                 return;
             }
-            mMutex.unlock();
 
             if( !mDataRepository->readVariablesFromFile() )
             {
@@ -239,6 +235,14 @@ void Zenom::openProject(const QString& pProjectPath)
             }
 
             mDataRepository->createMainControlHeap();
+
+            // Controlbase main control heap'e baglanmasi ve
+            // control variable degerlerini main control heap'e yazmasi beklenir.
+            if ( !mMessageListenerTask->waitForInitMessage() )
+            {
+                ui->output->appendErrorMessage( QString("Error: Failed connecting program: The program does not implemented specified format.") );
+                return;
+            }
 
             mControlVariablesWidget->setControlVariableList( mDataRepository->controlVariables() );
             mLogVariablesWidget->setLogVariableList( mDataRepository->logVariables() );

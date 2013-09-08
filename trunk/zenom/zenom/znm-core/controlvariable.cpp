@@ -21,8 +21,6 @@ ControlVariable::~ControlVariable()
 void ControlVariable::setMainHeapAddr(double *pHeapAddr)
 {
     mMainHeapAddr = pHeapAddr;
-    for ( unsigned int i = 0; i < size(); ++i )
-        mMainHeapAddr[i] = 0;
 }
 
 double ControlVariable::heapElement(int pIndex)
