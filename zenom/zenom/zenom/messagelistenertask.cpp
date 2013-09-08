@@ -1,6 +1,7 @@
 #include "messagelistenertask.h"
 #include <MessageQueueXn.h>
 #include <datarepository.h>
+#include <unistd.h>
 
 MessageListenerTask::MessageListenerTask( Zenom* pZenom )
 {
@@ -18,9 +19,8 @@ void MessageListenerTask::run()
             {
 
                 case R_INIT:
-                    mZenom->mMutex.lock();
-                    mZenom->mWaitCondition.wakeAll();
-                    mZenom->mMutex.unlock();
+                    // All functions in QQueue are reentrant.
+                    mMessageQueue.enqueue( R_INIT );
                     break;
 
                 case R_STOP:
@@ -33,4 +33,26 @@ void MessageListenerTask::run()
             }
         }
     }
+}
+
+bool MessageListenerTask::waitForInitMessage()
+{
+    // All functions in QQueue Class are reentrant.
+    int attempt = 0;
+    while ( mMessageQueue.isEmpty() && attempt < 20 )
+    {
+        usleep( 50000 );
+        ++attempt;
+    }
+
+    if( attempt < 20 )
+    {
+        mMessageQueue.dequeue();
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
 }

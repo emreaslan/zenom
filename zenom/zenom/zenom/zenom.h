@@ -224,8 +224,6 @@ private:
      * Control programindan gelen mesajlari dinleyen siniftir.
      */
     MessageListenerTask* mMessageListenerTask;
-    QWaitCondition mWaitCondition;
-    QMutex mMutex;
 
     /**
      * Benzetim durumunu getirir.

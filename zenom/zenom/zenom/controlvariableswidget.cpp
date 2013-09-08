@@ -195,8 +195,9 @@ void ControlVariablesWidget::loadSettings(QSettings &pSettings)
 		for ( unsigned int row = 0; row < controlVariable->row(); ++row )
 		{
 			for ( unsigned int col = 0; col < controlVariable->col(); ++col )
-			{
-				double val = pSettings.value( QString("value[%1][%2]").arg(row).arg(col), 0 ).toDouble();
+            {
+                double defaultValue = controlVariable->heapElement(row, col);
+                double val = pSettings.value( QString("value[%1][%2]").arg(row).arg(col), defaultValue ).toDouble();
 				controlVariable->setHeapElement( row, col, val );
 				tableWidget->item( row, col )->setText( QString::number(val) );
 			}
