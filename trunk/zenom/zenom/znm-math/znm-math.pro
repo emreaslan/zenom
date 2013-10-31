@@ -37,7 +37,8 @@ HEADERS += \
     Differentiator4O.hpp \
     Differentiator.hpp \
     ColumnVector.hpp \
-    Adams3Integrator.hpp
+    Adams3Integrator.hpp \
+    ButterworthFilter.hpp
 
 # build directory
 DESTDIR = ../../lib

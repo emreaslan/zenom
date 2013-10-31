@@ -2,4 +2,7 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     Morph \
-    BouncingBall
+    BouncingBall \
+    HelloWorld \
+    Sine \
+    SineFilter
