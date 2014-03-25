@@ -15,5 +15,8 @@ DEPENDPATH += ../../zenom/znm-core
 INCLUDEPATH += ../../zenom/znm-tools
 DEPENDPATH += ../../zenom/znm-tools
 
-LIBS += -L../../lib -lznm-controlbase -lznm-core -lznm-tools
+INCLUDEPATH += ../../zenom/znm-arduino
+DEPENDPATH += ../../zenom/znm-arduino
+
+LIBS += -L../../lib -lznm-controlbase -lznm-core -lznm-tools -lznm-arduino 
 

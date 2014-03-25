@@ -26,7 +26,7 @@
 //==============================================================================
 
 #define TASK_TIMEOUT 10000000000LL  // Varsayilan zaman asimi olarak 10sn
-#define TASK_MODE_C    T_JOINABLE      // Varsayilan yarailma modu
+#define TASK_MODE_C    T_JOINABLE      // Varsayilan yaratilma modu
 #define TASK_PRIO    50
 #define TASK_STACK_SIZE  0
 
