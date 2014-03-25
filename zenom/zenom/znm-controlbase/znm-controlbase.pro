@@ -43,6 +43,11 @@ INCLUDEPATH += ../znm-tools
 DEPENDPATH += ../znm-tools
 LIBS += -L../../lib -lznm-tools
 
+# Zenom Arduino Library
+INCLUDEPATH += ../znm-arduino
+DEPENDPATH += ../znm-arduino
+LIBS += -L../../lib -lznm-arduino
+
 # build directory
 DESTDIR = ../../lib
 

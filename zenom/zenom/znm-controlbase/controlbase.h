@@ -10,6 +10,7 @@
 #include "znm-controlbase_global.h"
 
 class LoopTask;
+class ArduinoManager;
 #define SECOND_TO_NANO (1000000000)
 #define MILLISECOND_TO_NANO (1000000)
 
@@ -17,7 +18,6 @@ class ZNMCONTROLBASESHARED_EXPORT ControlBase
 {
 	friend class LoopTask;
 	friend class LifeCycleTask;
-
 public:
 
 	ControlBase(/*int argc, char* argv[]*/);
@@ -57,6 +57,8 @@ public:
 	double simTimeInSec() { return mElapsedTimeInSecond; }
 
 	int overruns() { return mOverruns; }
+
+    void initArduino(const std::string& pInoFile);
 
 private:
 	// Loop Task Elapsed Time
@@ -102,6 +104,7 @@ private:
 	LoopTask* mLoopTask;
 	State mState;
     DataRepository* mDataRepository;
+    ArduinoManager* mArduinoManager;
 };
 
 #endif /* CONTROLBASE_H_ */

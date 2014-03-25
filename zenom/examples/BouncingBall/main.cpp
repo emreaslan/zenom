@@ -10,7 +10,7 @@
  * This example simulates a bouncing ball from floor.
  *
  */
-class BouncingBall : public ControlBase
+class ArduinoDistance : public ControlBase
 {
 public:
 
@@ -58,7 +58,7 @@ private:
 };
 
 
-int BouncingBall::initialize()
+int ArduinoDistance::initialize()
 {
     registerLogVariable(&velocity, "velocity");
     registerLogVariable(position, "position", 1, 3);
@@ -75,7 +75,7 @@ int BouncingBall::initialize()
     return 0;
 }
 
-int BouncingBall::start()
+int ArduinoDistance::start()
 {
     mVelocityIntegrator.setSamplingPeriod( period() );
     mVelocityIntegrator.reset( 0 );  // initial speed 0 m/s
@@ -86,7 +86,7 @@ int BouncingBall::start()
     return 0;
 }
 
-int BouncingBall::doloop()
+int ArduinoDistance::doloop()
 {
     double ballRadius = 1;
 
@@ -109,13 +109,13 @@ int BouncingBall::doloop()
     return 0;
 }
 
-int BouncingBall::stop()
+int ArduinoDistance::stop()
 {
 
     return 0;
 }
 
-int BouncingBall::terminate()
+int ArduinoDistance::terminate()
 {
 
     return 0;
@@ -124,7 +124,7 @@ int BouncingBall::terminate()
 
 int main( int argc, char *argv[] )
 {
-    BouncingBall c;
+    ArduinoDistance c;
     c.run( argc, argv );
 
     return 0;
