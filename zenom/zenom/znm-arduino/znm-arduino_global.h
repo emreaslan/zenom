@@ -1,0 +1,12 @@
+#ifndef ZNMARDUINO_GLOBAL_H
+#define ZNMARDUINO_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(ZNMARDUINO_LIBRARY)
+#  define ZNMARDUINOSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define ZNMARDUINOSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // ZNMARDUINO_GLOBAL_H
