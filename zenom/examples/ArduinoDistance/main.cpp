@@ -1,6 +1,5 @@
 
-#include <controlbase.h>
-#include <zenomarduinomanager.h>
+#include <controlbasearduino.h>
 
 
 /**
@@ -11,7 +10,7 @@
  * This example simulates a bouncing ball from floor.
  *
  */
-class ArduinoDistance : public ControlBase
+class ArduinoDistance : public ControlBaseArduino
 {
 public:
 
@@ -48,17 +47,18 @@ public:
 private:
 
     double Distance;
-    ZenomArduinoManager mArduinoManager;
-
+    double Check;
+    double controlVar;
 };
 
 
 int ArduinoDistance::initialize()
 {
-    mArduinoManager.initArduino(this);
-    mArduinoManager.registerArduinoLogVariable(&Distance, "Distance");
+    controlVar = -1;
 
-    mArduinoManager.start();
+    registerArduinoLogVariable(&Distance, "Distance");
+    registerArduinoLogVariable(&Check, "Check");
+    registerArduinoControlVariable(&controlVar, "controlVar");
     return 0;
 }
 
@@ -69,11 +69,7 @@ int ArduinoDistance::start()
 
 int ArduinoDistance::doloop()
 {
-    mArduinoManager.doLoopPreProcess();
-
     /* Your Code Here*/
-
-    mArduinoManager.doLoopPostProcess();
     return 0;
 }
 
@@ -84,7 +80,6 @@ int ArduinoDistance::stop()
 
 int ArduinoDistance::terminate()
 {
-    mArduinoManager.stop();
     return 0;
 }
 

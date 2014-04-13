@@ -11,6 +11,7 @@
 
 ArduinoManagerImp::ArduinoManagerImp() : mIsArduinoConnected(false), mContiuneReading(false)
 {
+    reset();
     /*
     int connectionResult = initArduinoConnection();
     switch ( connectionResult)
@@ -43,6 +44,13 @@ ArduinoManagerImp::~ArduinoManagerImp()
         close(mArduinoFileID);
     }
 }
+
+void ArduinoManagerImp::reset()
+{
+    mLogVariableCurrentName = 'A';
+    mControlVariableCurrentName = 'a';
+}
+
 
 void ArduinoManagerImp::initArduino()
 {
@@ -175,12 +183,15 @@ void ArduinoManagerImp::terminate()
 
 void ArduinoManagerImp::registerLogVariable(double *pVariable, const std::string& pName)
 {
-    mLogVaribleMap[pName] = pVariable;
+    mLogVaribleVec.push_back( ZenomVariableData(mLogVariableCurrentName, pVariable) );
+    mLogVariableCurrentName++;
+
 }
 
 void ArduinoManagerImp::registerControlVariable(double *pVariable, const std::string& pName)
 {
-    mControlvariableMap[pName] = pVariable;
+    mControlvariableVec.push_back( ZenomVariableData(mControlVariableCurrentName, pVariable) );
+    mControlVariableCurrentName++;
 }
 
 
@@ -189,8 +200,9 @@ void ArduinoManagerImp::updateValue(QString &pMes)
     QStringList list = pMes.split(" : ");
     QString variable = list.at(0);
     QString value = list.at(1);
+    variable.remove(' ');
 
-    mLogVaribleFileValueMap[variable.toStdString()] = value.toDouble();
+    mLogVaribleFileValueMap[variable.at(0).toAscii()] = value.toDouble();
 }
 
 void ArduinoManagerImp::doLoopPreProcess()
@@ -202,17 +214,27 @@ void ArduinoManagerImp::doLoopPreProcess()
         return;
     }
 
-    QMap<std::string, double>::iterator valueIter = mLogVaribleFileValueMap.begin();
+    QMap<char, double>::iterator valueIter = mLogVaribleFileValueMap.begin();
     for(; valueIter != mLogVaribleFileValueMap.end(); valueIter++)
     {
-        std::cout << "Key : " << valueIter.key() << " : Value : " << valueIter.value() << std::endl;
-        *(mLogVaribleMap[valueIter.key()]) = valueIter.value();
+        for (int i = 0; i < mLogVaribleVec.size(); ++i)
+        {
+            if (mLogVaribleVec[i].mName == valueIter.key() )
+            {
+                *(mLogVaribleVec[i].mValue) =  valueIter.value();
+                std::cout << "Key : " << valueIter.key() << " : Value : " << valueIter.value() << std::endl;
+                break;
+            }
+        }
     }
 }
 
 void ArduinoManagerImp::doLoopPostProcess()
 {
-
+    for (int i = 0; i < mControlvariableVec.size(); ++i)
+    {
+        mControlVaribleFileValueMap[mControlvariableVec[i].mName] = *(mControlvariableVec[i].mValue);
+    }
 }
 
 void ArduinoManagerImp::start()

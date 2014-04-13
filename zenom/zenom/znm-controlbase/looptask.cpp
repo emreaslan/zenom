@@ -34,7 +34,7 @@ void LoopTask::run()
 
         if( mControlBase->mState != PAUSED )
         {
-            mControlBase->doloop();
+            mControlBase->doloopWrapper();
             mControlBase->logVariables( elapsedTime );
             mControlBase->syncMainHeap();
 

@@ -12,24 +12,50 @@ ArduinoFileReaderTask::ArduinoFileReaderTask(ArduinoManagerImp *pManager) : mArd
 
 void ArduinoFileReaderTask::run()
 {
-    QByteArray buffer;
-    char buf[256];
     while (mArduinoManager->mContiuneReading)
     {
         std::cout << "Arduino File Reader loop" << std::endl;
-        int n = read(mArduinoManager->mArduinoFileID, buf, 128);
-        buffer.append(buf, n);
+        readSerial();
 
-       processBuffer(buffer);
+        writeSerial();
+    }
+}
 
-        // clears buffer
-        for (int i = 0; i < 256; ++i)
-        {
-            buf[i] = '\0';
-        }
 
-   //     char* testStr = "test";
-   //     write(fd, testStr, 4);
+void ArduinoFileReaderTask::readSerial()
+{
+    int n = read(mArduinoManager->mArduinoFileID, mBuffer, 128);
+    mByteArray.append(mBuffer, n);
+
+    processBuffer(mByteArray);
+    clearBuffer(mBuffer, 256);
+}
+
+void ArduinoFileReaderTask::writeSerial()
+{
+    if (mWriteCounter != 5)
+    {
+        mWriteCounter++;
+        return;
+    }
+    QMap<char, double>::iterator controlVarIter = mArduinoManager->mControlVaribleFileValueMap.begin();
+    for (;controlVarIter != mArduinoManager->mControlVaribleFileValueMap.end(); controlVarIter++)
+    {
+        sprintf(mBuffer, "< %c : %.2f >\n", controlVarIter.key(), controlVarIter.value());
+        std::cout  << "Buf: "<< mBuffer << std::endl;
+        write(mArduinoManager->mArduinoFileID, mBuffer, 128);
+        clearBuffer(mBuffer, 256);
+    }
+    mWriteCounter = 0;
+
+}
+
+void ArduinoFileReaderTask::clearBuffer(char* pBuffer, unsigned int pSize)
+{
+    // clears buffer
+    for (int i = 0; i < pSize; ++i)
+    {
+        pBuffer[i] = '\0';
     }
 }
 

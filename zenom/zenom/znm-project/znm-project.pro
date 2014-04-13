@@ -32,6 +32,5 @@ znm_template.path = $${ZENOM_INSTALL_BINS}
 
 INSTALLS += target znm_template
 
-OTHER_FILES += \
-    ../../bin/znm-project-main-arduino.template
+OTHER_FILES +=
 

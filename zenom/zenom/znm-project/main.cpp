@@ -9,7 +9,8 @@
 #include <unistd.h>
 
 QString getexepath();
-void createFile(const QString pTemplate, const QString pDestination, const QString pClassName );
+void createFile(const QString pTemplate, const QString pDestination, const QString pClassName, const QString pParentName = QString("ControlBase"), const QString pHeaderName = QString("controlbase.h"));
+
 
 int main(int argc, char *argv[])
 {
@@ -41,11 +42,11 @@ int main(int argc, char *argv[])
 
     if (argc == 3 && argv[2] == QString("--arduino"))
     {
-        createFile( programFileInfo.dir().filePath("znm-project-main-arduino.template"), projectDir.filePath("main.cpp"), projectName );
+        createFile( programFileInfo.dir().filePath("znm-project-main.template"), projectDir.filePath("main.cpp"), projectName, "ControlBaseArduino", "constrolbasearduino.h" );
     }
     else
     {
-        createFile( programFileInfo.dir().filePath("znm-project-main.template"), projectDir.filePath("main.cpp"), projectName );
+        createFile( programFileInfo.dir().filePath("znm-project-main.template"), projectDir.filePath("main.cpp"), projectName);
     }
     createFile( programFileInfo.dir().filePath("znm-project-makefile.template"), projectDir.filePath("Makefile"), projectName );
 
@@ -68,7 +69,7 @@ QString getexepath()
     return QString::fromStdString( std::string( result, (count > 0) ? count : 0 ) );
 }
 
-void createFile(const QString pTemplate, const QString pDestination, const QString pClassName )
+void createFile(const QString pTemplate, const QString pDestination, const QString pClassName, const QString pParentName, const QString pHeaderName)
 {
     // Open template file to read.
     QFile templateFile( pTemplate );
@@ -96,6 +97,10 @@ void createFile(const QString pTemplate, const QString pDestination, const QStri
         line = in.readLine();
 
         line.replace( "<%=class_name%>", pClassName );
+
+        line.replace( "<%=parent_name%>", pParentName );
+
+        line.replace( "<%=header_name%>", pHeaderName );
 
         out << line << "\n";;
     } while (!line.isNull());
