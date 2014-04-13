@@ -2,10 +2,19 @@
 #define ARDUINOMANAGERIMP_H
 
 #include "znm-arduino_global.h"
-#include <map>
+#include <vector>
 #include <QMap>
 #include <QString>
 #include "arduinofilereadertask.h"
+
+struct ZenomVariableData
+{
+  ZenomVariableData(char pName, double* pValue) : mName(pName), mValue(pValue) {}
+  ZenomVariableData() : mName(0), mValue(NULL) {}
+
+  char mName;
+  double* mValue;
+};
 
 class ArduinoManagerImp
 {
@@ -30,23 +39,26 @@ protected:
 
     int initArduinoConnection(); // 0 - connection successed, -1 - No Device, -2 - File error
     void terminate();
+    void reset();
+
 
 
     bool openArduinoFile(const QString &pFileName);
     void updateValue(QString& pMes);
 
-    std::map<std::string, double*> mLogVaribleMap;
-    std::map<std::string, double*> mControlvariableMap;
+    std::vector<ZenomVariableData> mLogVaribleVec;
+    std::vector<ZenomVariableData> mControlvariableVec;
 
-    QMap<std::string, double> mLogVaribleFileValueMap;
-    QMap<std::string, double> mControlvariableFileValueMap;
-
+    QMap<char, double> mLogVaribleFileValueMap;
+    QMap<char, double> mControlVaribleFileValueMap;
 
     ArduinoFileReaderTask* mFileReaderTask;
     int mArduinoFileID;
     QString mLastErrorString;
     bool mIsArduinoConnected;
     bool mContiuneReading;
+    char mLogVariableCurrentName;
+    char mControlVariableCurrentName;
 };
 
 #endif // ARDUINOMANAGERIMP_H

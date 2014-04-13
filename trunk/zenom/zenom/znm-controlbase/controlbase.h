@@ -99,6 +99,16 @@ private:
 	//============================================================================//
 	void terminateControlBase();
 
+    //============================================================================//
+    //		WRAPPER OPERATIONS												  //
+    //============================================================================//
+    virtual int initializeWrapper(){return initialize();}
+    virtual int startWrapper(){return start();}
+    virtual int doloopWrapper(){return doloop();}
+    virtual int stopWrapper(){return stop();}
+    virtual int terminateWrapper(){return terminate();}
+
+
 	LoopTask* mLoopTask;
 	State mState;
     DataRepository* mDataRepository;

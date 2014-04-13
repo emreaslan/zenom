@@ -22,13 +22,13 @@ DEFINES += ZNMCONTROLBASE_LIBRARY
 SOURCES += controlbase.cpp \
     lifecycletask.cpp \
     looptask.cpp \
-    zenomarduinomanager.cpp
+    controlbasearduino.cpp
 
 HEADERS += controlbase.h\
         znm-controlbase_global.h \
     lifecycletask.h \
     looptask.h \
-    zenomarduinomanager.h
+    controlbasearduino.h
 
 # Xenomai
 INCLUDEPATH +=  $${XENOMAI_HEADERS}

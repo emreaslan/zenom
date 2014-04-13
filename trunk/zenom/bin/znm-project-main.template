@@ -1,5 +1,5 @@
 
-#include <controlbase.h>
+#include "<%=header_name%>"
 
 /**
  * Zenom - Hard Real-Time Simulation Enviroment
@@ -9,7 +9,7 @@
  * -- Description --
  *
  */
-class <%=class_name%> : public ControlBase
+class <%=class_name%> : public <%=parent_name%>
 {
 public:
 

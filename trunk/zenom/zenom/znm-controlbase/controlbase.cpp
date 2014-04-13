@@ -77,7 +77,7 @@ void ControlBase::run(int argc, char *argv[])
 //============================================================================//
 void ControlBase::initializeControlBase()
 {
-	initialize();	// User Function
+    initializeWrapper();	// User Function
 
     mDataRepository->writeVariablesToFile();
     mDataRepository->bindMessageQueues();
@@ -107,7 +107,7 @@ void ControlBase::startControlBase()
         mDataRepository->bindLogVariablesHeap();
         syncMainHeap();
 
-        start();	// User Function
+        startWrapper();	// User Function
 
 		mState = RUNNING;
         mLoopTask = new LoopTask(this);
@@ -175,7 +175,7 @@ void ControlBase::stopControlBase()
 
         mDataRepository->unbindLogVariableHeap();
 
-		stop();			// User Function
+        stopWrapper();			// User Function
 	}
 }
 
@@ -188,7 +188,7 @@ void ControlBase::terminateControlBase()
     mDataRepository->unbindMainControlHeap();
 
     mState = TERMINATED;
-	terminate();	// User Function
+    terminateWrapper();	// User Function
 }
 
 
