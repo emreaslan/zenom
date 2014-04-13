@@ -41,7 +41,7 @@ bool MessageListenerTask::waitForInitMessage()
     int attempt = 0;
     while ( mMessageQueue.isEmpty() && attempt < 20 )
     {
-        usleep( 50000 );
+        usleep( 500000 );
         ++attempt;
     }
 

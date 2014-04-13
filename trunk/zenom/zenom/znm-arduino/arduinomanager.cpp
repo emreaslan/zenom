@@ -11,19 +11,9 @@ ArduinoManager::~ArduinoManager()
    delete mManager;
 }
 
-void ArduinoManager::initArduino(const std::string& pFile)
+void ArduinoManager::initArduino()
 {
-    return mManager->initArduino(pFile);
-}
-
-const std::map<std::string, double*>& ArduinoManager::getLogVaribleMap()
-{
-    return mManager->getLogVaribleMap();
-}
-
-const std::map<std::string, double*>& ArduinoManager::getControlVaribleMap()
-{
-    return mManager->getControlVaribleMap();
+    return mManager->initArduino();
 }
 
 void ArduinoManager::doLoopPreProcess()
@@ -51,4 +41,13 @@ void ArduinoManager::stop()
     return mManager->stop();
 }
 
+void ArduinoManager::registerLogVariable(double *pVariable, const std::string& pName)
+{
+    return mManager->registerLogVariable(pVariable, pName);
+}
+
+void ArduinoManager::registerControlVariable(double *pVariable, const std::string& pName)
+{
+     return mManager->registerControlVariable(pVariable, pName);
+}
 

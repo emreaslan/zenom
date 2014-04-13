@@ -1,5 +1,6 @@
 
 #include <controlbase.h>
+#include <zenomarduinomanager.h>
 
 
 /**
@@ -46,36 +47,44 @@ public:
 
 private:
 
+    double Distance;
+    ZenomArduinoManager mArduinoManager;
+
 };
 
 
 int ArduinoDistance::initialize()
 {
-    initArduino("ino/ArduinoDistance.ino");
+    mArduinoManager.initArduino(this);
+    mArduinoManager.registerArduinoLogVariable(&Distance, "Distance");
 
+    mArduinoManager.start();
     return 0;
 }
 
 int ArduinoDistance::start()
 {
-
     return 0;
 }
 
 int ArduinoDistance::doloop()
 {
+    mArduinoManager.doLoopPreProcess();
+
+    /* Your Code Here*/
+
+    mArduinoManager.doLoopPostProcess();
     return 0;
 }
 
 int ArduinoDistance::stop()
 {
-
     return 0;
 }
 
 int ArduinoDistance::terminate()
 {
-
+    mArduinoManager.stop();
     return 0;
 }
 

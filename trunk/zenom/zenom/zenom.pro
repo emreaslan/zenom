@@ -7,4 +7,5 @@ SUBDIRS += \
     znm-arduino \
     znm-controlbase \
     zenom \
-    znm-project
+    znm-project \
+    znm-arduino-project

@@ -34,9 +34,7 @@ void LoopTask::run()
 
         if( mControlBase->mState != PAUSED )
         {
-            mControlBase->mArduinoManager->doLoopPreProcess();
             mControlBase->doloop();
-            mControlBase->mArduinoManager->doLoopPostProcess();
             mControlBase->logVariables( elapsedTime );
             mControlBase->syncMainHeap();
 

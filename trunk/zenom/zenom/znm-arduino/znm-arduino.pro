@@ -19,14 +19,12 @@ DEFINES += ZNMARDUINO_LIBRARY
 
 SOURCES += arduinomanager.cpp \
     arduinofilereadertask.cpp \
-    arduinomanagerimp.cpp \
-    inofilereader.cpp
+    arduinomanagerimp.cpp
 
 HEADERS += arduinomanager.h\
         znm-arduino_global.h \
     arduinofilereadertask.h \
-    arduinomanagerimp.h \
-    inofilereader.h
+    arduinomanagerimp.h
 
 # Xenomai
 INCLUDEPATH +=  $${XENOMAI_HEADERS}
