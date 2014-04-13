@@ -12,15 +12,15 @@ public:
     ArduinoManager();
     ~ArduinoManager();
 
-    void initArduino(const std::string&);
+    void initArduino();
     void doLoopPreProcess();
     void doLoopPostProcess();
     bool isConnected();
     void start();
     void stop();
 
-    const std::map<std::string, double*>& getLogVaribleMap();
-    const std::map<std::string, double*>& getControlVaribleMap();
+    void registerLogVariable(double *, const std::string&);
+    void registerControlVariable(double *, const std::string&);
 private:
     ArduinoManagerImp* mManager;
 };

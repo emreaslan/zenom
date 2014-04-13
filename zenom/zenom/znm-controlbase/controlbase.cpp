@@ -4,9 +4,8 @@
 #include <sys/mman.h>
 #include <rtdk.h>
 
-ControlBase::ControlBase(/*int argc, char* argv[]*/):mArduinoManager(NULL)
+ControlBase::ControlBase(/*int argc, char* argv[]*/)
 {
-    mArduinoManager = new ArduinoManager;
     mDataRepository = DataRepository::instance();
 
 	setFrequency( 1 );
@@ -17,8 +16,6 @@ ControlBase::ControlBase(/*int argc, char* argv[]*/):mArduinoManager(NULL)
 
 ControlBase::~ControlBase()
 {
-    delete mArduinoManager;
-
 }
 
 void ControlBase::registerLogVariable(double *pVariable, const std::string& pName, unsigned int pRow, unsigned int pCol, const std::string& pDesc)
@@ -113,8 +110,6 @@ void ControlBase::startControlBase()
         start();	// User Function
 
 		mState = RUNNING;
-
-        mArduinoManager->start();
         mLoopTask = new LoopTask(this);
         mLoopTask->create( mDataRepository->projectName() + "LoopTask" );
         mLoopTask->start();
@@ -176,7 +171,6 @@ void ControlBase::stopControlBase()
 	{
         mState = STOPPED;
         mLoopTask->join();
-        mArduinoManager->stop();
         delete mLoopTask;
 
         mDataRepository->unbindLogVariableHeap();
@@ -195,36 +189,6 @@ void ControlBase::terminateControlBase()
 
     mState = TERMINATED;
 	terminate();	// User Function
-}
-
-//============================================================================//
-//		ARDUINO OPERATIONS												  //
-//============================================================================//
-void ControlBase::initArduino(const std::string &pInoFile)
-{
-    std::cout << "ControlBase init arduino" << std::endl;
-    mArduinoManager->initArduino(pInoFile);
-    if (!mArduinoManager->isConnected())
-    {
-        std::cout << "ControlBase init arduino cannot connect" << std::endl;
-        return;
-    }
-
-    std::cout << "ControlBase init arduino connected" << std::endl;
-
-    const std::map<std::string, double*>& logVarMap = mArduinoManager->getLogVaribleMap();
-    std::map<std::string, double*>::const_iterator logIter = logVarMap.begin();
-    for (; logIter != logVarMap.end(); logIter++)
-    {
-        registerLogVariable(logIter->second, logIter->first);
-    }
-
-    const std::map<std::string, double*>& controlVarMap = mArduinoManager->getControlVaribleMap();
-    std::map<std::string, double*>::const_iterator controlIter = controlVarMap.begin();
-    for (; controlIter != controlVarMap.end(); controlIter++)
-    {
-        registerControlVariable(controlIter->second, controlIter->first);
-    }
 }
 
 

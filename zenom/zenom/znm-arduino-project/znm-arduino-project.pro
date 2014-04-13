@@ -13,13 +13,14 @@ include( ../../zenom.pri )
 QT       += core
 QT       -= gui
 
-TARGET = znm-project
+TARGET = znm-arduino-project
 CONFIG   += console
 CONFIG   -= app_bundle
 
 TEMPLATE = app
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    cppparser.cpp
 
 # build directory
 DESTDIR = ../../bin
@@ -27,11 +28,8 @@ DESTDIR = ../../bin
 # install
 target.path = $${ZENOM_INSTALL_BINS}
 
-znm_template.files += ../../bin/znm-project-main.template ../../bin/znm-project-makefile.template
-znm_template.path = $${ZENOM_INSTALL_BINS}
 
-INSTALLS += target znm_template
+INSTALLS += target
 
-OTHER_FILES += \
-    ../../bin/znm-project-main-arduino.template
-
+HEADERS += \
+    cppparser.h

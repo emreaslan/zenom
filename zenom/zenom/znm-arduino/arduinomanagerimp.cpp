@@ -42,26 +42,10 @@ ArduinoManagerImp::~ArduinoManagerImp()
     {
         close(mArduinoFileID);
     }
-
-    std::map<std::string, double*>::iterator iterLog = mLogVaribleMap.begin();
-    for (; iterLog != mLogVaribleMap.end(); iterLog++)
-    {
-        delete iterLog->second;
-    }
-
-    std::map<std::string, double*>::iterator iterControl = mControlvariableMap.begin();
-    for (; iterControl != mLogVaribleMap.end(); iterControl++)
-    {
-        delete iterControl->second;
-    }
-
 }
 
-void ArduinoManagerImp::initArduino(const std::string &pFile)
+void ArduinoManagerImp::initArduino()
 {
-    mArduinoFilePath = pFile.c_str();
-    parseArduinoFile();
-
     int connectionResult = initArduinoConnection();
     switch ( connectionResult)
     {
@@ -83,15 +67,6 @@ void ArduinoManagerImp::initArduino(const std::string &pFile)
         mLastErrorString = QString("Unknown Error");
         break;
     }
-}
-
-int ArduinoManagerImp::parseArduinoFile()
-{
-    mLogVaribleMap["Distance"] = new double;
-
-    mLogVaribleMap["test"] = new double;
-    *(mLogVaribleMap["test"]) = 123;
-    return 0;
 }
 
 
@@ -129,16 +104,18 @@ int ArduinoManagerImp::initArduinoConnection()
 
 bool ArduinoManagerImp::openArduinoFile(const QString &pFileName)
 {
+    std::cout << "Opening : " << pFileName.toStdString() << std::endl;
+
     QString filePath = QString("/dev/") + pFileName;
    /* Open the file descriptor in non-blocking mode */
-    mArduinoFileID = open(filePath.toStdString().c_str(), O_RDWR | O_NOCTTY);
+    mArduinoFileID = open(filePath.toStdString().c_str(), O_RDWR | O_NOCTTY ); // | O_NONBLOCK );
 
     if (mArduinoFileID == -1)
     {
         return false;
     }
 
-   /* Set up the control structure */
+   // Set up the control structure
     struct termios toptions;
 
     /* Get currently set options for the tty */
@@ -181,7 +158,8 @@ bool ArduinoManagerImp::openArduinoFile(const QString &pFileName)
     tcflush(mArduinoFileID, TCIFLUSH);
     /* read up to 128 bytes from the fd */
 
-      return true;
+    std::cout << "Opened : " << pFileName.toStdString() << std::endl;
+    return true;
 }
 
 bool ArduinoManagerImp::isConnected()
@@ -194,15 +172,17 @@ void ArduinoManagerImp::terminate()
     mContiuneReading = false;
 }
 
-const std::map<std::string, double*>& ArduinoManagerImp::getLogVaribleMap()
+
+void ArduinoManagerImp::registerLogVariable(double *pVariable, const std::string& pName)
 {
-    return mLogVaribleMap;
+    mLogVaribleMap[pName] = pVariable;
 }
 
-const std::map<std::string, double*>& ArduinoManagerImp::getControlVaribleMap()
+void ArduinoManagerImp::registerControlVariable(double *pVariable, const std::string& pName)
 {
-    return mControlvariableMap;
+    mControlvariableMap[pName] = pVariable;
 }
+
 
 void ArduinoManagerImp::updateValue(QString &pMes)
 {

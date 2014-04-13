@@ -13,7 +13,7 @@ void createFile(const QString pTemplate, const QString pDestination, const QStri
 
 int main(int argc, char *argv[])
 {
-    if ( argc != 2 )
+    if ( argc < 2 || argc > 3)
     {
         /* display usage on error stream */
         fprintf(stderr, "usage: znm-project project_name\n\n");
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
     if ( QString("--help") == argv[1] )
     {
-        printf ("usage: znm-project project_name\nCreates a zenom project.\n\n");
+        printf ("usage: znm-project project_name --arduino (optional, creates arduino project)\nCreates a zenom project.\n\n");
         exit(0);  /* exit status of the program : non-zero for errors */
     }
 
@@ -39,7 +39,14 @@ int main(int argc, char *argv[])
     QFileInfo programFileInfo( getexepath() );
     QString projectName( QFileInfo(argv[1]).fileName() );
 
-    createFile( programFileInfo.dir().filePath("znm-project-main.template"), projectDir.filePath("main.cpp"), projectName );
+    if (argc == 3 && argv[2] == QString("--arduino"))
+    {
+        createFile( programFileInfo.dir().filePath("znm-project-main-arduino.template"), projectDir.filePath("main.cpp"), projectName );
+    }
+    else
+    {
+        createFile( programFileInfo.dir().filePath("znm-project-main.template"), projectDir.filePath("main.cpp"), projectName );
+    }
     createFile( programFileInfo.dir().filePath("znm-project-makefile.template"), projectDir.filePath("Makefile"), projectName );
 
     // Open project file to write

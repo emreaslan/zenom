@@ -58,8 +58,6 @@ public:
 
 	int overruns() { return mOverruns; }
 
-    void initArduino(const std::string& pInoFile);
-
 private:
 	// Loop Task Elapsed Time
 	RTIME mElapsedTicks;
@@ -104,7 +102,6 @@ private:
 	LoopTask* mLoopTask;
 	State mState;
     DataRepository* mDataRepository;
-    ArduinoManager* mArduinoManager;
 };
 
 #endif /* CONTROLBASE_H_ */

@@ -15,10 +15,10 @@ public:
     ArduinoManagerImp();
     ~ArduinoManagerImp();
 
-    void initArduino(const std::string&);
+    void initArduino();
 
-    const std::map<std::string, double*>& getLogVaribleMap();
-    const std::map<std::string, double*>& getControlVaribleMap();
+    void registerLogVariable(double *, const std::string&);
+    void registerControlVariable(double *, const std::string&);
 
     void doLoopPreProcess();
     void doLoopPostProcess();
@@ -28,11 +28,11 @@ public:
 
 protected:
 
-    int parseArduinoFile();
     int initArduinoConnection(); // 0 - connection successed, -1 - No Device, -2 - File error
     void terminate();
 
-    bool openArduinoFile(const QString&);
+
+    bool openArduinoFile(const QString &pFileName);
     void updateValue(QString& pMes);
 
     std::map<std::string, double*> mLogVaribleMap;
@@ -44,10 +44,8 @@ protected:
 
     ArduinoFileReaderTask* mFileReaderTask;
     int mArduinoFileID;
-    QString mArduinoFilePath;
     QString mLastErrorString;
     bool mIsArduinoConnected;
-    QString mInoFile;
     bool mContiuneReading;
 };
 
