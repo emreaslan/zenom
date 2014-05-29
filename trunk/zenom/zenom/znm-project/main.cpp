@@ -1,9 +1,10 @@
 #include <QtCore/QCoreApplication>
 
-#include <QDir>
-#include <QFileInfo>
-#include <QString>
-#include <QTextStream>
+
+
+
+
+
 
 #include <iostream>
 #include <unistd.h>
@@ -42,7 +43,7 @@ int main(int argc, char *argv[])
 
     if (argc == 3 && argv[2] == QString("--arduino"))
     {
-        createFile( programFileInfo.dir().filePath("znm-project-main.template"), projectDir.filePath("main.cpp"), projectName, "ControlBaseArduino", "constrolbasearduino.h" );
+        createFile( programFileInfo.dir().filePath("znm-project-main.template"), projectDir.filePath("main.cpp"), projectName, "ControlBaseArduino", "controlbasearduino.h" );
     }
     else
     {
