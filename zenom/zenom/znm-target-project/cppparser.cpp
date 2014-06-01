@@ -11,7 +11,7 @@ CppParser::CppParser()
 }
 
 
-void CppParser::parseFile(const QString &pFile)
+bool CppParser::parseFile(const QString &pFile)
 {
     mLogVariableVec.clear();
     mControlVariableVec.clear();
@@ -19,7 +19,7 @@ void CppParser::parseFile(const QString &pFile)
     QFile zenomFile(pFile);
     if ( !zenomFile.open(QFile::ReadOnly))
     {
-        return;
+        return false;
     }
 
     while (!zenomFile.atEnd())
@@ -29,11 +29,12 @@ void CppParser::parseFile(const QString &pFile)
         {
             processLogVariableLine(text);
         }
-        if ( text.contains(REGISTER_CONTROL_PROC));
+        if ( text.contains(REGISTER_CONTROL_PROC) );
         {
             processControlVariableLine(text);
         }
     }
+    return true;
 }
 
 QVector<QString>& CppParser::logVariables()
@@ -75,7 +76,7 @@ void CppParser::processVariableLine(const QString &pLine, const QString &pProc, 
 QString CppParser::readBetweenParenthesis(const QString &pLine, int pBeginIndex)
 {
     int openCount = 0;
-    int closeIndex;
+    int closeIndex = 0;
     for ( int i = pBeginIndex; i < pLine.size(); ++i )
     {
         if ( pLine[i] == '(' )

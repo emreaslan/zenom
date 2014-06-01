@@ -8,7 +8,7 @@ class CppParser
 {
 public:
     CppParser();
-    void parseFile(const QString& pFile);
+    bool parseFile(const QString& pFile);
 
     QVector<QString>& logVariables();
     QVector<QString>& controlVariables();
