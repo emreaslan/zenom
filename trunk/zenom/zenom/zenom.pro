@@ -8,4 +8,4 @@ SUBDIRS += \
     znm-controlbase \
     zenom \
     znm-project \
-    znm-arduino-project
+    znm-target-project

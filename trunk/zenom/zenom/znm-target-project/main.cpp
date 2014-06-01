@@ -1,11 +1,22 @@
 #include <iostream>
-#include "cppparser.h"
+#include "targetprojectmanager.h"
+#include <cstdlib>
 
 using namespace std;
 
-int main()
+
+int main(int argc, char *argv[])
 {
-    CppParser cppParser;
+    TargetProjectManager targetProjectManager;
+
+    if ( !targetProjectManager.checkParameters(argc, argv))
+    {
+        targetProjectManager.printUsage();
+        exit(1);  /* exit status of the program : non-zero for errors */
+    }
+
+
+    /*
     cppParser.parseFile("/home/zenom/Desktop/zenom/examples/ArduinoDistance/main.cpp");
 
     std::cout << "Printing Log Vars" << std::endl;
@@ -19,7 +30,7 @@ int main()
     {
         std::cout << "Variable : " << cppParser.controlVariables()[i].toStdString() << std::endl;
     }
-
+    */
 
     return 0;
 }

@@ -1,53 +1,57 @@
-#include <QtCore/QCoreApplication>
+#include "targetprojectcreator.h"
 
+#include <QFile>
 #include <QDir>
-#include <QFileInfo>
-#include <QString>
 #include <QTextStream>
-
 #include <iostream>
 #include <unistd.h>
 
-QString getexepath();
-void createFile(const QString pTemplate, const QString pDestination, const QString pClassName );
+#define CREATE_PROJECT_PARAMETER (std::string("--createProject"))
 
-int main(int argc, char *argv[])
+
+TargetProjectCreator::TargetProjectCreator()
 {
-    if ( argc < 2 || argc > 3)
+}
+
+
+bool TargetProjectCreator::checkParameters(int argc, char *argv[])
+{
+    if ( argc != 3 || (std::string(argv[1]) != CREATE_PROJECT_PARAMETER && std::string(argv[2]) != CREATE_PROJECT_PARAMETER) )
     {
-        /* display usage on error stream */
-        fprintf(stderr, "usage: znm-project project_name\n\n");
-        exit(1);  /* exit status of the program : non-zero for errors */
+        return false;
     }
+    return true;
+}
 
-    if ( QString("--help") == argv[1] )
+bool TargetProjectCreator::processParameters(int argc, char *argv[])
+{
+    if (std::string(argv[1]) == CREATE_PROJECT_PARAMETER )
     {
-        printf ("usage: znm-project project_name --arduino (optional, creates arduino project)\nCreates a zenom project.\n\n");
-        exit(0);  /* exit status of the program : non-zero for errors */
-    }
-
-    QDir projectDir;
-    if ( projectDir.exists( argv[1] ) )
-    {
-        fprintf(stderr, "The project cannot be created because '%s' folder already exists.\n", argv[1]);
-        exit(1);  /* exit status of the program : non-zero for errors */
-    }
-
-    projectDir.mkpath( argv[1] );
-    projectDir.cd( argv[1] );
-
-    QFileInfo programFileInfo( getexepath() );
-    QString projectName( QFileInfo(argv[1]).fileName() );
-
-    if (argc == 3 && argv[2] == QString("--arduino"))
-    {
-        createFile( programFileInfo.dir().filePath("znm-project-main-arduino.template"), projectDir.filePath("main.cpp"), projectName );
+        return createProject(QString(argv[2]) );
     }
     else
     {
-        createFile( programFileInfo.dir().filePath("znm-project-main.template"), projectDir.filePath("main.cpp"), projectName );
+        return createProject(QString(argv[1]) );
     }
-    createFile( programFileInfo.dir().filePath("znm-project-makefile.template"), projectDir.filePath("Makefile"), projectName );
+}
+
+bool TargetProjectCreator::createProject(QString pProjectName)
+{
+    QDir projectDir;
+    if ( projectDir.exists( pProjectName) )
+    {
+        fprintf(stderr, "The project cannot be created because '%s' folder already exists.\n", pProjectName.toStdString().c_str() );
+        exit(1);  /* exit status of the program : non-zero for errors */
+    }
+
+    projectDir.mkpath( pProjectName );
+    projectDir.cd( pProjectName );
+
+    QFileInfo programFileInfo( getexepath() );
+    QString projectName( QFileInfo(pProjectName).fileName() );
+
+    createFile( programFileInfo.dir().filePath("znm-project-main.template"), projectDir.filePath("main.cpp"), projectName, "ControlBaseArduino", "controlbasearduino.h" );
+    createFile( programFileInfo.dir().filePath("znm-project-makefile.template"), projectDir.filePath("Makefile"), projectName, "ControlBaseArduino" );
 
     // Open project file to write
     QFile configFile( projectDir.filePath(QString("%1.znm").arg(projectName)) );
@@ -58,17 +62,23 @@ int main(int argc, char *argv[])
     }
     configFile.close();
 
-    return 0;
+    return true;
 }
 
-QString getexepath()
+
+void TargetProjectCreator::printUsage()
+{
+    printf ("usage: znm-target-project project_name (Target Type)\nCreates a zenom project.\n\n");
+}
+
+QString TargetProjectCreator::getexepath()
 {
     char result[ PATH_MAX ];
     ssize_t count = readlink( "/proc/self/exe", result, PATH_MAX );
     return QString::fromStdString( std::string( result, (count > 0) ? count : 0 ) );
 }
 
-void createFile(const QString pTemplate, const QString pDestination, const QString pClassName )
+void TargetProjectCreator::createFile(const QString pTemplate, const QString pDestination, const QString pClassName, const QString pParentName, const QString pHeaderName)
 {
     // Open template file to read.
     QFile templateFile( pTemplate );
@@ -96,6 +106,10 @@ void createFile(const QString pTemplate, const QString pDestination, const QStri
         line = in.readLine();
 
         line.replace( "<%=class_name%>", pClassName );
+
+        line.replace( "<%=parent_name%>", pParentName );
+
+        line.replace( "<%=header_name%>", pHeaderName );
 
         out << line << "\n";;
     } while (!line.isNull());
