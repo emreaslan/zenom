@@ -3,7 +3,7 @@
 
 #include "znm-arduino_global.h"
 #include <vector>
-#include <QMap>
+#include <map>
 #include <QString>
 #include "arduinofilereadertask.h"
 
@@ -49,8 +49,8 @@ protected:
     std::vector<ZenomVariableData> mLogVaribleVec;
     std::vector<ZenomVariableData> mControlvariableVec;
 
-    QMap<char, double> mLogVaribleFileValueMap;
-    QMap<char, double> mControlVaribleFileValueMap;
+    std::map<char, double> mLogVaribleFileValueMap;
+    std::map<char, double> mControlVaribleFileValueMap;
 
     ArduinoFileReaderTask* mFileReaderTask;
     int mArduinoFileID;

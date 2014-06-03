@@ -12,7 +12,7 @@ InoGenerator::InoGenerator()
 
 void InoGenerator::printUsage()
 {
-
+    printf ("usage: znm-target-project project_name --generateino  : Generates .ino file from Arduino project.\n");
 }
 
 bool InoGenerator::checkParameters(int argc, char *argv[])
@@ -50,10 +50,9 @@ bool InoGenerator::generateIno(QString pFileName)
         return false;
     }
 
-    QString inoFileName = pFileName;
-    inoFileName.replace(".cpp", ".ino");
+    QString inoFileName = mCppParser.projectName() + ".ino";
 
-    QFile inoFile(inoFileName);
+    QFile inoFile(QString("./src/") + inoFileName);
     if ( !inoFile.open(QFile::WriteOnly | QFile::Text) )
     {
         fprintf(stderr, "The ino file cannot be created because the file '%s' could not be opened.\n", inoFileName.toAscii().data());
@@ -70,7 +69,7 @@ bool InoGenerator::generateIno(QString pFileName)
 void InoGenerator::fillInoFile(QFile &pInoFile)
 {
     QTextStream out( &pInoFile );
-    out << "#include \"ArduinoManager.h\"" << "\n";
+    out << "#include \"zenomarduinomanager.h\"" << "\n";
     out << "\n";
     out << "ZenomArduinoManager zenomManager;" << "\n";
     out << "\n";
@@ -99,7 +98,7 @@ void InoGenerator::fillInoFile(QFile &pInoFile)
     out << INDENTATION_TEXT << "// Log Variable Register" << "\n";
     for (int i = 0; i < mCppParser.logVariables().size(); ++i)
     {
-        out << INDENTATION_TEXT << "zenomManager.registerLogVariable(&"<< mCppParser.logVariables()[i] << ", \"" << mCppParser.logVariables()[i] << "\";"  << "\n";
+        out << INDENTATION_TEXT << "zenomManager.registerLogVariable(&"<< mCppParser.logVariables()[i] << ", \"" << mCppParser.logVariables()[i] << "\");"  << "\n";
     }
 
     // Control Variables Register
@@ -107,7 +106,7 @@ void InoGenerator::fillInoFile(QFile &pInoFile)
     out << INDENTATION_TEXT << "// Control Variable Register" << "\n";
     for (int i = 0; i < mCppParser.controlVariables().size(); ++i)
     {
-        out << INDENTATION_TEXT <<"zenomManager.registerControlVariable(&"<< mCppParser.controlVariables()[i] << ", \"" << mCppParser.controlVariables()[i] << "\";"  << "\n";
+        out << INDENTATION_TEXT <<"zenomManager.registerControlVariable(&"<< mCppParser.controlVariables()[i] << ", \"" << mCppParser.controlVariables()[i] << "\");"  << "\n";
     }
 
     out << "\n";

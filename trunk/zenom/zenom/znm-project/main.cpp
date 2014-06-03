@@ -97,6 +97,10 @@ void createFile(const QString pTemplate, const QString pDestination, const QStri
 
         line.replace( "<%=class_name%>", pClassName );
 
+        line.replace( "<%=parent_name%>", "ControlBase" );
+
+        line.replace( "<%=header_name%>", "controlbase.h" );
+
         out << line << "\n";;
     } while (!line.isNull());
 

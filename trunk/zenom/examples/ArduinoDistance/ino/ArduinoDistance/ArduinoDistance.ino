@@ -14,7 +14,7 @@ double controlVar;
 double check;
 
 void setup() {
-  Serial.begin (19200);
+  Serial.begin (9600);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   pinMode(led, OUTPUT);

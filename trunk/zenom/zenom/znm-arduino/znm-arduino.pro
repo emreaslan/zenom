@@ -10,6 +10,7 @@
 
 include( ../../zenom.pri )
 
+QT       += core
 QT       -= gui
 
 TARGET = znm-arduino

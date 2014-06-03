@@ -24,7 +24,9 @@ SOURCES += main.cpp \
     targetprojectmanager.cpp \
     arduinoprojectcreator.cpp \
     targetprojectcreator.cpp \
-    inogenerator.cpp
+    inogenerator.cpp \
+    arduinobuilder.cpp \
+    arduinouploader.cpp
 
 # build directory
 DESTDIR = ../../bin
@@ -32,8 +34,11 @@ DESTDIR = ../../bin
 # install
 target.path = $${ZENOM_INSTALL_BINS}
 
+arduino_template.files += ../../bin/zenomarduinomanager.h
+arduino_template.path = $${ZENOM_INSTALL_BINS}
 
-INSTALLS += target
+
+INSTALLS += target arduino_template
 
 HEADERS += \
     cppparser.h \
@@ -41,4 +46,6 @@ HEADERS += \
     targetprojectmanager.h \
     targetprojectcreator.h \
     arduinoprojectcreator.h \
-    inogenerator.h
+    inogenerator.h \
+    arduinobuilder.h \
+    arduinouploader.h

@@ -40,8 +40,19 @@ bool ArduinoProjectCreator::createProject(QString pProjectName)
 
     projectDir.mkpath( pProjectName );
     projectDir.cd( pProjectName );
-    projectDir.mkdir("libs");
+    projectDir.mkdir("lib");
     projectDir.mkdir("src");
+
+    QFile managerFile("zenomarduinomanager.h");
+    if ( !managerFile.open(QFile::ReadOnly | QFile::Text) )
+    {
+        fprintf(stderr, "The project cannot be created because the file '%s' could not be opened.\n", managerFile.fileName().toAscii().data());
+        exit(1);  /* exit status of the program : non-zero for errors */
+    }
+
+    managerFile.copy(QString("./") + pProjectName + QString("/src/zenomarduinomanager.h") );
+    managerFile.close();
+
 
     QFileInfo programFileInfo( getexepath() );
     QString projectName( QFileInfo(pProjectName).fileName() );
@@ -64,5 +75,5 @@ bool ArduinoProjectCreator::createProject(QString pProjectName)
 
 void ArduinoProjectCreator::printUsage()
 {
-    printf ("usage: znm-target-project project_name --arduinoproject \nCreates a zenom project.\n\n");
+    printf ("usage: znm-target-project project_name --createarduinoproject  : Creates a zenom project.\n");
 }

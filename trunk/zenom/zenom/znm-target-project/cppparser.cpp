@@ -3,6 +3,7 @@
 #include <QStringList>
 #include <iostream>
 
+#define ARDUINO_CONTROL_BASE_CLASS_NAME (QString("ControlBaseArduino"))
 #define REGISTER_LOG_PROC (QString("registerArduinoLogVariable"))
 #define REGISTER_CONTROL_PROC (QString("registerArduinoControlVariable"))
 
@@ -25,6 +26,10 @@ bool CppParser::parseFile(const QString &pFile)
     while (!zenomFile.atEnd())
     {
         QString text(zenomFile.readLine() );
+        if (text.contains(QString("class")) && text.contains(ARDUINO_CONTROL_BASE_CLASS_NAME) )
+        {
+            processClassName(text);
+        }
         if( text.contains(REGISTER_LOG_PROC))
         {
             processLogVariableLine(text);
@@ -35,6 +40,11 @@ bool CppParser::parseFile(const QString &pFile)
         }
     }
     return true;
+}
+
+QString CppParser::projectName()
+{
+    return mProjectName;
 }
 
 QVector<QString>& CppParser::logVariables()
@@ -104,4 +114,13 @@ QString CppParser::extractVariableName(const QString &pParameters)
         return list[1];
     }
     return QString("");
+}
+
+void CppParser::processClassName(const QString &pLine)
+{
+    QString line = pLine;
+    line.remove(' '); line.remove('\t');
+    line.chop( line.size() - line.indexOf(':') );
+    line.remove("class");
+    mProjectName = line;
 }
