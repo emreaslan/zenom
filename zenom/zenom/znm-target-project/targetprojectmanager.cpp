@@ -2,11 +2,15 @@
 
 #include "arduinoprojectcreator.h"
 #include "inogenerator.h"
+#include "arduinobuilder.h"
+#include "arduinouploader.h"
 
 TargetProjectManager::TargetProjectManager()
 {
     mProjectOperatorVec.push_back(new ArduinoProjectCreator);
     mProjectOperatorVec.push_back(new InoGenerator);
+    mProjectOperatorVec.push_back(new ArduinoBuilder);
+    mProjectOperatorVec.push_back(new ArduinoUploader);
 }
 
 TargetProjectManager::~TargetProjectManager()

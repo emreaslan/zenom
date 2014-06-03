@@ -38,10 +38,10 @@ void ArduinoFileReaderTask::writeSerial()
         mWriteCounter++;
         return;
     }
-    QMap<char, double>::iterator controlVarIter = mArduinoManager->mControlVaribleFileValueMap.begin();
+    std::map<char, double>::iterator controlVarIter = mArduinoManager->mControlVaribleFileValueMap.begin();
     for (;controlVarIter != mArduinoManager->mControlVaribleFileValueMap.end(); controlVarIter++)
     {
-        sprintf(mBuffer, "< %c : %.2f >\n", controlVarIter.key(), controlVarIter.value());
+        sprintf(mBuffer, "< %c : %.2f >\n", controlVarIter->first, controlVarIter->second);
         std::cout  << "Buf: "<< mBuffer << std::endl;
         write(mArduinoManager->mArduinoFileID, mBuffer, 128);
         clearBuffer(mBuffer, 256);

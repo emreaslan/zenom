@@ -214,15 +214,15 @@ void ArduinoManagerImp::doLoopPreProcess()
         return;
     }
 
-    QMap<char, double>::iterator valueIter = mLogVaribleFileValueMap.begin();
+    std::map<char, double>::iterator valueIter = mLogVaribleFileValueMap.begin();
     for(; valueIter != mLogVaribleFileValueMap.end(); valueIter++)
     {
         for (int i = 0; i < mLogVaribleVec.size(); ++i)
         {
-            if (mLogVaribleVec[i].mName == valueIter.key() )
+            if (mLogVaribleVec[i].mName == valueIter->first )
             {
-                *(mLogVaribleVec[i].mValue) =  valueIter.value();
-                std::cout << "Key : " << valueIter.key() << " : Value : " << valueIter.value() << std::endl;
+                *(mLogVaribleVec[i].mValue) =  valueIter->second;
+                std::cout << "Key : " << valueIter->first << " : Value : " << valueIter->second << std::endl;
                 break;
             }
         }
