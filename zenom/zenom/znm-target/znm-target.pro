@@ -13,19 +13,19 @@ include( ../../zenom.pri )
 QT       += core
 QT       -= gui
 
-TARGET = znm-arduino
+TARGET = znm-target
 TEMPLATE = lib
 
-DEFINES += ZNMARDUINO_LIBRARY
+DEFINES += ZNMTARGET_LIBRARY
 
 SOURCES += arduinomanager.cpp \
-    arduinofilereadertask.cpp \
-    arduinomanagerimp.cpp
+    targetmanager.cpp \
+    targetreaderwritertask.cpp
 
 HEADERS += arduinomanager.h\
-        znm-arduino_global.h \
-    arduinofilereadertask.h \
-    arduinomanagerimp.h
+    targetmanager.h \
+    znm-target_global.h \
+    targetreaderwritertask.h
 
 # Xenomai
 INCLUDEPATH +=  $${XENOMAI_HEADERS}
@@ -37,6 +37,8 @@ LIBS += -L$${XENOMAI_LIBS} -lnative
 INCLUDEPATH += ../znm-tools
 DEPENDPATH += ../znm-tools
 LIBS += -L../../lib -lznm-tools
+
+
 
 # build directory
 DESTDIR = ../../lib

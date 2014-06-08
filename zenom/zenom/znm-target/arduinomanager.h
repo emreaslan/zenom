@@ -1,12 +1,12 @@
-#ifndef ARDUINOMANAGER_H
+#ifndef TARGETMANAGER_H
 #define ARDUINOMANAGER_H
 
-#include "znm-arduino_global.h"
+#include "znm-target_global.h"
 #include <string>
 #include <map>
 
-class ArduinoManagerImp;
-class ZNMARDUINOSHARED_EXPORT ArduinoManager
+class TargetManager;
+class ZNM_TARGET_SHARED_EXPORT ArduinoManager
 {
 public:
     ArduinoManager();
@@ -22,6 +22,6 @@ public:
     void registerLogVariable(double *, const std::string&);
     void registerControlVariable(double *, const std::string&);
 private:
-    ArduinoManagerImp* mManager;
+    TargetManager* mManager;
 };
 #endif // ARDUINOMANAGER_H
