@@ -1,4 +1,4 @@
-#include "arduinomanagerimp.h"
+#include "targetmanager.h"
 #include <iostream>
 #include <unistd.h>
 #include <stdio.h>
@@ -8,8 +8,10 @@
 #include <termios.h>
 #include <QDir>
 #include <QVector>
+#include "targetreaderwritertask.h"
 
-ArduinoManagerImp::ArduinoManagerImp() : mIsArduinoConnected(false), mContiuneReading(false)
+
+TargetManager::TargetManager() : mIsTargetConnected(false), mContiuneReading(false), mFileReaderTask(NULL), mTargetFileID(-1)
 {
     reset();
     /*
@@ -37,48 +39,48 @@ ArduinoManagerImp::ArduinoManagerImp() : mIsArduinoConnected(false), mContiuneRe
     */
 }
 
-ArduinoManagerImp::~ArduinoManagerImp()
+TargetManager::~TargetManager()
 {
-    if (mIsArduinoConnected)
+    if (mTargetFileID != -1)
     {
-        close(mArduinoFileID);
+        close(mTargetFileID);
     }
 }
 
-void ArduinoManagerImp::reset()
+void TargetManager::reset()
 {
     mLogVariableCurrentName = 'A';
     mControlVariableCurrentName = 'a';
 }
 
 
-void ArduinoManagerImp::initArduino()
+void TargetManager::initTarget()
 {
-    int connectionResult = initArduinoConnection();
+    int connectionResult = initTargetConnection();
     switch ( connectionResult)
     {
     case 0:
-        mIsArduinoConnected = true;
+        mIsTargetConnected = true;
         mContiuneReading = true;
         mLastErrorString = QString("No error");
         break;
     case -1:
-        mIsArduinoConnected = false;
+        mIsTargetConnected = false;
         mLastErrorString = QString("No Arduino Device Detected");
         break;
     case -2:
-        mIsArduinoConnected = false;
+        mIsTargetConnected = false;
         mLastErrorString = QString("Can not connect to Ardunio");
         break;
     default:
-        mIsArduinoConnected = false;
+        mIsTargetConnected = false;
         mLastErrorString = QString("Unknown Error");
         break;
     }
 }
 
 
-int ArduinoManagerImp::initArduinoConnection()
+int TargetManager::initTargetConnection()
 {
     QDir dir("/dev/");
     QStringList nameFilters;
@@ -92,10 +94,11 @@ int ArduinoManagerImp::initArduinoConnection()
         return -1;
     }
 
+
     bool isOpened = false;
     for (int i = 0 ; i < fileList.size(); ++i )
     {
-        isOpened = openArduinoFile(fileList.at(i));
+        isOpened = openTargetFile(fileList.at(i));
         if (isOpened)
         {
             break;
@@ -104,21 +107,22 @@ int ArduinoManagerImp::initArduinoConnection()
 
     if (!isOpened)
     {
-        std::cout << "Arduino Communication File cannot be opened" << std::endl;
+        std::cout << "Target Communication File cannot be opened" << std::endl;
         return -2;
     }
+
     return 0;
 }
 
-bool ArduinoManagerImp::openArduinoFile(const QString &pFileName)
+bool TargetManager::openTargetFile(const QString &pFileName)
 {
     std::cout << "Opening : " << pFileName.toStdString() << std::endl;
 
     QString filePath = QString("/dev/") + pFileName;
    /* Open the file descriptor in non-blocking mode */
-    mArduinoFileID = open(filePath.toStdString().c_str(), O_RDWR | O_NOCTTY ); // | O_NONBLOCK );
+    mTargetFileID = open(filePath.toStdString().c_str(), O_RDWR | O_NOCTTY ); // | O_NONBLOCK );
 
-    if (mArduinoFileID == -1)
+    if (mTargetFileID == -1)
     {
         return false;
     }
@@ -127,7 +131,7 @@ bool ArduinoManagerImp::openArduinoFile(const QString &pFileName)
     struct termios toptions;
 
     /* Get currently set options for the tty */
-    tcgetattr(mArduinoFileID, &toptions);
+    tcgetattr(mTargetFileID, &toptions);
 
    /* Set custom options */
 
@@ -158,44 +162,48 @@ bool ArduinoManagerImp::openArduinoFile(const QString &pFileName)
     toptions.c_cc[VTIME] = 0;
 
    /* commit the options */
-    tcsetattr(mArduinoFileID, TCSANOW, &toptions);
+    tcsetattr(mTargetFileID, TCSANOW, &toptions);
 
    /* Wait for the Arduino to reset */
     usleep(1000*1000);
     /* Flush anything already in the serial buffer */
-    tcflush(mArduinoFileID, TCIFLUSH);
+    tcflush(mTargetFileID, TCIFLUSH);
     /* read up to 128 bytes from the fd */
 
+    char buffer[128];
+    int n = read(mTargetFileID, buffer, 128);
     std::cout << "Opened : " << pFileName.toStdString() << std::endl;
     return true;
 }
 
-bool ArduinoManagerImp::isConnected()
+bool TargetManager::isConnected()
 {
-    return mIsArduinoConnected;
+    return mIsTargetConnected;
 }
 
-void ArduinoManagerImp::terminate()
+void TargetManager::terminate()
 {
     mContiuneReading = false;
 }
 
 
-void ArduinoManagerImp::registerLogVariable(double *pVariable, const std::string& pName)
+void TargetManager::registerLogVariable(double *pVariable, const std::string& pName)
 {
     mLogVaribleVec.push_back( ZenomVariableData(mLogVariableCurrentName, pVariable) );
     mLogVariableCurrentName++;
 
 }
 
-void ArduinoManagerImp::registerControlVariable(double *pVariable, const std::string& pName)
+void TargetManager::registerControlVariable(double *pVariable, const std::string& pName)
 {
     mControlvariableVec.push_back( ZenomVariableData(mControlVariableCurrentName, pVariable) );
+    mControlVaribleFileValueVec.push_back( std::pair<char, double>(mControlVariableCurrentName, *pVariable) );
+    mControlVarDiffVec.push_back( *pVariable );
     mControlVariableCurrentName++;
 }
 
 
-void ArduinoManagerImp::updateValue(QString &pMes)
+void TargetManager::updateValue(QString &pMes)
 {
     QStringList list = pMes.split(" : ");
     QString variable = list.at(0);
@@ -205,10 +213,10 @@ void ArduinoManagerImp::updateValue(QString &pMes)
     mLogVaribleFileValueMap[variable.at(0).toAscii()] = value.toDouble();
 }
 
-void ArduinoManagerImp::doLoopPreProcess()
+void TargetManager::doLoopPreProcess()
 {
-    std::cout << "Do loop pre process" << std::endl;
-    if(!mIsArduinoConnected)
+    //std::cout << "Do loop pre process" << std::endl;
+    if(!mIsTargetConnected)
     {
         std::cout << "do loop pre process not connected" << std::endl;
         return;
@@ -222,45 +230,51 @@ void ArduinoManagerImp::doLoopPreProcess()
             if (mLogVaribleVec[i].mName == valueIter->first )
             {
                 *(mLogVaribleVec[i].mValue) =  valueIter->second;
-                std::cout << "Key : " << valueIter->first << " : Value : " << valueIter->second << std::endl;
+                //std::cout << "Key : " << valueIter->first << " : Value : " << valueIter->second << std::endl;
                 break;
             }
         }
     }
 }
 
-void ArduinoManagerImp::doLoopPostProcess()
+void TargetManager::doLoopPostProcess()
 {
     for (int i = 0; i < mControlvariableVec.size(); ++i)
     {
-        mControlVaribleFileValueMap[mControlvariableVec[i].mName] = *(mControlvariableVec[i].mValue);
+        //std::cout << "doLoopPostProcess - ControlVar Name : " << mControlvariableVec[i].mName << " - mValue : " <<  *(mControlvariableVec[i].mValue) << std::endl;
+        mControlVaribleFileValueVec[i].second = *(mControlvariableVec[i].mValue);
     }
 }
 
-void ArduinoManagerImp::start()
+void TargetManager::start()
 {
-    if (!mIsArduinoConnected)
+    if (!mIsTargetConnected)
     {
         return;
     }
 
-    std::cout << "Arduino start" << std::endl;
-    mFileReaderTask = new ArduinoFileReaderTask(this);
-    mFileReaderTask->create( "Arduino File Reader Task" );
+    std::cout << "Target start" << std::endl;
+    mFileReaderTask = new TargetReaderWriterTask(this);
+    //mFileReaderTask->( "Target Reader Task" );
+
     mFileReaderTask->start();
 }
 
 
-void ArduinoManagerImp::stop()
+void TargetManager::stop()
 {
-    if (!mIsArduinoConnected)
+    if (!mIsTargetConnected)
     {
+        mContiuneReading = false;
         return;
     }
 
-    std::cout << "Arduino stop" << std::endl;
+    std::cout << "Target stop" << std::endl;
     mContiuneReading = false;
-    mFileReaderTask->join();
+
+    mFileReaderTask->wait();
     delete mFileReaderTask;
+
+    mFileReaderTask = NULL;
 }
 

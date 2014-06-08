@@ -4,7 +4,7 @@ SUBDIRS += \
     znm-tools \
     znm-math \
     znm-core \
-    znm-arduino \
+    znm-target \
     znm-controlbase \
     zenom \
     znm-project \

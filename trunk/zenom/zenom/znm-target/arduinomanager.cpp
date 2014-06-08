@@ -1,9 +1,9 @@
 #include "arduinomanager.h"
-#include "arduinomanagerimp.h"
+#include "targetmanager.h"
 
 ArduinoManager::ArduinoManager()
 {
-    mManager = new ArduinoManagerImp;
+    mManager = new TargetManager;
 }
 
 ArduinoManager::~ArduinoManager()
@@ -13,7 +13,7 @@ ArduinoManager::~ArduinoManager()
 
 void ArduinoManager::initArduino()
 {
-    return mManager->initArduino();
+    return mManager->initTarget();
 }
 
 void ArduinoManager::doLoopPreProcess()

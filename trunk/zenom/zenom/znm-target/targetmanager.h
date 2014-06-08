@@ -1,11 +1,12 @@
-#ifndef ARDUINOMANAGERIMP_H
-#define ARDUINOMANAGERIMP_H
+#ifndef ZNMTARGETMANAGER_H
+#define ZNMTARGETMANAGER_H
 
-#include "znm-arduino_global.h"
+#include "znm-target_global.h"
 #include <vector>
 #include <map>
 #include <QString>
-#include "arduinofilereadertask.h"
+
+class TargetReaderWriterTask;
 
 struct ZenomVariableData
 {
@@ -16,15 +17,15 @@ struct ZenomVariableData
   double* mValue;
 };
 
-class ArduinoManagerImp
+class TargetManager
 {
-    friend class ArduinoFileReaderTask;
+    friend class TargetReaderWriterTask;
 
 public:
-    ArduinoManagerImp();
-    ~ArduinoManagerImp();
+    TargetManager();
+    ~TargetManager();
 
-    void initArduino();
+    void initTarget();
 
     void registerLogVariable(double *, const std::string&);
     void registerControlVariable(double *, const std::string&);
@@ -37,28 +38,29 @@ public:
 
 protected:
 
-    int initArduinoConnection(); // 0 - connection successed, -1 - No Device, -2 - File error
+    int initTargetConnection(); // 0 - connection successed, -1 - No Device, -2 - File error
     void terminate();
     void reset();
 
 
 
-    bool openArduinoFile(const QString &pFileName);
+    bool openTargetFile(const QString &pFileName);
     void updateValue(QString& pMes);
 
     std::vector<ZenomVariableData> mLogVaribleVec;
     std::vector<ZenomVariableData> mControlvariableVec;
 
     std::map<char, double> mLogVaribleFileValueMap;
-    std::map<char, double> mControlVaribleFileValueMap;
+    std::vector< std::pair<char, double > > mControlVaribleFileValueVec;
+    std::vector<double> mControlVarDiffVec;
 
-    ArduinoFileReaderTask* mFileReaderTask;
-    int mArduinoFileID;
+    TargetReaderWriterTask* mFileReaderTask;
+    int mTargetFileID;
     QString mLastErrorString;
-    bool mIsArduinoConnected;
+    bool mIsTargetConnected;
     bool mContiuneReading;
     char mLogVariableCurrentName;
     char mControlVariableCurrentName;
 };
 
-#endif // ARDUINOMANAGERIMP_H
+#endif // ZNMTARGETMANAGER_H
