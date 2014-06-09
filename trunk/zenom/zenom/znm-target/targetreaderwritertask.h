@@ -3,7 +3,6 @@
 
 #include <QFile>
 #include <QThread>
-#include <native/timer.h>
 
 class TargetManager;
 class QByteArray;

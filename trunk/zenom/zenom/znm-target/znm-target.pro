@@ -27,10 +27,11 @@ HEADERS += arduinomanager.h\
     znm-target_global.h \
     targetreaderwritertask.h
 
+
 # Xenomai
-INCLUDEPATH +=  $${XENOMAI_HEADERS}
-DEPENDPATH += $${XENOMAI_HEADERS}
-LIBS += -L$${XENOMAI_LIBS} -lnative
+#INCLUDEPATH +=  $${XENOMAI_HEADERS}
+#DEPENDPATH += $${XENOMAI_HEADERS}
+#LIBS += -L$${XENOMAI_LIBS} -lnative
 
 
 # Zenom Tools Library
