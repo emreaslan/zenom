@@ -55,7 +55,7 @@ bool InoGenerator::generateIno(QString pFileName)
     QFile inoFile(QString("./src/") + inoFileName);
     if ( !inoFile.open(QFile::WriteOnly | QFile::Text) )
     {
-        fprintf(stderr, "The ino file cannot be created because the file '%s' could not be opened.\n", inoFileName.toAscii().data());
+        fprintf(stderr, "The ino file cannot be created because the file '%s' could not be opened.\n", inoFileName.toLatin1().data());
         return false;  /* exit status of the program : non-zero for errors */
     }
 
