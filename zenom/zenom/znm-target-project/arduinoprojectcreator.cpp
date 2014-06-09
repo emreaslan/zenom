@@ -46,7 +46,7 @@ bool ArduinoProjectCreator::createProject(QString pProjectName)
     QFile managerFile("zenomarduinomanager.h");
     if ( !managerFile.open(QFile::ReadOnly | QFile::Text) )
     {
-        fprintf(stderr, "The project cannot be created because the file '%s' could not be opened.\n", managerFile.fileName().toAscii().data());
+        fprintf(stderr, "The project cannot be created because the file '%s' could not be opened.\n", managerFile.fileName().toLatin1().data());
         exit(1);  /* exit status of the program : non-zero for errors */
     }
 
@@ -64,7 +64,7 @@ bool ArduinoProjectCreator::createProject(QString pProjectName)
     QFile configFile( projectDir.filePath(QString("%1.znm").arg(projectName)) );
     if ( !configFile.open(QFile::WriteOnly | QFile::Text) )
     {
-        fprintf(stderr, "The project cannot be created because the file '%s' could not be opened.\n", configFile.fileName().toAscii().data());
+        fprintf(stderr, "The project cannot be created because the file '%s' could not be opened.\n", configFile.fileName().toLatin1().data());
         exit(1);  /* exit status of the program : non-zero for errors */
     }
     configFile.close();

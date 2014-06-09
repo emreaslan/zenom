@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     QFile configFile( projectDir.filePath(QString("%1.znm").arg(projectName)) );
     if ( !configFile.open(QFile::WriteOnly | QFile::Text) )
     {
-        fprintf(stderr, "The project cannot be created because the file '%s' could not be opened.\n", configFile.fileName().toAscii().data());
+        fprintf(stderr, "The project cannot be created because the file '%s' could not be opened.\n", configFile.fileName().toLatin1().data());
         exit(1);  /* exit status of the program : non-zero for errors */
     }
     configFile.close();
@@ -74,7 +74,7 @@ void createFile(const QString pTemplate, const QString pDestination, const QStri
     QFile templateFile( pTemplate );
     if ( !templateFile.open(QFile::ReadOnly | QFile::Text) )
     {
-        fprintf(stderr, "The project cannot be created because the template file '%s' could not be found.\n", pTemplate.toAscii().data());
+        fprintf(stderr, "The project cannot be created because the template file '%s' could not be found.\n", pTemplate.toLatin1().data());
         exit(1);  /* exit status of the program : non-zero for errors */
     }
 
@@ -82,7 +82,7 @@ void createFile(const QString pTemplate, const QString pDestination, const QStri
     QFile destinationFile( pDestination );
     if ( !destinationFile.open(QFile::WriteOnly | QFile::Text) )
     {
-        fprintf(stderr, "The project cannot be created because the file '%s' could not be opened.\n", pDestination.toAscii().data());
+        fprintf(stderr, "The project cannot be created because the file '%s' could not be opened.\n", pDestination.toLatin1().data());
         exit(1);  /* exit status of the program : non-zero for errors */
     }
 

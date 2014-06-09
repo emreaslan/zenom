@@ -210,7 +210,7 @@ void TargetManager::updateValue(QString &pMes)
     QString value = list.at(1);
     variable.remove(' ');
 
-    mLogVaribleFileValueMap[variable.at(0).toAscii()] = value.toDouble();
+    mLogVaribleFileValueMap[variable.at(0).toLatin1()] = value.toDouble();
 }
 
 void TargetManager::doLoopPreProcess()
