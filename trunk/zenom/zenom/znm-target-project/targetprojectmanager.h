@@ -11,7 +11,7 @@ public:
     TargetProjectManager();
     ~TargetProjectManager();
     void printUsage();
-    bool checkParameters(int argc, char *argv[]);
+    bool processParameters(int argc, char *argv[]);
 
 protected:
     std::vector<TargetProjectBase*> mProjectOperatorVec;

@@ -30,14 +30,23 @@ void TargetProjectManager::printUsage()
 
 }
 
-bool TargetProjectManager::checkParameters(int argc, char *argv[])
+bool TargetProjectManager::processParameters(int argc, char *argv[])
 {
-    for (int i = 0; i < mProjectOperatorVec.size(); ++i)
+    int i = 0;
+    for (; i < mProjectOperatorVec.size(); ++i)
     {
         if (mProjectOperatorVec[i]->checkParameters(argc, argv))
         {
-            return mProjectOperatorVec[i]->processParameters(argc, argv);
+            break;
         }
+    }
+    if ( i != mProjectOperatorVec.size())
+    {
+        return mProjectOperatorVec[i]->processParameters(argc, argv);
+    }
+    else
+    {
+        printUsage();
     }
     return false;
 }
