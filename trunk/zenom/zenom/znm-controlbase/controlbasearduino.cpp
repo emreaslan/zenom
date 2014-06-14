@@ -18,10 +18,17 @@ void ControlBaseArduino::registerArduinoLogVariable(double *pVariable, const std
     registerLogVariable(pVariable, pName, pRow, pCol, pDesc);
 }
 
-void ControlBaseArduino::registerArduinoControlVariable(double *pVariable, const std::string& pName, unsigned int pRow, unsigned int pCol, const std::string& pDesc)
+void ControlBaseArduino::registerArduinoControlVariable(double *pVariable, const std::string& pName, VariableType pVariableType, unsigned int pRow, unsigned int pCol, const std::string& pDesc)
 {
     mArduinoManager->registerControlVariable(pVariable, pName);
-    registerControlVariable(pVariable, pName, pRow, pCol, pDesc);
+    if (pVariableType == CONTROL_VARIABLE)
+    {
+        registerControlVariable(pVariable, pName, pRow, pCol, pDesc);
+    }
+    else if (pVariableType == LOG_VARIABLE)
+    {
+        registerLogVariable(pVariable, pName, pRow, pCol, pDesc);
+    }
 }
 
 

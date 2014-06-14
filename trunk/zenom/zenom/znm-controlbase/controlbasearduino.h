@@ -11,11 +11,18 @@ class ArduinoManager;
 class ZNMCONTROLBASESHARED_EXPORT ControlBaseArduino : public ControlBase
 {
 public:
+    enum VariableType
+    {
+        NONE = 0,
+        LOG_VARIABLE = 1,
+        CONTROL_VARIABLE = 2
+    };
+
     ControlBaseArduino();
     ~ControlBaseArduino();
 
     void registerArduinoLogVariable(double *pVariable, const std::string& pName, unsigned int pRow = 1, unsigned int pCol = 1, const std::string& pDesc= "");
-    void registerArduinoControlVariable(double *pVariable, const std::string& pName, unsigned int pRow = 1, unsigned int pCol = 1, const std::string& pDesc= "");
+    void registerArduinoControlVariable(double *pVariable, const std::string& pName, VariableType = CONTROL_VARIABLE, unsigned int pRow = 1, unsigned int pCol = 1, const std::string& pDesc= "");
 
     virtual int initialize(){return 0;}
 

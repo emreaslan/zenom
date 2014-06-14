@@ -86,7 +86,7 @@ void InoGenerator::fillInoFile(QFile &pInoFile)
     out << "// Control Variables" << "\n";
     for (int i = 0; i < mCppParser.controlVariables().size(); ++i)
     {
-        out << "double "<< mCppParser.controlVariables()[i] << ";" << "\n";
+        out << "double "<< mCppParser.controlVariables()[i] << " = 0;" << "\n";
     }
 
     out << "\n";

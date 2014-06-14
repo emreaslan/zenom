@@ -58,7 +58,7 @@ int ArduinoDistance::initialize()
 
     registerArduinoLogVariable(&Distance, "Distance");
     registerArduinoLogVariable(&Check, "Check");
-    registerArduinoControlVariable(&controlVar, "controlVar");
+    registerArduinoControlVariable(&controlVar, "controlVar", CONTROL_VARIABLE);
     return 0;
 }
 
