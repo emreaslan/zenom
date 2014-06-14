@@ -6,4 +6,6 @@ SUBDIRS += \
     HelloWorld \
     Sine \
     SineFilter \
-    ArduinoDistance
+    ArduinoDistance \
+	MotorArduinoControl \
+	MotorZenomControl
