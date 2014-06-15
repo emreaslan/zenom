@@ -46,6 +46,10 @@ void loop()
     digitalWrite(statpin, LOW);
     duration = pulseIn(echoPin, HIGH);
     Distance = (duration/2) / 29.1;
+    if (Distance > 200)
+    {
+	Distance = 200;
+    }
     
     if ( (int)MotorDirection == 0 )
     {
