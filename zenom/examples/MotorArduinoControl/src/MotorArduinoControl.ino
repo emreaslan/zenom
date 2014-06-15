@@ -52,11 +52,11 @@ void loop()
     digitalWrite(statpin, LOW);
     duration = pulseIn(echoPin, HIGH);
     Distance = (duration/2) / 29.1;
+    if (Distance > 200)
+    {
+	Distance = 200;
+    }
 
-	motorGo(0, CCW, 1023);
-	motorGo(1, CCW, 1023);    
-        digitalWrite(led, LOW);
-	digitalWrite(led2, HIGH);
     
     if ( Distance < CriticalProximity )
     {
@@ -78,10 +78,10 @@ void loop()
 	motorOff(1);
 	digitalWrite(led, LOW);
 	digitalWrite(led2, LOW);
-    }        
+    }      
     
     // User Code End
     
     zenomManager.loopPostProcess();
-    delay(100); // delay time editable
+    //delay(100); // delay time editable
 }
