@@ -8,8 +8,11 @@ class LineSizeComboBox : public QComboBox
     Q_OBJECT
 public:
     LineSizeComboBox(QWidget *parent = 0);
+
+    void setSize(const int);
     
 signals:
+    void sizeChanged(int);
     
 public slots:
     void on_SelectedSizeChanged(int);

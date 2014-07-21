@@ -19,9 +19,12 @@ public:
 
     void setColor( const QColor& pColor );
 
+    void setSize( const int );
+
 signals:
     void colorChanged( const QColor& );
     void removeRequest();
+    void sizeChanged( int );
     
 private:
     Ui::LegendItem *ui;

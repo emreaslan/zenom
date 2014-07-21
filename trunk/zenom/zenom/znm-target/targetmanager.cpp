@@ -210,7 +210,11 @@ void TargetManager::updateValue(QString &pMes)
     QString value = list.at(1);
     variable.remove(' ');
 
+    // --------------- Lock Begin ---------------------
+    mLogVarMutex.lock();
     mLogVaribleFileValueMap[variable.at(0).toLatin1()] = value.toDouble();
+    mLogVarMutex.unlock();
+     // --------------- Lock End ---------------------
 }
 
 void TargetManager::doLoopPreProcess()
@@ -222,6 +226,8 @@ void TargetManager::doLoopPreProcess()
         return;
     }
 
+    // --------------- Lock Begin ---------------------
+    mLogVarMutex.lock();
     std::map<char, double>::iterator valueIter = mLogVaribleFileValueMap.begin();
     for(; valueIter != mLogVaribleFileValueMap.end(); valueIter++)
     {
@@ -235,15 +241,21 @@ void TargetManager::doLoopPreProcess()
             }
         }
     }
+    mLogVarMutex.unlock();
+    // --------------- Lock End ---------------------
 }
 
 void TargetManager::doLoopPostProcess()
 {
+    // --------------- Lock Begin ---------------------
+    mControlVarMutex.lock();
     for (int i = 0; i < mControlvariableVec.size(); ++i)
     {
         //std::cout << "doLoopPostProcess - ControlVar Name : " << mControlvariableVec[i].mName << " - mValue : " <<  *(mControlvariableVec[i].mValue) << std::endl;
         mControlVaribleFileValueVec[i].second = *(mControlvariableVec[i].mValue);
     }
+    mControlVarMutex.unlock();
+    // --------------- Lock End ---------------------
 }
 
 void TargetManager::start()

@@ -64,6 +64,8 @@ signals:
 protected slots:
     void legendColorChanged( const QColor& pColor );
 
+    void legendSizeChanged( int );
+
     void legendRemoveRequest();
 
     void zoommed_or_panned();

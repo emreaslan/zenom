@@ -17,8 +17,15 @@ void TargetReaderWriterTask::run()
     while (mTargetManager->mContiuneReading)
     {
         //std::cout << "Arduino File Reader loop" << std::endl;
-        readSerial();
-        writeSerial();
+        if (mTargetManager->mLogVaribleVec.size() > 0)
+        {
+            readSerial();
+        }
+
+        if (mTargetManager->mControlvariableVec.size() > 0)
+        {
+            writeSerial();
+        }
     }
 }
 
@@ -87,6 +94,9 @@ void TargetReaderWriterTask::writeSerial()
 {
     clearBuffer(mSendBuffer, 256);
     std::string message;
+
+    // --------------- Lock Begin ---------------------
+    mTargetManager->mControlVarMutex.lock();
     for (int i = 0; i < mTargetManager->mControlVaribleFileValueVec.size(); ++i)
     {
         if ( isDoublesEqual(mTargetManager->mControlVaribleFileValueVec[i].second, mTargetManager->mControlVarDiffVec[i]) )
@@ -101,6 +111,8 @@ void TargetReaderWriterTask::writeSerial()
 
         clearBuffer(mSendBuffer, 256);
     }
+    mTargetManager->mControlVarMutex.unlock();
+    // --------------- Lock End ---------------------
 
     if (message.size() != 0 )
     {

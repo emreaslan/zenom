@@ -84,7 +84,6 @@ void Plot::attactLogVariableItems( const QList<LogVariableItem>& pLogVariableIte
         PlotCurve* newCurve = new PlotCurve( name );
         newCurve->setLogVariableItem( pLogVariableItems[i]);
         QPen pen = QPen( mColorGenerator.generateColor() );
-        pen.setWidth(10);
         newCurve->setPen( pen );
         newCurve->attach( this );
         mCurveVec.push_back(newCurve);
@@ -120,7 +119,9 @@ void Plot::legendColorChanged( const QColor& pColor )
     if ( legend() && sender()->isWidgetType() )
     {
         PlotCurve* curve = (PlotCurve*) legend()->find( ( QWidget * )sender() );
-        curve->setPen( QPen( pColor ) );
+        QPen currentPen = curve->pen();
+        currentPen.setColor( pColor );
+        curve->setPen( currentPen );
         replot();
     }
 }
@@ -143,6 +144,18 @@ void Plot::legendRemoveRequest()
         delete curve;
         replot();
         updateLayout();
+    }
+}
+
+void Plot::legendSizeChanged(int pWidth)
+{
+    if ( legend() && sender()->isWidgetType() )
+    {
+        PlotCurve* curve = (PlotCurve*) legend()->find( ( QWidget * )sender() );
+        QPen currentPen = curve->pen();
+        currentPen.setWidth(pWidth);
+        curve->setPen( currentPen );
+        replot();
     }
 }
 

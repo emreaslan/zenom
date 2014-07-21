@@ -7,5 +7,5 @@ SUBDIRS += \
     Sine \
     SineFilter \
     ArduinoDistance \
-	MotorArduinoControl \
-	MotorZenomControl
+    MotorArduinoControl \
+    MotorZenomControl
