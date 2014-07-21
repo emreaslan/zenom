@@ -11,6 +11,8 @@ LegendItem::LegendItem(QWidget *parent) :
         SIGNAL(removeRequest()) );
     connect( ui->colorButton, SIGNAL(colorChanged(const QColor&)),
         SIGNAL(colorChanged(const QColor&)) );
+
+    ui->lineSizeCombo;
 }
 
 LegendItem::~LegendItem()

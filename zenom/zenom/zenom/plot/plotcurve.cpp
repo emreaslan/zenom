@@ -80,7 +80,11 @@ void PlotCurve::loadSettings(QSettings &pSettings)
     QColor curveColor ( pSettings.value("ColorR").toInt(),
                         pSettings.value("ColorG").toInt(),
                         pSettings.value("ColorB").toInt() );
-    setPen(QPen(curveColor));
+    QPen pen = QPen(curveColor);
+
+    pen.setWidth(10);
+
+    setPen(pen);
     mCurveData->loadSettings(pSettings);
 }
 
