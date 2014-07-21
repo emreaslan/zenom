@@ -62,7 +62,8 @@ SOURCES += main.cpp\
     plot/plotmagnifier.cpp \
     widget/output.cpp \
     aboutdialog.cpp \
-    utility/matlabstream.cpp
+    utility/matlabstream.cpp \
+    widget/linesizecombobox.cpp
 
 HEADERS  += zenom.h \
     messagelistenertask.h \
@@ -108,7 +109,8 @@ HEADERS  += zenom.h \
     plot/plotmagnifier.h \
     widget/output.h \
     aboutdialog.h \
-    utility/matlabstream.h
+    utility/matlabstream.h \
+    widget/linesizecombobox.h
 
 FORMS    += zenom.ui \
     controlvariableswidget.ui \

@@ -19,6 +19,7 @@
 #include <QtGui/QPushButton>
 #include <QtGui/QWidget>
 #include "widget/colorbutton.h"
+#include "widget/linesizecombobox.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -27,6 +28,7 @@ class Ui_LegendItem
 public:
     QHBoxLayout *horizontalLayout;
     ColorButton *colorButton;
+    LineSizeComboBox *lineSizeCombo;
     QLabel *curveName;
     QPushButton *removeButton;
 
@@ -34,7 +36,7 @@ public:
     {
         if (LegendItem->objectName().isEmpty())
             LegendItem->setObjectName(QString::fromUtf8("LegendItem"));
-        LegendItem->resize(101, 22);
+        LegendItem->resize(133, 22);
         horizontalLayout = new QHBoxLayout(LegendItem);
         horizontalLayout->setContentsMargins(3, 3, 3, 3);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -62,6 +64,12 @@ public:
         colorButton->setFlat(true);
 
         horizontalLayout->addWidget(colorButton);
+
+        lineSizeCombo = new LineSizeComboBox(LegendItem);
+        lineSizeCombo->setObjectName(QString::fromUtf8("lineSizeCombo"));
+        lineSizeCombo->setMaximumSize(QSize(20, 14));
+
+        horizontalLayout->addWidget(lineSizeCombo);
 
         curveName = new QLabel(LegendItem);
         curveName->setObjectName(QString::fromUtf8("curveName"));

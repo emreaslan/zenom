@@ -83,7 +83,9 @@ void Plot::attactLogVariableItems( const QList<LogVariableItem>& pLogVariableIte
 
         PlotCurve* newCurve = new PlotCurve( name );
         newCurve->setLogVariableItem( pLogVariableItems[i]);
-        newCurve->setPen( QPen( mColorGenerator.generateColor() ));
+        QPen pen = QPen( mColorGenerator.generateColor() );
+        pen.setWidth(10);
+        newCurve->setPen( pen );
         newCurve->attach( this );
         mCurveVec.push_back(newCurve);
     }
