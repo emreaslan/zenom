@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 #include <QString>
+#include <QMutex>
 
 class TargetReaderWriterTask;
 
@@ -53,6 +54,9 @@ protected:
     std::map<char, double> mLogVaribleFileValueMap;
     std::vector< std::pair<char, double > > mControlVaribleFileValueVec;
     std::vector<double> mControlVarDiffVec;
+
+    QMutex mControlVarMutex;
+    QMutex mLogVarMutex;
 
     TargetReaderWriterTask* mFileReaderTask;
     int mTargetFileID;

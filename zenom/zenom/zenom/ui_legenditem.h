@@ -67,7 +67,7 @@ public:
 
         lineSizeCombo = new LineSizeComboBox(LegendItem);
         lineSizeCombo->setObjectName(QString::fromUtf8("lineSizeCombo"));
-        lineSizeCombo->setMaximumSize(QSize(20, 14));
+        lineSizeCombo->setMaximumSize(QSize(40, 18));
 
         horizontalLayout->addWidget(lineSizeCombo);
 
