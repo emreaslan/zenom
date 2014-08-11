@@ -55,6 +55,7 @@ GaugeWidget* CreateGaugeDialog::create()
     }
 
     GaugeWidget* gaugeWidget = new GaugeWidget( parentWidget() );
+    gauge->setTitle( ui->logVariableList->currentLogVariableItem().logVariable()->name().c_str());
     gaugeWidget->setGauge( gauge );
     gaugeWidget->setLogVariable( ui->logVariableList->currentLogVariableItem() );
 
