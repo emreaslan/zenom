@@ -14,11 +14,13 @@ TargetReaderWriterTask::TargetReaderWriterTask(TargetManager *pManager) : mTarge
 
 void TargetReaderWriterTask::run()
 {
+    int counter = 0;
     while (mTargetManager->mContiuneReading)
     {
         //std::cout << "Arduino File Reader loop" << std::endl;
         if (mTargetManager->mLogVaribleVec.size() > 0)
         {
+            ++counter;
             readSerial();
         }
 
@@ -26,18 +28,29 @@ void TargetReaderWriterTask::run()
         {
             writeSerial();
         }
+
+        if (counter == 10 )
+        {
+            /* Flush anything already in the serial buffer */
+            mTargetManager->flushSerialFile();
+            counter = 0;
+            mByteArray.clear();
+        }
     }
 }
 
 
 void TargetReaderWriterTask::readSerial()
 {
-
     int n = read(mTargetManager->mTargetFileID, mBuffer, 128);
 
+    if (n <= 0)
+    {
+        std::cout << "read returned : " << n << std::endl;
+        return;
+    }
 
     mByteArray.append(mBuffer, n);
-
     processBuffer(mByteArray);
     clearBuffer(mBuffer, 256);
 }
@@ -55,33 +68,35 @@ void TargetReaderWriterTask::clearBuffer(char* pBuffer, unsigned int pSize)
 
 void TargetReaderWriterTask::processBuffer(QByteArray& pBuffer)
 {
+    QVector<QByteArray>  messageVec;
 
-     QVector<QByteArray>  messageVec;
+    if (pBuffer.size() == 0)
+    {
+        return;
+    }
 
-     while (true)
-     {
-         int beginPos = pBuffer.indexOf('<');
-         if (beginPos == -1)
-         {
-             break;
-         }
+    while (true)
+    {
+        int beginPos = pBuffer.indexOf('<');
+        if (beginPos == -1)
+        {
+            break;
+        }
 
-         int endPos = pBuffer.indexOf('>', beginPos);
-         if (endPos == -1)
-         {
-             break;
-         }
+        int endPos = pBuffer.indexOf('>', beginPos);
+        if (endPos == -1)
+        {
+            break;
+        }
 
-         QByteArray tempArray;
-         for (int i = beginPos + 1; i < endPos -1 ; ++i )
-         {
-             tempArray.push_back(pBuffer[i]);
-         }
-         messageVec.push_back(tempArray);
-         pBuffer = pBuffer.right( pBuffer.size() - endPos -1);
+        QByteArray tempArray;
+        for (int i = beginPos + 1; i < endPos -1 ; ++i )
+        {
+            tempArray.push_back(pBuffer[i]);
+        }
+        messageVec.push_back(tempArray);
+        pBuffer = pBuffer.right( pBuffer.size() - endPos -1);
      }
-
-
 
      for (int i = 0; i < messageVec.size(); ++i)
      {
@@ -125,7 +140,7 @@ void TargetReaderWriterTask::writeSerial()
 
 bool TargetReaderWriterTask::isDoublesEqual(double pRight, double pLeft)
 {
-    if ( fabs( pRight - pLeft ) < 0.1 )
+    if ( fabs( pRight - pLeft ) < 0.01 )
     {
         return true;
     }
