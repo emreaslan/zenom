@@ -10,6 +10,7 @@ ZenomArduinoManager zenomManager;
 
 // Log Variables
 double Distance;
+double MotorDirectionArduinoLog;
 
 // Control Variables
 double MotorDirection = 0;
@@ -18,6 +19,7 @@ void setup()
 {
     // Log Variable Register
     zenomManager.registerLogVariable(&Distance, "Distance");
+    zenomManager.registerLogVariable(&MotorDirectionArduinoLog, "MotorDirectionArduinoLog");
     
     // Control Variable Register
     zenomManager.registerControlVariable(&MotorDirection, "MotorDirection");
@@ -29,7 +31,10 @@ void setup()
     pinMode(statpin, OUTPUT);
     pinMode(echoPin, INPUT);
     pinMode(led, OUTPUT);
-    pinMode(led2, OUTPUT); 
+    pinMode(led2, OUTPUT);
+
+    digitalWrite(led, HIGH);
+    digitalWrite(led2, HIGH);
 }
 
 void loop()
@@ -50,21 +55,31 @@ void loop()
     {
 	Distance = 200;
     }
-    
+
+
     if ( (int)MotorDirection == 0 )
     {
+	MotorDirectionArduinoLog = 0;
 	motorOff(0);
 	motorOff(1);
+	digitalWrite(led, LOW);
+	digitalWrite(led2, LOW);
     }
     else if ( (int)MotorDirection == 1 )
     {
+	MotorDirectionArduinoLog = 1;
 	motorGo(0, CW, 1023);
 	motorGo(1, CW, 1023);
+	digitalWrite(led, HIGH);
+	digitalWrite(led2, LOW);
     }
     else if ( (int)MotorDirection == 2 )
     {
+	MotorDirectionArduinoLog = 2;
 	motorGo(0, CCW, 1023);
 	motorGo(1, CCW, 1023);
+	digitalWrite(led, LOW);
+	digitalWrite(led2, HIGH);
     }    
     
     // User Code End
