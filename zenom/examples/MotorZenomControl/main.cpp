@@ -47,6 +47,8 @@ private:
     // ----- Log Variables -----
     double Distance;
     double Error;
+    double MotorDirectionLog;
+    double MotorDirectionArduinoLog;
 
     // ----- Control Variables -----
     double MotorDirection;
@@ -62,11 +64,13 @@ int MotorZenomControl::initialize()
     CriticalProximity = 15;
     CriticalDistance = 35;
 
-    registerLogVariable(&Error, "Error");
-
     registerArduinoLogVariable(&Distance, "Distance");
+    registerArduinoLogVariable(&MotorDirectionArduinoLog, "MotorDirectionArduinoLog");
 
-    registerArduinoControlVariable(&MotorDirection, "MotorDirection", LOG_VARIABLE);
+    registerArduinoControlVariable(&MotorDirection, "MotorDirection");
+
+    registerLogVariable(&Error, "Error");
+    registerLogVariable(&MotorDirectionLog, "MotorDirectionLog");
 
     registerControlVariable(&CriticalProximity, "CriticalProximity");
     registerControlVariable(&CriticalDistance, "CriticalDistance");
@@ -97,6 +101,8 @@ int MotorZenomControl::doloop()
         MotorDirection = 0;
         Error = 0;
     }
+
+    MotorDirectionLog = MotorDirection;
 
     return 0;
 }
