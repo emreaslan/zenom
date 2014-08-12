@@ -11,7 +11,7 @@
 #include "targetreaderwritertask.h"
 
 
-TargetManager::TargetManager() : mIsTargetConnected(false), mContiuneReading(false), mFileReaderTask(NULL), mTargetFileID(-1)
+TargetManager::TargetManager() : mContiuneReading(false), mIsTargetConnected(false), mFileReaderTask(NULL), mTargetFileID(-1)
 {
     reset();
     /*
@@ -176,6 +176,11 @@ bool TargetManager::openTargetFile(const QString &pFileName)
     return true;
 }
 
+void TargetManager::flushSerialFile()
+{
+    tcflush(mTargetFileID, TCIFLUSH);
+}
+
 bool TargetManager::isConnected()
 {
     return mIsTargetConnected;
@@ -206,6 +211,10 @@ void TargetManager::registerControlVariable(double *pVariable, const std::string
 void TargetManager::updateValue(QString &pMes)
 {
     QStringList list = pMes.split(" : ");
+    if (list.size() < 2)
+    {
+        return;
+    }
     QString variable = list.at(0);
     QString value = list.at(1);
     variable.remove(' ');
@@ -219,10 +228,9 @@ void TargetManager::updateValue(QString &pMes)
 
 void TargetManager::doLoopPreProcess()
 {
-    //std::cout << "Do loop pre process" << std::endl;
     if(!mIsTargetConnected)
     {
-        std::cout << "do loop pre process not connected" << std::endl;
+        std::cout << "Target is not connected" << std::endl;
         return;
     }
 
@@ -251,7 +259,6 @@ void TargetManager::doLoopPostProcess()
     mControlVarMutex.lock();
     for (int i = 0; i < mControlvariableVec.size(); ++i)
     {
-        //std::cout << "doLoopPostProcess - ControlVar Name : " << mControlvariableVec[i].mName << " - mValue : " <<  *(mControlvariableVec[i].mValue) << std::endl;
         mControlVaribleFileValueVec[i].second = *(mControlvariableVec[i].mValue);
     }
     mControlVarMutex.unlock();

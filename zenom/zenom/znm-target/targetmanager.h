@@ -42,6 +42,7 @@ protected:
     int initTargetConnection(); // 0 - connection successed, -1 - No Device, -2 - File error
     void terminate();
     void reset();
+    void flushSerialFile();
 
 
 
