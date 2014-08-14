@@ -47,6 +47,8 @@ private:
     // ----- Log Variables -----
     double Distance;
     double Error;
+    double TotalError;
+    double AverageError;
 
 
     // ----- Control Variables -----
@@ -58,6 +60,9 @@ private:
 
 int MotorArduinoControl::initialize()
 {
+    TotalError = 0;
+    AverageError = 0;
+
     CriticalProximity = 15;
     CriticalDistance = 35;
 
@@ -67,12 +72,16 @@ int MotorArduinoControl::initialize()
     registerArduinoControlVariable(&CriticalProximity, "CriticalProximity");
     registerArduinoControlVariable(&CriticalDistance, "CriticalDistance");
 
+    registerLogVariable(&TotalError, "TotalError");
+    registerLogVariable(&AverageError, "AverageError");
 
     return 0;
 }
 
 int MotorArduinoControl::start()
 {
+    TotalError = 0;
+    AverageError = 0;
 
     return 0;
 }
@@ -91,6 +100,10 @@ int MotorArduinoControl::doloop()
     {
         Error = 0;
     }
+
+    TotalError += Error;
+
+    AverageError = TotalError / frequency();
 
     return 0;
 }
