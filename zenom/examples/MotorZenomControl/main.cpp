@@ -49,6 +49,8 @@ private:
     double Error;
     double MotorDirectionLog;
     double MotorDirectionArduinoLog;
+    double TotalError;
+    double AverageError;
 
     // ----- Control Variables -----
     double MotorDirection;
@@ -60,6 +62,8 @@ private:
 
 int MotorZenomControl::initialize()
 {
+    TotalError = 0;
+    AverageError = 0;
     MotorDirection = 0;
     CriticalProximity = 15;
     CriticalDistance = 35;
@@ -75,11 +79,16 @@ int MotorZenomControl::initialize()
     registerControlVariable(&CriticalProximity, "CriticalProximity");
     registerControlVariable(&CriticalDistance, "CriticalDistance");
 
+    registerLogVariable(&TotalError, "TotalError");
+    registerLogVariable(&AverageError, "AverageError");
+
     return 0;
 }
 
 int MotorZenomControl::start()
 {
+    TotalError = 0;
+    AverageError = 0;
 
     return 0;
 }
@@ -103,6 +112,10 @@ int MotorZenomControl::doloop()
     }
 
     MotorDirectionLog = MotorDirection;
+
+    TotalError += Error;
+
+    AverageError = TotalError / frequency();
 
     return 0;
 }
