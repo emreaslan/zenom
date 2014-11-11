@@ -77,7 +77,7 @@ void ControlBase::run(int argc, char *argv[])
 //============================================================================//
 void ControlBase::initializeControlBase()
 {
-	initialize();	// User Function
+    int error = initialize();	// User Function
 
     mDataRepository->writeVariablesToFile();
     mDataRepository->bindMessageQueues();
@@ -92,6 +92,11 @@ void ControlBase::initializeControlBase()
 
     mDataRepository->sendStateRequest( R_INIT ); // Send message to GUI to read values
     mState = STOPPED;
+
+    if( error )
+    {
+        std::cerr << "The initialize() function returned non zero: " << error << std::endl;
+    }
 }
 
 //============================================================================//
@@ -104,16 +109,27 @@ void ControlBase::startControlBase()
         setElapsedTime( 0 );
         mElapsedTicks = 0;
         setOverruns( 0 );
-        mDataRepository->bindLogVariablesHeap();
-        syncMainHeap();
 
-        start();	// User Function
+        int error = start();	// User Function
 
-		mState = RUNNING;
+        // start() hata ile donerse program baslatilmaz.
+        if ( error )
+        {
+            mState = STOPPED;
+            DataRepository::instance()->sendStateRequest( R_STOP );
+            std::cerr << "The start() function returned non zero: " << error << std::endl;
+        }
+        else
+        {
+            mDataRepository->bindLogVariablesHeap();
+            syncMainHeap();
 
-        mLoopTask = new LoopTask(this);
-        mLoopTask->create( mDataRepository->projectName() + "LoopTask" );
-        mLoopTask->start();
+            mState = RUNNING;
+
+            mLoopTask = new LoopTask(this);
+            mLoopTask->create( mDataRepository->projectName() + "LoopTask" );
+            mLoopTask->start();
+        }
     }
 }
 
@@ -169,15 +185,19 @@ void ControlBase::logVariables( double pSimTime )
 void ControlBase::stopControlBase()
 {
     if( mState != STOPPED )
-	{
+    {
         mState = STOPPED;
         mLoopTask->join();
         delete mLoopTask;
 
         mDataRepository->unbindLogVariableHeap();
 
-		stop();			// User Function
-	}
+        int error = stop();			// User Function
+        if( error )
+        {
+            std::cerr << "The stop() function returned non zero: " << error << std::endl;
+        }
+    }
 }
 
 //============================================================================//

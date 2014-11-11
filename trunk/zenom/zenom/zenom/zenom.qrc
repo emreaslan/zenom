@@ -6,6 +6,7 @@
         <file>resources/link.png</file>
         <file>resources/return.png</file>
         <file>resources/logo.png</file>
+        <file>resources/logo2x.png</file>
     </qresource>
     <qresource prefix="/gauge">
         <file>resources/lineargauge.png</file>
