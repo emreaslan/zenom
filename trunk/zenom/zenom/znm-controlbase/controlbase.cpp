@@ -109,21 +109,21 @@ void ControlBase::startControlBase()
         setElapsedTime( 0 );
         mElapsedTicks = 0;
         setOverruns( 0 );
-
-        int error = start();	// User Function
+        mDataRepository->bindLogVariablesHeap();
+        syncMainHeap();
+        
+		int error = start();	// User Function
 
         // start() hata ile donerse program baslatilmaz.
         if ( error )
         {
             mState = STOPPED;
             DataRepository::instance()->sendStateRequest( R_STOP );
+			mDataRepository->unbindLogVariableHeap();
             std::cerr << "The start() function returned non zero: " << error << std::endl;
         }
         else
         {
-            mDataRepository->bindLogVariablesHeap();
-            syncMainHeap();
-
             mState = RUNNING;
 
             mLoopTask = new LoopTask(this);
