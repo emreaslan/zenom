@@ -2,14 +2,14 @@
  * Zenom - Hard Real-Time Simulation Enviroment
  * @author
  *
- * <%=class_name%>
+ * %ProjectName%
  *
  *
  */
 
 #include <controlbase.h>
 
-class <%=class_name%> : public ControlBase
+class %ProjectName% : public ControlBase
 {
 public:
 
@@ -38,7 +38,7 @@ private:
  *
  * @return Return non-zero to indicate an error.
  */
-int <%=class_name%>::initialize()
+int %ProjectName%::initialize()
 {
 
 
@@ -51,7 +51,7 @@ int <%=class_name%>::initialize()
  * @return If you return 0, the control starts and the doloop() function is
  * called periodically. If you return nonzero, the control will not start.
  */
-int <%=class_name%>::start()
+int %ProjectName%::start()
 {
 
 
@@ -75,7 +75,7 @@ int <%=class_name%>::start()
  * @return If you return 0, the control will continue to execute. If you return
  * nonzero, the control will abort and stop() function will be called.
  */
-int <%=class_name%>::doloop()
+int %ProjectName%::doloop()
 {
 
 
@@ -88,7 +88,7 @@ int <%=class_name%>::doloop()
  *
  * @return Return non-zero to indicate an error.
  */
-int <%=class_name%>::stop()
+int %ProjectName%::stop()
 {
 
 
@@ -102,7 +102,7 @@ int <%=class_name%>::stop()
  *
  * @return Return non-zero to indicate an error.
  */
-int <%=class_name%>::terminate()
+int %ProjectName%::terminate()
 {
 
 
@@ -115,7 +115,7 @@ int <%=class_name%>::terminate()
  */
 int main( int argc, char *argv[] )
 {
-    <%=class_name%> c;
+    %ProjectName% c;
     c.run( argc, argv );
 
     return 0;

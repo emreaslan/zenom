@@ -40,3 +40,9 @@ QWT_LIBS      = /usr/lib64/
 #--------------------------------------------------------------
 OSG_HEADERS   = /usr/include
 OSG_LIBS      = /usr/lib64/
+
+
+#--------------------------------------------------------------
+# QtCreator Wizards Plugin Path
+#--------------------------------------------------------------
+QTCREATOR_WIZARDS_PATH = /usr/share/qtcreator/templates/wizards

@@ -15,6 +15,7 @@ LoopTask::LoopTask( ControlBase* pControlBase )
 
 void LoopTask::run()
 {
+    int error = 0;
 	RTIME now, previous;
 	RTIME elapsedTime = 0;
     unsigned long totalOverruns = 0;
@@ -33,7 +34,7 @@ void LoopTask::run()
 
         if( mControlBase->mState != PAUSED )
         {
-            mControlBase->doloop();
+            error = mControlBase->doloop();
             mControlBase->logVariables( elapsedTime );
             mControlBase->syncMainHeap();
 
@@ -48,11 +49,15 @@ void LoopTask::run()
             previous = now;
         }
 
-        if( mControlBase->mElapsedTimeInSecond > duration )
+        if( error )
+        {
+            std::cerr << "The doloop() function returned non zero: " << error << std::endl;
+        }
+
+        if( mControlBase->mElapsedTimeInSecond > duration || error )
         {
             DataRepository::instance()->sendStateRequest( R_STOP );
             break;
         }
-
 	}
 }

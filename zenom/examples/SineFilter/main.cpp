@@ -1,51 +1,27 @@
-#include <controlbase.h>
-#include <math.h>
-#include <ButterworthFilter.hpp>
-#include <iostream>
-using namespace std;
-
-
 /**
  * Zenom - Hard Real-Time Simulation Enviroment
- * @author
+ * @author zenom
  *
  * SineFilter
  * Generates a noisy sinus signal and filter it.
  *
  */
+
+#include <controlbase.h>
+#include <math.h>
+#include <ButterworthFilter.hpp>
+
 class SineFilter : public ControlBase
 {
 public:
 
-    /**
-     * Initializes and registers the log variables and control variables.
-     * @return
-     */
-    virtual int initialize();
-
-    /**
-     *
-     * @return
-     */
-    virtual int start();
-
-    /**
-     *
-     * @return
-     */
-    virtual int doloop();
-
-    /**
-     *
-     * @return
-     */
-    virtual int stop();
-
-    /**
-     *
-     * @return
-     */
-    virtual int terminate();
+    // ----- User Functions -----
+    // This functions need to be implemented by the user.
+    int initialize();
+    int start();
+    int doloop();
+    int stop();
+    int terminate();
 
 private:
     // ----- Log Variables -----
@@ -53,16 +29,22 @@ private:
     double noisySignal;
     double filteredSignal;
 
-    // ----- Control Parameters -----
+    // ----- Control Variables -----
     double amplitude;
     double cutOffFrequency;
     double dampingRatio;
 
-    // ----- Other variables -----
+    // ----- Variables -----
     ButterworthFilter<double> filter;
 };
 
-
+/**
+ * This function is called when the control program is loaded to zenom.
+ * Use this function to register control parameters, to register log variables
+ * and to initialize control parameters.
+ *
+ * @return Return non-zero to indicate an error.
+ */
 int SineFilter::initialize()
 {
     // ----- Initializes log and control variables -----
@@ -76,14 +58,19 @@ int SineFilter::initialize()
     registerControlVariable(&cutOffFrequency, "cutOffFrequency");
     registerControlVariable(&dampingRatio, "dampingRatio");
 
-    cout
+    std::cout
         << "This example program generates a noisy sine wave "
-        << "and uses a Butterworth filter to remove the noise." << endl;
+        << "and uses a Butterworth filter to remove the noise." << std::endl;
 
     return 0;
 }
 
-
+/**
+ * This function is called when the START button is pushed from zenom.
+ *
+ * @return If you return 0, the control starts and the doloop() function is
+ * called periodically. If you return nonzero, the control will not start.
+ */
 int SineFilter::start()
 {
     // ----- Initializes filter attributes -----
@@ -94,7 +81,22 @@ int SineFilter::start()
 }
 
 
-
+/**
+ * This function is called periodically (as specified by the control frequency).
+ * The useful functions that you can call used in doloop() are listed below.
+ *
+ * frequency()          returns frequency of simulation.
+ * period()             returns period of simulation.
+ * duration()           returns duration of simulation.
+ * simTicks()           returns elapsed simulation ticks.
+ * simTimeInNano()      returns elapsed simulation time in nano seconds.
+ * simTimeInMiliSec()   returns elapsed simulation time in miliseconds.
+ * simTimeInSec()       returns elapsed simulation time in seconds.
+ * overruns()           returns the count of overruns.
+ *
+ * @return If you return 0, the control will continue to execute. If you return
+ * nonzero, the control will abort.
+ */
 int SineFilter::doloop()
 {
     // ----- Sets filter attributes online.
@@ -115,17 +117,37 @@ int SineFilter::doloop()
     return 0;
 }
 
+
+/**
+ * Called when a timed run ends or the STOP button is pushed from zenom.
+ *
+ * @return Return non-zero to indicate an error.
+ */
 int SineFilter::stop()
 {
+
+
     return 0;
 }
 
+
+/**
+ * This function is called when the control is unloaded. It happens when
+ * the user loads a new control program or exits.
+ *
+ * @return Return non-zero to indicate an error.
+ */
 int SineFilter::terminate()
 {
+
+
     return 0;
 }
 
 
+/**
+ * The main function starts the control program
+ */
 int main( int argc, char *argv[] )
 {
     SineFilter c;

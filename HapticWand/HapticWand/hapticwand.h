@@ -75,15 +75,16 @@ namespace Hardware
          */
         void jointAngles( double* jointAngles );
 
-        // YAPILACAK milimetre milimetre, yoksa metre
         /**
          * Computes the end-effector position and orientation.
          * The parameter worldCoordinates are output. The first three elements of
          * the worldCoordinates denote the x, y and z position of the end-effector
-         * in millimeters and the last two elements denote its orientation
+         * in meters and the last two elements denote its orientation
          * (roll and pitch ) in radians.
          */
         void forwardKinematics( double* worldCoordinates );
+
+        void generateForces( double period, const double joint_angles[], const double world_forces[], double *output);
 
     private:
 
@@ -106,6 +107,34 @@ namespace Hardware
          * Digital output channels driving the amplifier enable lines
          */
         static const unsigned int digitalOutputChannels[6];
+
+
+        struct limiter_state
+        {
+            double mean;
+            double time;
+            int    count;
+            int    state;
+        };
+
+        struct limiter_state current_limiters[NUM_JOINTS];
+
+
+
+        void limit_currents(double dt, double motor_currents[NUM_JOINTS]);
+
+        /*
+            Determine the motor currents in amps needed to produce the specified joint torques in N-m.
+        */
+        void joint_torques_to_motor_currents(const double joint_torques[NUM_JOINTS], double motor_currents[NUM_JOINTS]);
+
+        /*
+            Determine the voltages with which we need to drive the current amplifiers
+            to get the motor currents desired.
+        */
+        void motor_currents_to_output_voltages(const double motor_currents[NUM_JOINTS], double voltages[NUM_JOINTS]);
+
+        void inverse_force_kinematics(const double theta[NUM_JOINTS], const double F[NUM_WORLD], double tau[NUM_JOINTS]);
     };
 }
 

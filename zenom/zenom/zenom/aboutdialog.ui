@@ -72,7 +72,7 @@ p, li { white-space: pre-wrap; }
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="zenom.qrc">:/zenom/resources/logo.png</pixmap>
+      <pixmap resource="zenom.qrc">:/zenom/resources/logo2x.png</pixmap>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
