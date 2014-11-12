@@ -110,13 +110,8 @@ void HapticWand::jointAngles(double* jointAngles)
     }
 }
 
-void HapticWand::forwardKinematics(double *worldCoordinates)
+void HapticWand::forwardKinematics(double* theta, double *worldCoordinates)
 {
-    double theta[ NUM_JOINTS ];
-
-    // convert the encoder counts to joint angles in radians.
-    jointAngles( theta );
-
     // compute joint angles to world co-ordinates
     worldCoordinates[0] = l[4] / 0.2e1 + cos(theta[2]) * l[0] / 0.2e1 + cos(PI - acos(sqrt(pow(l[4] + cos(theta[2]) * l[0] - cos(theta[3]) * l[0], 0.2e1) + pow(sin(theta[2]) * l[0] - sin(theta[3]) * l[0], 0.2e1)) / l[1] / 0.2e1) + atan((sin(theta[2]) * l[0] - sin(theta[3]) * l[0]) / (l[4] + cos(theta[2]) * l[0] - cos(theta[3]) * l[0]))) * l[1] / 0.2e1 + cos(theta[0]) * l[0] / 0.2e1 + cos(PI - acos(sqrt(pow(l[4] + cos(theta[0]) * l[0] - cos(theta[1]) * l[0], 0.2e1) + pow(sin(theta[0]) * l[0] - sin(theta[1]) * l[0], 0.2e1)) / l[1] / 0.2e1) + atan((sin(theta[0]) * l[0] - sin(theta[1]) * l[0]) / (l[4] + cos(theta[0]) * l[0] - cos(theta[1]) * l[0]))) * l[1] / 0.2e1;
     worldCoordinates[1] = cos(theta[5]) * (sin(theta[2]) * l[0] + sin(PI - acos(sqrt(pow(l[4] + cos(theta[2]) * l[0] - cos(theta[3]) * l[0], 0.2e1) + pow(sin(theta[2]) * l[0] - sin(theta[3]) * l[0], 0.2e1)) / l[1] / 0.2e1) + atan((sin(theta[2]) * l[0] - sin(theta[3]) * l[0]) / (l[4] + cos(theta[2]) * l[0] - cos(theta[3]) * l[0]))) * l[1]) / 0.2e1 - sin(theta[5]) * (-l[6] + l[3]) / 0.2e1 + cos(theta[4]) * (sin(theta[0]) * l[0] + sin(PI - acos(sqrt(pow(l[4] + cos(theta[0]) * l[0] - cos(theta[1]) * l[0], 0.2e1) + pow(sin(theta[0]) * l[0] - sin(theta[1]) * l[0], 0.2e1)) / l[1] / 0.2e1) + atan((sin(theta[0]) * l[0] - sin(theta[1]) * l[0]) / (l[4] + cos(theta[0]) * l[0] - cos(theta[1]) * l[0]))) * l[1]) / 0.2e1 - sin(theta[4]) * (l[6] - l[3]) / 0.2e1;
@@ -125,7 +120,7 @@ void HapticWand::forwardKinematics(double *worldCoordinates)
     worldCoordinates[4] = atan((cos(theta[0]) * l[0] + cos(PI - acos(sqrt(pow(l[4] + cos(theta[0]) * l[0] - cos(theta[1]) * l[0], 0.2e1) + pow(sin(theta[0]) * l[0] - sin(theta[1]) * l[0], 0.2e1)) / l[1] / 0.2e1) + atan((sin(theta[0]) * l[0] - sin(theta[1]) * l[0]) / (l[4] + cos(theta[0]) * l[0] - cos(theta[1]) * l[0]))) * l[1] - cos(theta[2]) * l[0] - cos(PI - acos(sqrt(pow(l[4] + cos(theta[2]) * l[0] - cos(theta[3]) * l[0], 0.2e1) + pow(sin(theta[2]) * l[0] - sin(theta[3]) * l[0], 0.2e1)) / l[1] / 0.2e1) + atan((sin(theta[2]) * l[0] - sin(theta[3]) * l[0]) / (l[4] + cos(theta[2]) * l[0] - cos(theta[3]) * l[0]))) * l[1]) / (l[5] + sin(theta[4]) * (sin(theta[0]) * l[0] + sin(PI - acos(sqrt(pow(l[4] + cos(theta[0]) * l[0] - cos(theta[1]) * l[0], 0.2e1) + pow(sin(theta[0]) * l[0] - sin(theta[1]) * l[0], 0.2e1)) / l[1] / 0.2e1) + atan((sin(theta[0]) * l[0] - sin(theta[1]) * l[0]) / (l[4] + cos(theta[0]) * l[0] - cos(theta[1]) * l[0]))) * l[1]) + cos(theta[4]) * (l[6] - l[3]) - sin(theta[5]) * (sin(theta[2]) * l[0] + sin(PI - acos(sqrt(pow(l[4] + cos(theta[2]) * l[0] - cos(theta[3]) * l[0], 0.2e1) + pow(sin(theta[2]) * l[0] - sin(theta[3]) * l[0], 0.2e1)) / l[1] / 0.2e1) + atan((sin(theta[2]) * l[0] - sin(theta[3]) * l[0]) / (l[4] + cos(theta[2]) * l[0] - cos(theta[3]) * l[0]))) * l[1]) - cos(theta[5]) * (-l[6] + l[3])));
 }
 
-void HapticWand::generateForces(double period, const double joint_angles[NUM_JOINTS], const double world_forces[NUM_WORLD], double* output)
+void HapticWand::generateForces(double period, const double joint_angles[NUM_JOINTS], const double world_forces[NUM_WORLD] )
 {
     double joint_torques[NUM_JOINTS];       /* joint torques in N-m */
     double motor_currents[NUM_JOINTS];      /* motor currents in amps */
@@ -136,9 +131,6 @@ void HapticWand::generateForces(double period, const double joint_angles[NUM_JOI
     joint_torques_to_motor_currents(joint_torques, motor_currents);         /* convert joint torques to motor currents */
     limit_currents( period, motor_currents);               /* limit motor currents to prevent overheating */
     motor_currents_to_output_voltages(motor_currents, output_voltages);     /* compute output voltages required to produce the motor currents */
-
-    for ( int i = 0; i < NUM_JOINTS; ++i )
-        output[i] = output_voltages[i];
 
     /* Write the voltages to the outputs */
     writeAnalogs( output_voltages );

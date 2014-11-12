@@ -4,4 +4,6 @@ SUBDIRS += \
     ReadAnalog \
     WriteAnalog \
     ReadEncoder \
-    ReadWriteDigital
+    ReadWriteDigital \
+    SimpleSpring \
+    Sphere
