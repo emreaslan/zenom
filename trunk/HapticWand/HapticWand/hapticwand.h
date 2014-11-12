@@ -82,9 +82,9 @@ namespace Hardware
          * in meters and the last two elements denote its orientation
          * (roll and pitch ) in radians.
          */
-        void forwardKinematics( double* worldCoordinates );
+        void forwardKinematics( double* theta, double* worldCoordinates );
 
-        void generateForces( double period, const double joint_angles[], const double world_forces[], double *output);
+        void generateForces( double period, const double joint_angles[], const double world_forces[] );
 
     private:
 

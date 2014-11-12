@@ -15,13 +15,15 @@ DEFINES += HAPTICWAND_LIBRARY
 
 SOURCES += hapticwand.cpp \
     hil.cpp \
-    hilexception.cpp
+    hilexception.cpp \
+    hapticwand_utils.cpp
 
 HEADERS += hapticwand.h\
         HapticWand_global.h \
     hil.h \
     hilexception.h \
-    q8Config.h
+    q8Config.h \
+    hapticwand_utils.h
 
 # Xenomai
 INCLUDEPATH +=  $${XENOMAI_HEADERS}
