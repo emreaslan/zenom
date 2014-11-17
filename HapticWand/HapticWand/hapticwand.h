@@ -72,6 +72,8 @@ namespace Hardware
         /**
          * Converts encoder counts from the Haptic 5-DOF Wand into joint angles in radians.
          * The parameter jointAngles are output as a 6-vector in order of the joints.
+         *
+         * @param jointAngles (Output)  The joint angles in radians for the six joints.
          */
         void jointAngles( double* jointAngles );
 
@@ -81,10 +83,34 @@ namespace Hardware
          * the worldCoordinates denote the x, y and z position of the end-effector
          * in meters and the last two elements denote its orientation
          * (roll and pitch ) in radians.
+         *
+         * @param theta                     The joint angles in radians for the six joints.
+         * @param worldCoordinates (Output) The position and orientation of the robot
+         *                                  end-effector as a 5-vector: X, Y and Z coordinates
+         *                                  in meters, yaw and roll in radians.
          */
         void forwardKinematics( double* theta, double* worldCoordinates );
 
+        /**
+         * Writes user defined voltage values to analog output channels 0-5.
+         * The size of the counts array must be at least 6.
+         *
+         * @param period        The period of the controller.
+         * @param joint_angles  The joint angles in radians.
+         * @param world_forces  The forces and torques in Cartesian coordinates with which to drive
+         *                      the Haptic 5-DOF Wand end-effector. The input is a 5-vector, with the
+         *                      first three elements being the X, Y and Z forces in N and the last two
+         *                      elements being the yaw and roll torques in N-m.
+         */
         void generateForces( double period, const double joint_angles[], const double world_forces[] );
+
+        /**
+         * The first sample when enableWand() is called. This is useful to set a
+         * relative setpoint when doing a position control.
+         *
+         * @return The first sample when enableWand().
+         */
+        inline const double* firstSample() { return mFirstSample; }
 
     private:
 
@@ -119,8 +145,10 @@ namespace Hardware
 
         struct limiter_state current_limiters[NUM_JOINTS];
 
-
-
+        /*
+            Limit the motor currents such that the thermal rating for the motors is not exceeded
+            while continuing to provide the peak torque when necessary.
+        */
         void limit_currents(double dt, double motor_currents[NUM_JOINTS]);
 
         /*
@@ -134,7 +162,16 @@ namespace Hardware
         */
         void motor_currents_to_output_voltages(const double motor_currents[NUM_JOINTS], double voltages[NUM_JOINTS]);
 
+        /*
+            Compute the motor torques, tau, from the end-effector generalized forces, F. Since this conversion
+            is configuration-dependent, the joint tangles, theta, are required.
+        */
         void inverse_force_kinematics(const double theta[NUM_JOINTS], const double F[NUM_WORLD], double tau[NUM_JOINTS]);
+
+        /*
+            The first sample when enableWand() is called.
+        */
+        double mFirstSample[5];
     };
 }
 
