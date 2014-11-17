@@ -54,6 +54,14 @@ void LifeCycleTask::run()
 	}
     catch (ZnmException e)
 	{
-        std::cout << "Error occurred controlBase:"<< e.errorNo() << std::string(e.what()) << std::endl;
+        std::cerr << "Error occurred controlBase:"<< e.errorNo() << std::string(e.what()) << std::endl;
 	}
+    catch (std::exception e)
+    {
+        std::cerr << "Exception occured: " << e.what() << std::endl;
+    }
+    catch (...)
+    {
+        std::cerr << "Unknown exception occured." << std::endl;
+    }
 }

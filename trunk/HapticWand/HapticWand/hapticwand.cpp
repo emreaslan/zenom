@@ -63,6 +63,11 @@ void HapticWand::enableWand()
     // enable amplifiers
     const bool amplifiers[NUM_DIGITAL_OUTPUT] = { 1, 1, 1, 1, 1, 1 };
     writeDigital( digitalOutputChannels, amplifiers, NUM_DIGITAL_OUTPUT );
+
+    // The first sample when the controller is ran.
+    double joint_angles[6];        // joint angles in radians
+    jointAngles( joint_angles );
+    forwardKinematics( joint_angles, mFirstSample );
 }
 
 void HapticWand::disableWand()
@@ -136,9 +141,6 @@ void HapticWand::generateForces(double period, const double joint_angles[NUM_JOI
     writeAnalogs( output_voltages );
 }
 
-/*
-    Determine the motor currents in amps needed to produce the specified joint torques in N-m.
-*/
 void HapticWand::joint_torques_to_motor_currents(const double joint_torques[NUM_JOINTS], double motor_currents[NUM_JOINTS])
 {
     static const double torque_constants[NUM_JOINTS] = {KT_SMALL, KT_SMALL, KT_SMALL, KT_SMALL, KT_LARGE, KT_LARGE};
@@ -148,10 +150,6 @@ void HapticWand::joint_torques_to_motor_currents(const double joint_torques[NUM_
         motor_currents[i] = joint_torques[i] / torque_constants[i]; // convert N-m to amps
 }
 
-/*
-    Determine the voltages with which we need to drive the current amplifiers
-    to get the motor currents desired.
-*/
 void HapticWand::motor_currents_to_output_voltages(const double motor_currents[NUM_JOINTS], double voltages[NUM_JOINTS])
 {
     int i;
@@ -162,10 +160,6 @@ void HapticWand::motor_currents_to_output_voltages(const double motor_currents[N
     voltages[3] = -voltages[3];
 }
 
-/*
-    Limit the motor currents such that the thermal rating for the motors is not exceeded
-    while continuing to provide the peak torque when necessary.
-*/
 void HapticWand::limit_currents(double dt, double motor_currents[NUM_JOINTS])
 {
     static const double current_limit_1[NUM_JOINTS]  = {LIMIT_1_SMALL,   LIMIT_1_SMALL,   LIMIT_1_SMALL,   LIMIT_1_SMALL,   LIMIT_1_LARGE,   LIMIT_1_LARGE};
@@ -260,11 +254,6 @@ void HapticWand::limit_currents(double dt, double motor_currents[NUM_JOINTS])
     }
 }
 
-
-/*
-    Compute the motor torques, tau, from the end-effector generalized forces, F. Since this conversion
-    is configuration-dependent, the joint tangles, theta, are required.
-*/
 void HapticWand::inverse_force_kinematics(const double theta[NUM_JOINTS], const double F[NUM_WORLD], double tau[NUM_JOINTS])
 {
     double J[NUM_WORLD][NUM_JOINTS]; /* Jacobian */

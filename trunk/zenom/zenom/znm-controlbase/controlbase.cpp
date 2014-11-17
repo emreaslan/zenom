@@ -23,9 +23,19 @@ void ControlBase::registerLogVariable(double *pVariable, const std::string& pNam
     mDataRepository->insertLogVariable( new LogVariable( pVariable, pName, pRow, pCol, pDesc ) );
 }
 
+void ControlBase::registerLogVariable(double& pVariable, const std::string& pName, const std::string& pDesc)
+{
+    registerLogVariable(&pVariable, pName, 1, 1, pDesc);
+}
+
 void ControlBase::registerControlVariable(double *pVariable, const std::string& pName, unsigned int pRow, unsigned int pCol, const std::string& pDesc)
 {
     mDataRepository->insertControlVariable( new ControlVariable( pVariable, pName, pRow, pCol, pDesc ) );
+}
+
+void ControlBase::registerControlVariable(double& pVariable, const std::string& pName, const std::string& pDesc)
+{
+    registerControlVariable( &pVariable, pName, 1, 1, pDesc );
 }
 
 void ControlBase::setFrequency( double pFrequency )

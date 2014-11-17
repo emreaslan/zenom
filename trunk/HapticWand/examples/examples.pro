@@ -5,5 +5,5 @@ SUBDIRS += \
     WriteAnalog \
     ReadEncoder \
     ReadWriteDigital \
-    SimpleSpring \
-    Sphere
+    Sphere \
+    Tracker

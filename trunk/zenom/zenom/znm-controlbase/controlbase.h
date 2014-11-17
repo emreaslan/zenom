@@ -29,7 +29,11 @@ public:
      */
     void registerLogVariable(double *pVariable, const std::string& pName, unsigned int pRow = 1, unsigned int pCol = 1, const std::string& pDesc= "");
 
+    void registerLogVariable(double& pVariable, const std::string& pName, const std::string& pDesc= "");
+
     void registerControlVariable(double *pVariable, const std::string& pName, unsigned int pRow = 1, unsigned int pCol = 1, const std::string& pDesc= "");
+
+    void registerControlVariable(double& pVariable, const std::string& pName, const std::string& pDesc= "");
 
     void run(int argc, char *argv[]);
 

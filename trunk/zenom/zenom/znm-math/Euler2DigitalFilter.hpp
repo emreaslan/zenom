@@ -145,7 +145,7 @@ Euler2DigitalFilter<T>::Euler2DigitalFilter(double s, const T &i):Integrator<T>(
 
 
 //============================================================
-// LowpassFilter::setCutOffFrequencyHz
+// Euler2DigitalFilter::setCutOffFrequencyHz
 //============================================================
 template<class T>
 void Euler2DigitalFilter<T>::setCutOffFrequencyHz(double cutOffFrequencyHz)
@@ -156,7 +156,7 @@ void Euler2DigitalFilter<T>::setCutOffFrequencyHz(double cutOffFrequencyHz)
 
 
 //============================================================
-// LowpassFilter::setCutOffFrequencyRad
+// Euler2DigitalFilter::setCutOffFrequencyRad
 //============================================================
 template<class T>
 void Euler2DigitalFilter<T>::setCutOffFrequencyRad(double cutOffFrequencyRad)
@@ -167,7 +167,7 @@ void Euler2DigitalFilter<T>::setCutOffFrequencyRad(double cutOffFrequencyRad)
 
 
 //============================================================
-// LowpassFilter::getCutOffFrequencyHz
+// Euler2DigitalFilter::getCutOffFrequencyHz
 //============================================================
 template<class T>
 double Euler2DigitalFilter<T>::getCutOffFrequencyHz() const
@@ -177,7 +177,7 @@ double Euler2DigitalFilter<T>::getCutOffFrequencyHz() const
 
 
 //============================================================
-// LowpassFilter::getCutOffFrequencyRad
+// Euler2DigitalFilter::getCutOffFrequencyRad
 //============================================================
 template<class T>
 double Euler2DigitalFilter<T>::getCutOffFrequencyRad() const
@@ -187,7 +187,7 @@ double Euler2DigitalFilter<T>::getCutOffFrequencyRad() const
 
 
 //============================================================
-// LowpassFilter::setDampingRatio
+// Euler2DigitalFilter::setDampingRatio
 //============================================================
 template<class T>
 void Euler2DigitalFilter<T>::setDampingRatio(double dampingRatio)
@@ -197,7 +197,7 @@ void Euler2DigitalFilter<T>::setDampingRatio(double dampingRatio)
 
 
 //============================================================
-// LowpassFilter::getDampingRatio
+// Euler2DigitalFilter::getDampingRatio
 //============================================================
 template<class T>
 double Euler2DigitalFilter<T>::getDampingRatio() const
@@ -222,14 +222,9 @@ void Euler2DigitalFilter<T>::reset(const T &resetToValue)
 template<class T>
 T Euler2DigitalFilter<T>::integrate(const T &currentInput)
 {
-	/*
-	T input = currentInput;// - integrator2.previousOutput();
-	input = input - (integrator1.previousOutput() * 2 * d_dampingRatio);
-	input = input * d_cutOffFrequencyRad; 
-	input = integrator1.integrate( input );
-	input = input * d_cutOffFrequencyRad;
-	return integrator2.integrate( input );
-	*/
+    // Quanser 5-DOF Haptic Wand
+    // Matlab Quanser Tunable Functions
+    // 2nd Order Digital Filter Input ICs
 
 	T tmpPrevOutput2 = prevOutput2;
 	T tmpPrevOutput1 = prevOutput1;
@@ -242,7 +237,7 @@ T Euler2DigitalFilter<T>::integrate(const T &currentInput)
 	prevOutput2 = this->d_samplingPeriod * input2 + prevOutput2;
 	prevOutput1 = this->d_samplingPeriod * input1 + prevOutput1;
 
-	return tmpPrevOutput2;
+    return input2;
 }
 
 #endif
