@@ -16,8 +16,7 @@ public:
 
 	ColumnVector<5> force( ColumnVector<5>& w, ColumnVector<5>& wd ); 
 
-private:
-	ColumnVector<5> firstSample;
+private:	
     ColumnVector<5> stiffness;
     ColumnVector<5> damping;
 	Euler2DigitalFilter< ColumnVector<5> > digitalFilter;
