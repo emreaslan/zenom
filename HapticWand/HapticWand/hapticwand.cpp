@@ -154,7 +154,7 @@ void HapticWand::motor_currents_to_output_voltages(const double motor_currents[N
 {
     int i;
     for (i=NUM_JOINTS-1; i >= 0; --i)
-        voltages[i] = 0.5*motor_currents[i];
+        voltages[i] = 2*motor_currents[i];
 
     voltages[2] = -voltages[2];
     voltages[3] = -voltages[3];

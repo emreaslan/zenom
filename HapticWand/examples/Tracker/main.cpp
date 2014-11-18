@@ -12,6 +12,7 @@
 
 #include <controlbase.h>
 #include <hapticwand.h>
+#include <hapticwand_utils.h>
 #include "setpoint.h"
 #include "positioncontroller.h"
 
@@ -32,9 +33,9 @@ public:
     
 private:
     // ----- Log Variables -----
-    ColumnVector<5> w;
-    ColumnVector<5> wd;
-    ColumnVector<5> F;
+    ColumnVector<5> w;      // current world position.
+    ColumnVector<5> wd;     // desired world position.
+
     
     // ----- Control Variables -----
     
@@ -43,7 +44,7 @@ private:
     HapticWand hapticWand;
     SetPoint setPoint;
     PositionController positionController;
-
+    ColumnVector<5> firstSample;
 };
 
 /**
@@ -57,7 +58,6 @@ int Tracker::initialize()
 {
     registerLogVariable( w.getElementsPointer(), "w", 1, 5 );
     registerLogVariable( wd.getElementsPointer(), "wd", 1, 5 );
-    registerLogVariable( F.getElementsPointer(), "F", 1, 5 );
 
     hapticWand.open();              // Open the q8 card
     hapticWand.calibrateWand();     // Calibrate the haptic wand
@@ -77,15 +77,14 @@ int Tracker::start()
 
     setPoint.reset();
 
-    ColumnVector<5> first_sample;
-    first_sample =
+    firstSample =
             hapticWand.firstSample()[0],
             hapticWand.firstSample()[1],
             hapticWand.firstSample()[2],
             hapticWand.firstSample()[3],
             hapticWand.firstSample()[4];
 
-    positionController.reset( first_sample, period() );
+    positionController.reset( firstSample, period() );
 
     return 0;
 }
@@ -111,11 +110,14 @@ int Tracker::doloop()
 {
     double jointAngles[6];        // joint angles in radians
     hapticWand.jointAngles( jointAngles );
-    hapticWand.forwardKinematics( jointAngles, w.getElementsPointer() ); // current world position.
+    hapticWand.forwardKinematics( jointAngles, w.getElementsPointer() );    // current world position.
 
-    wd = setPoint.wd( simTimeInSec() , period() );  // Desired position.
+    // Desired position.
+    wd = setPoint.wd( simTimeInSec() , period() ) + firstSample;
 
-    F = positionController.force( w, wd ); // calculate forces.
+    // calculate forces.
+    ColumnVector<5> F;
+    F = positionController.force( w, wd );
 
     hapticWand.generateForces( period(), jointAngles, F.getElementsPointer() );
 

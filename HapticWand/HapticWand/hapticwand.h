@@ -92,8 +92,7 @@ namespace Hardware
         void forwardKinematics( double* theta, double* worldCoordinates );
 
         /**
-         * Writes user defined voltage values to analog output channels 0-5.
-         * The size of the counts array must be at least 6.
+         * Converts cartesian end-effector forces to joint torques for the Quanser Haptic 5-DOF Wand.
          *
          * @param period        The period of the controller.
          * @param joint_angles  The joint angles in radians.

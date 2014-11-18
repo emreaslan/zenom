@@ -4,15 +4,12 @@
 
 PositionController::PositionController()
 {
-	firstSample = 0, 0.124, 0, 0, 0;
-	stiffness = 500, 500, 500, 1000, 1000;
-	damping = 5, 5, 5, 100, 100;
+    stiffness = 500, 500, 500, 1, 1;
+    damping = 5, 5, 5, 0.1, 0.1;
 }
 
 void PositionController::reset( ColumnVector<5>& pFirstSample, double pPeriod )
 {
-	firstSample = pFirstSample;
-
 	// Filter Cutoff (rad/s)
     double wn_f = 150;
 
@@ -27,7 +24,7 @@ void PositionController::reset( ColumnVector<5>& pFirstSample, double pPeriod )
 
 ColumnVector<5> PositionController::force( ColumnVector<5>& w, ColumnVector<5>& wd )
 {
-	ColumnVector<5> F_stiff = wd - firstSample;
+    ColumnVector<5> F_stiff = wd - w;
 	F_stiff = elementProduct(F_stiff, stiffness);
 
 	ColumnVector<5> F_damp = digitalFilter.integrate( w );
