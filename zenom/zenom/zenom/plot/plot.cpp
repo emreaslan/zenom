@@ -67,9 +67,19 @@ void Plot::loadSettings( QSettings& pSettings )
         PlotCurve* newCurve = new PlotCurve( );
         newCurve->loadSettings(pSettings);
         pSettings.endGroup();
-        newCurve->attach( this );
-        mCurveVec.push_back(newCurve);
-        mColorGenerator.increaseIndex();
+
+        // Konfigurasyon dosyasında silinen bir log degiskenine ait
+        // kayit varsa, o log değişkeni plota eklenmez.
+        if ( newCurve->logVariableItem().isNull() )
+        {
+            delete newCurve;
+        }
+        else
+        {
+            newCurve->attach( this );
+            mCurveVec.push_back(newCurve);
+            mColorGenerator.increaseIndex();
+        }
     }
 }
 
@@ -255,41 +265,11 @@ void Plot::exportCurvesAsMatlab(const QString &pFileName)
 
     MatlabStream out(&file);
 
-    // mCurveVec listesinde olmayan log variable olabilir. Buy yuzden tersten yapildi.
-    for ( unsigned int i = 0; i < DataRepository::instance()->logVariables().size(); ++i )
+    // Writes the points to stream out
+    for( int i = 0; i < mCurveVec.size(); ++i )
     {
-        LogVariable* logVariable = DataRepository::instance()->logVariables().at(i);
-        bool timeVariable = false;
-
-        for ( unsigned int row = 0; row < logVariable->row(); ++row )
-        {
-            for ( unsigned int col = 0; col < logVariable->col(); ++col )
-            {
-                if ( contains( logVariable, row, col ) )
-                {
-                    // Writes the log variable to stream out
-                    out.writeLogVariableItem(logVariable, row, col);
-                    timeVariable = true;
-                }
-            }
-        }
-
-        if ( timeVariable )
-        {
-            out.writeLogVariableTime( logVariable );
-        }
+        LogVariableItem logVariableItem = mCurveVec[i]->logVariableItem();
+        out.writeLogVariableItem( logVariableItem.logVariable(), logVariableItem.row(), logVariableItem.column() );
+        out.writeLogVariableTime( logVariableItem.logVariable() );
     }
-}
-
-bool Plot::contains(LogVariable *pLogVariable, int pRow, int pCol)
-{
-    for ( int i = 0; i < mCurveVec.size(); ++i )
-    {
-        if( mCurveVec[i]->logVariableItem().logVariable() == pLogVariable &&
-                mCurveVec[i]->logVariableItem().row() == pRow &&
-                mCurveVec[i]->logVariableItem().column() == pCol )
-            return true;
-    }
-
-    return false;
 }

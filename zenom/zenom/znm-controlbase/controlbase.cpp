@@ -87,7 +87,22 @@ void ControlBase::run(int argc, char *argv[])
 //============================================================================//
 void ControlBase::initializeControlBase()
 {
-    int error = initialize();	// User Function
+    try
+    {
+        int error = initialize();	// User Function
+        if( error )
+        {
+            std::cerr << "The initialize() function returned non zero: " << error << std::endl;
+        }
+    }
+    catch( std::exception& e )
+    {
+        std::cerr << "An exception occured in the initialize() function: " << e.what() << std::endl;
+    }
+    catch (...)
+    {
+        std::cerr << "An unknown exception occured in the initialize() function." << std::endl;
+    }
 
     mDataRepository->writeVariablesToFile();
     mDataRepository->bindMessageQueues();
@@ -102,11 +117,6 @@ void ControlBase::initializeControlBase()
 
     mDataRepository->sendStateRequest( R_INIT ); // Send message to GUI to read values
     mState = STOPPED;
-
-    if( error )
-    {
-        std::cerr << "The initialize() function returned non zero: " << error << std::endl;
-    }
 }
 
 //============================================================================//
@@ -121,16 +131,36 @@ void ControlBase::startControlBase()
         setOverruns( 0 );
         mDataRepository->bindLogVariablesHeap();
         syncMainHeap();
-        
-		int error = start();	// User Function
+
+        int error = 0;
+
+        try
+        {
+            error = start();	// User Function
+
+            // start() hata ile donerse program baslatilmaz.
+            if ( error )
+            {
+                std::cerr << "The start() function returned non zero: " << error << std::endl;
+            }
+        }
+        catch( std::exception& e )
+        {
+            error = -1;
+            std::cerr << "An exception occured in the start() function: " << e.what() << std::endl;
+        }
+        catch (...)
+        {
+            error = -1;
+            std::cerr << "An unknown exception occured in the start() function." << std::endl;
+        }
 
         // start() hata ile donerse program baslatilmaz.
         if ( error )
         {
             mState = STOPPED;
             DataRepository::instance()->sendStateRequest( R_STOP );
-			mDataRepository->unbindLogVariableHeap();
-            std::cerr << "The start() function returned non zero: " << error << std::endl;
+            mDataRepository->unbindLogVariableHeap();
         }
         else
         {
@@ -202,10 +232,21 @@ void ControlBase::stopControlBase()
 
         mDataRepository->unbindLogVariableHeap();
 
-        int error = stop();			// User Function
-        if( error )
+        try
         {
-            std::cerr << "The stop() function returned non zero: " << error << std::endl;
+            int error = stop();			// User Function
+            if( error )
+            {
+                std::cerr << "The stop() function returned non zero: " << error << std::endl;
+            }
+        }
+        catch( std::exception& e )
+        {
+            std::cerr << "An exception occured in the stop() function: " << e.what() << std::endl;
+        }
+        catch (...)
+        {
+            std::cerr << "An unknown exception occured in the stop() function." << std::endl;
         }
     }
 }

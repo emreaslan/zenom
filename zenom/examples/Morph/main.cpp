@@ -81,7 +81,6 @@ int Morph::start()
  */
 int Morph::doloop()
 {
-    // TODO 50000hz 100s controlbase gidiyor. loglama ile ilgili bir problem olabilir.
     double constantCoords[8][3] =
     {
         { -1,  1,  1 },
