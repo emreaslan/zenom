@@ -25,6 +25,7 @@ SetPoint::SetPoint()
 	toSI = 1e-3, 1e-3, 1e-3, M_PI/180, M_PI/180;	
 	v_lim = 50.0 * toSI;
     current = wd_0;
+    trajectory_space = 30, 30, 30, 20, 20;
 }
 
 void SetPoint::reset()
@@ -36,11 +37,11 @@ ColumnVector<5> SetPoint::wd( double pTime, double pSamplingPeriod )
 {
 	ColumnVector<5> wd;
 	wd = 
-		squareWave_x( pTime ) * 30,
-		squareWave_y( pTime ) * 30,
-		squareWave_z( pTime ) * 30,
-		squareWave_yaw( pTime ) * 20,
-		squareWave_roll( pTime ) * 20;
+        squareWave_x( pTime ) * trajectory_space.getElement(1),
+        squareWave_y( pTime ) * trajectory_space.getElement(2),
+        squareWave_z( pTime ) * trajectory_space.getElement(3),
+        squareWave_yaw( pTime ) * trajectory_space.getElement(4),
+        squareWave_roll( pTime ) * trajectory_space.getElement(5);
 
 	wd = elementProduct( wd, toSI );
 

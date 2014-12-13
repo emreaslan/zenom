@@ -78,8 +78,6 @@ void BindDialog::loadSettings( QSettings& pSettings )
             //std::cout << "could not find osg node" << std::endl;
         }
 
-        // TODO false olursa ne yapalim
-
         pSettings.endGroup();
     }
 }
@@ -107,9 +105,10 @@ void BindDialog::on_nodeTree_itemDoubleClicked( QTreeWidgetItem * pNodeItem, int
 
 void BindDialog::bindedSlot( NodeData* pNodeData, const QVector<LogVariable *> pArguments )
 {
-    // TODO false olursa ne yapalim
-    pNodeData->bind( pArguments );
-    mBindedElements.insert(pNodeData);
+    if( pNodeData->bind( pArguments ) )
+    {
+        mBindedElements.insert(pNodeData);
+    }
 }
 
 void BindDialog::unbindedSlot( NodeData* pNodeData )

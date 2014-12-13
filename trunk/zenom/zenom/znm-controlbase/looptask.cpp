@@ -34,7 +34,25 @@ void LoopTask::run()
 
         if( mControlBase->mState != PAUSED )
         {
-            error = mControlBase->doloop();
+            try
+            {
+                error = mControlBase->doloop();			// User Function
+                if( error )
+                {
+                    std::cerr << "The doloop() function returned non zero: " << error << std::endl;
+                }
+            }
+            catch( std::exception& e )
+            {
+                error = -1;
+                std::cerr << "An exception occured in the doloop() function: " << e.what() << std::endl;
+            }
+            catch (...)
+            {
+                error = -1;
+                std::cerr << "An unknown exception occured in the doloop() function." << std::endl;
+            }
+
             mControlBase->logVariables( elapsedTime );
             mControlBase->syncMainHeap();
 
@@ -47,11 +65,6 @@ void LoopTask::run()
         {
             now = rt_timer_read();
             previous = now;
-        }
-
-        if( error )
-        {
-            std::cerr << "The doloop() function returned non zero: " << error << std::endl;
         }
 
         if( mControlBase->mElapsedTimeInSecond > duration || error )

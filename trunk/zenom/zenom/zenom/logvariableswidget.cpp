@@ -16,8 +16,6 @@ LogVariablesWidget::LogVariablesWidget(QWidget *parent) :
 	mHeaderView = new CheckedHeader(Qt::Vertical, ui->logVariableTable);
 	connect( mHeaderView, SIGNAL(toggled(int,bool)), SLOT(setLogVariableChecked(int, bool)) );
     ui->logVariableTable->setVerticalHeader( mHeaderView );
-
-    // TODO checkboxa tiklayinca cakiyor.
 }
 
 LogVariablesWidget::~LogVariablesWidget()

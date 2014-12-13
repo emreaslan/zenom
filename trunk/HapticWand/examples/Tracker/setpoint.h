@@ -15,6 +15,12 @@ public:
 
     void reset();
 
+    /*
+     * The wand's end-effector tracks a 30-mm cube trajectory (along the x, y, and z axes) and
+     * rotates ± 20 degrees between each corner in turns about its roll and pitch.
+     */
+    ColumnVector<5> trajectory_space;
+
 	ColumnVector<5> wd( double pTime, double pSamplingPeriod ); 
 
 private:

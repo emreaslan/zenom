@@ -48,16 +48,6 @@ public:
      */
     void exportCurvesAsMatlab( const QString& pFileName );
 
-    /**
-     * Verilen satir ve sutundaki log variable ait bir egri var ise
-     * true, yoksa false dondurur.
-     * @param pLogVariable log variable
-     * @param pRow log variable satiri
-     * @param pColumn log variable sutunu
-     * @return log variable ait egri varse true yoksa false getirir.
-     */
-    bool contains( LogVariable* pLogVariable, int pRow, int pCol );
-
 signals:
     void autoscaleOff();
 

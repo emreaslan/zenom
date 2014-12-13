@@ -206,8 +206,6 @@ void Zenom::on_actionOpen_Project_triggered()
     }
 }
 
-#include  <QDir>
-
 void Zenom::openProject(const QString& pProjectPath)
 {
     terminateProject();     // close project if already a project was opened.

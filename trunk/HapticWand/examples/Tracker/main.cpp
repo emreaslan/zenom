@@ -59,6 +59,8 @@ int Tracker::initialize()
     registerLogVariable( w.getElementsPointer(), "w", 1, 5 );
     registerLogVariable( wd.getElementsPointer(), "wd", 1, 5 );
 
+    registerControlVariable( setPoint.trajectory_space.getElementsPointer(), "trajectory_space", 1, 5 );
+
     hapticWand.open();              // Open the q8 card
     hapticWand.calibrateWand();     // Calibrate the haptic wand
     
