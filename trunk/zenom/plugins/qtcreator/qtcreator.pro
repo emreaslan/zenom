@@ -8,10 +8,10 @@ TEMPLATE = subdirs
 include( ../../zenom.pri )
 
 WIZARD_FILE = $$system(cp project.pro.template zenom/project.pro)
-WIZARD_FILE = $$system(replace "%XENOMAI_HEADERS%" $${XENOMAI_HEADERS} -- zenom/project.pro)
-WIZARD_FILE = $$system(replace "%XENOMAI_LIBS%" $${XENOMAI_LIBS} -- zenom/project.pro)
-WIZARD_FILE = $$system(replace "%ZENOM_INSTALL_HEADERS%" $${ZENOM_INSTALL_HEADERS} -- zenom/project.pro)
-WIZARD_FILE = $$system(replace "%ZENOM_INSTALL_LIBS%" $${ZENOM_INSTALL_LIBS} -- zenom/project.pro)
+WIZARD_FILE = $$system(sed -i 's@%XENOMAI_HEADERS%@$${XENOMAI_HEADERS}@g' zenom/project.pro)
+WIZARD_FILE = $$system(sed -i 's@%XENOMAI_LIBS%@$${XENOMAI_LIBS}@g' zenom/project.pro)
+WIZARD_FILE = $$system(sed -i 's@%ZENOM_INSTALL_HEADERS%@$${ZENOM_INSTALL_HEADERS}@g' zenom/project.pro)
+WIZARD_FILE = $$system(sed -i 's@%ZENOM_INSTALL_LIBS%@$${ZENOM_INSTALL_LIBS}@g' zenom/project.pro)
 
 
 wizard.files  += zenom/logo.png
