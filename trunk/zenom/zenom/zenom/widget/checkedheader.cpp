@@ -6,7 +6,11 @@ CheckedHeader::CheckedHeader(Qt::Orientation orientation, QWidget *parent)
     : QHeaderView(orientation, parent)
 {
     // set clickable by default
+#if QT_VERSION < 0x050000
     setClickable(true);
+#else
+    setSectionsClickable(true);
+#endif
     connect(this, SIGNAL(sectionCountChanged(int,int)), SLOT(sectionCountChanged(int,int)));
 }
 
