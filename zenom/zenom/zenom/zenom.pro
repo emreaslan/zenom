@@ -146,7 +146,7 @@ LIBS += -L$${QWT_LIBS} -lqwt
 # OpenSceneGraph
 INCLUDEPATH +=  $${OSG_HEADERS}
 DEPENDPATH += $${OSG_HEADERS}
-LIBS += -L$${OSG_LIBS} -losgViewer -losgGA -losg -losgQt -losgDB -losgSim
+LIBS += -L$${OSG_LIBS} -losgViewer -losgGA -losg -losgQt -losgDB -losgSim -lOpenThreads
 
 # Zenom Core Library
 INCLUDEPATH += ../znm-core
